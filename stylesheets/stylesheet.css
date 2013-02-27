@@ -364,13 +364,20 @@ Full-Width Styles
 }
 
 #main_content_wrap {
-  background: #f2f2f2;
+  background: #d0d0d0;
   border-top: 1px solid #111;
   border-bottom: 1px solid #111;
 }
 
 #main_content {
-  padding-top: 40px;
+  margin-top: 40px;
+  margin-bottom:40px;
+  background: #dfdfdf;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow:  0px 0px 20px 0px rgba(255, 255, 255, 1);
+  box-shadow:  0px 0px 20px 0px rgba(255, 255, 255, 1);
 }
 
 #footer_wrap {
