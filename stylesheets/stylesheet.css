@@ -301,7 +301,7 @@ Full-Width Styles
   background: -o-linear-gradient(top, #373737, #212121);
   background: linear-gradient(top, #373737, #212121);
   */
-  background: url('../images/bgheader.png') repeat-x;
+  background: url('../images/bgheader.png') #ff0000 repeat-x;
 }
 
 #header_wrap .inner {
