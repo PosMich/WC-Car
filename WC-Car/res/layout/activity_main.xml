@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/AppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/AppVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AppName"
+        android:layout_centerHorizontal="true"
+        android:text="@string/version" />
+    
+    <Button
+        android:id="@+id/buttonForward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/AppName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="26dp"
+        android:onClick="driveForward"
+        android:text="@string/forward" />
+
+    <Button
+        android:id="@+id/buttonBackward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AppVersion"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:onClick="driveBackward"
+        android:text="@string/backward" />
+
+    <Button
+        android:id="@+id/buttonBackwardRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonBackward"
+        android:layout_alignBottom="@+id/buttonBackward"
+        android:layout_alignParentRight="true"
+        android:onClick="driveBackwardRight"
+        android:text="@string/backwardRight"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/buttonForwardLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonForward"
+        android:layout_alignBottom="@+id/buttonForward"
+        android:layout_alignParentLeft="true"
+        android:onClick="driveForwardLeft"
+        android:text="@string/forwardLeft" />
+
+    <Button
+        android:id="@+id/buttonForwardRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonForward"
+        android:layout_alignBottom="@+id/buttonForward"
+        android:layout_alignParentRight="true"
+        android:onClick="driveForwardRight"
+        android:text="@string/forwardRight" />
+
+    <Button
+        android:id="@+id/buttonLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:onClick="driveLeft"
+        android:text="@string/left" />
+
+    <Button
+        android:id="@+id/buttonRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonLeft"
+        android:layout_alignBottom="@+id/buttonLeft"
+        android:layout_alignParentRight="true"
+        android:onClick="driveRight"
+        android:text="@string/right" />
+
+    <Button
+        android:id="@+id/buttonBackwardLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonBackward"
+        android:layout_alignBottom="@+id/buttonBackward"
+        android:layout_alignParentLeft="true"
+        android:onClick="driveBackwardLeft"
+        android:text="@string/backwardLeft"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonForward"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="24dp"
+        android:onClick="stop"
+        android:text="@string/stop" />
+    
+</RelativeLayout>
