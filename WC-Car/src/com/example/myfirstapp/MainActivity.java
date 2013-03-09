@@ -41,9 +41,9 @@ public class MainActivity extends Activity {
     
     // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
     // and modified by Steve Pomeroy <steve@staticfree.info>
-    private final int duration = 1; // seconds
+    private final double duration = 0.1; // seconds
     private final int sampleRate = 2*FREQ_MAX;
-    private final int numSamples = duration * sampleRate;
+    private final int numSamples = (int) (duration * sampleRate);
     private final double sample[] = new double[numSamples];
     private double freqOfTone = STOP; // hz
     
@@ -56,7 +56,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        
+        playSound(freqOfTone);
+        
+/*
         // Use a new tread as this can take a while
         final Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -70,6 +73,7 @@ public class MainActivity extends Activity {
             }
         });
         thread.start();
+        */
     }
     
 
@@ -96,6 +100,7 @@ public class MainActivity extends Activity {
     	if (track != null) {
     		track.pause();
     		track.stop();
+        	track.release();
     	}
     	freqOfTone = Hz;
     	genTone();
