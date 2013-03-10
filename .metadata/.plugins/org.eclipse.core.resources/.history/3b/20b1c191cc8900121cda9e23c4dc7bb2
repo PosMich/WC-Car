@@ -11,12 +11,9 @@
  * AUDIO Control Signal:
  * 	xx100 - xx400 Hz backward
  * 	xx600 - xx900 Hz forward
- * 	00xxx - 10xxx Hz left
- * 	11xxx - 20xxx Hz right
+ * 	00xxx - 10xxx left
+ * 	11xxx - 20xxx right
  * 	10500 Hz Standby
- *
- *	Tolerance: +/- 50Hz
- *
  *
  * OUT:
  *	EN_RC	enables radio control
@@ -26,7 +23,7 @@
  *	LFT		drive left
  *
  * IN:
- *	AUDIO	Uss 1.7V
+ *	AUDIO
  *
  */
 

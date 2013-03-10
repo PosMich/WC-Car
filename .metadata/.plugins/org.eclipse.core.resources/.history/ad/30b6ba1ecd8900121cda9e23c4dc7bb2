@@ -15,9 +15,6 @@
  * 	11xxx - 20xxx Hz right
  * 	10500 Hz Standby
  *
- *	Tolerance: +/- 50Hz
- *
- *
  * OUT:
  *	EN_RC	enables radio control
  *	BWD		drive backward
@@ -26,7 +23,7 @@
  *	LFT		drive left
  *
  * IN:
- *	AUDIO	Uss 1.7V
+ *	AUDIO
  *
  */
 
