@@ -1,0 +1,11 @@
+avrdude/avrdudeconf=/opt/arduino-1.0.3/hardware/tools/avrdude.conf
+avrdude/customconfigfile=true
+avrpaths//systempath/AVRGCC=/usr/bin
+avrpaths//systempath/AVRINCLUDE=/usr/lib/avr/include
+avrpaths//systempath/MAKE=/usr/bin
+avrpaths/AVRDUDE=/opt/arduino-1.0.3/hardware/tools
+avrpaths/AVRGCC=System
+avrpaths/AVRINCLUDE=System
+avrpaths/MAKE=System
+avrpaths/NoScanAtStartup=false
+eclipse.preferences.version=1

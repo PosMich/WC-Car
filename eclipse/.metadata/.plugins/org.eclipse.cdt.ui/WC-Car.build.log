@@ -1,0 +1,14 @@
+14:55:17 **** Build of configuration Release for project WC-Car ****
+make all 
+Building file: ../WC-Car.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -I"/var/www/QPT2b/WC-Car/eclipse" -I"/var/www/QPT2b/WC-Car/eclipse" -I"/var/www/QPT2b/WC-Car/eclipse/WC-Car" -D__IN_ECLIPSE__=1 -DUSB_VID= -DUSB_PID= -DARDUINO= -Wall -Os -ffunction-sections -fdata-sections -fno-exceptions -g -mmcu=atmega328p -DF_CPU=8000000UL -MMD -MP -MF"WC-Car.d" -MT"WC-Car.d"  -c -o "WC-Car.o" -x c++ "../WC-Car.cpp"
+In file included from ../WC-Car.cpp:2:0:
+../WC-Car.h:7:11: warning: mehrere Token am Ende der Direktive #ifndef
+../WC-Car.h:8:11: warning: Whitespace hinter Makroname fehlt
+../WC-Car.h:9:21: fatal error: Arduino.h: Datei oder Verzeichnis nicht gefunden
+compilation terminated.
+make: *** [WC-Car.o] Fehler 1
+
+14:55:18 Build Finished (took 175ms)
+
