@@ -1,0 +1,7 @@
+Arduino\ Board=Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328
+Arduino\ IDE\ Version=1.0.3
+Arduino\ Path=/opt/arduino-1.0.3
+Arduino\ Port=1
+Private\ Library\ Path=/opt/arduino-1.0.3/libraries
+Use\ Arduino\ IDE\ Tools=true
+eclipse.preferences.version=1

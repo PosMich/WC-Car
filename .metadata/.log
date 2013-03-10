@@ -1,0 +1,18 @@
+!SESSION 2013-03-10 18:49:33.686 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_27
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86, WS=gtk, NL=de_AT
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.core.resources 2 2 2013-03-10 18:53:23.686
+!MESSAGE Save operation warnings.
+!SUBENTRY 1 org.eclipse.core.resources 2 234 2013-03-10 18:53:23.686
+!MESSAGE The project description file (.project) for 'RemoteSystemsTempFiles' was missing.  This file contains important information about the project.  A new project description file has been created, but some information about the project may have been lost.
+
+!ENTRY org.eclipse.cdt.core 1 0 2013-03-10 18:53:25.525
+!MESSAGE Indexed 'WC-Car_Arduino' (1 sources, 32 headers) in 1,65 sec: 1.292 declarations; 1.723 references; 0 unresolved inclusions; 1 syntax errors; 0 unresolved names (0,00 %)
+
+!ENTRY org.eclipse.cdt.core 1 0 2013-03-10 18:53:27.032
+!MESSAGE Indexed 'Arduino_Pro_or_Pro_Mini__3_3V__8_MHz__w__ATmega328' (18 sources, 71 headers) in 1,50 sec: 2.858 declarations; 5.788 references; 0 unresolved inclusions; 14 syntax errors; 16 unresolved names (0,18 %)
