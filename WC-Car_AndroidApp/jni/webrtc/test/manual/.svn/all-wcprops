@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/3614/trunk/webrtc/test/manual
+END
+iframe-video.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/iframe-video.html
+END
+adapter.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/adapter.js
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2963/trunk/webrtc/test/manual/README
+END
+multiple-audio.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/multiple-audio.html
+END
+iframe-apprtc.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/iframe-apprtc.html
+END
+two-video-devices.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/two-video-devices.html
+END
+multiple-video.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/multiple-video.html
+END
+single-audio.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/single-audio.html
+END
+audio-and-video.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/audio-and-video.html
+END
+single-video.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3614/trunk/webrtc/test/manual/single-video.html
+END

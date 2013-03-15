@@ -14,5 +14,6 @@
     <string name="stop">hoit!</string>
     <string name="start">weida!</string>
     <string name="frequency">start</string>
-
+	<string name="NativeSampleRate">12345</string>
+	<string name="NativeSampleRateText">max. SampleRate</string>
 </resources>

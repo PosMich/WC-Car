@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/3454/trunk/webrtc/modules/audio_coding/codecs/opus
+END
+opus.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/3317/trunk/webrtc/modules/audio_coding/codecs/opus/opus.gypi
+END
+opus_interface.c
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/3454/trunk/webrtc/modules/audio_coding/codecs/opus/opus_interface.c
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/3668/trunk/tools
+END
+DEPS
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/2428/trunk/tools/DEPS
+END
+codereview.settings
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/3386/trunk/tools/codereview.settings
+END
+OWNERS
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/1945/trunk/tools/OWNERS
+END
+create_supplement_gypi.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2993/trunk/tools/create_supplement_gypi.py
+END
+PRESUBMIT.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2691/trunk/tools/PRESUBMIT.py
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/2428/trunk/tools/.gitignore
+END

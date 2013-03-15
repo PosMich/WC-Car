@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3506/trunk/webrtc/modules/audio_coding/neteq/interface
+END
+webrtc_neteq.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/3506/trunk/webrtc/modules/audio_coding/neteq/interface/webrtc_neteq.h
+END
+webrtc_neteq_help_macros.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/3314/trunk/webrtc/modules/audio_coding/neteq/interface/webrtc_neteq_help_macros.h
+END
+webrtc_neteq_internal.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/3289/trunk/webrtc/modules/audio_coding/neteq/interface/webrtc_neteq_internal.h
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/extended
+END
+ec_metrics_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/extended/ec_metrics_test.cc
+END
+agc_config_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/extended/agc_config_test.cc
+END

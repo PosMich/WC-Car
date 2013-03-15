@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/569/trunk/third_party/google-gflags/gen/arch/linux/x64/include/gflags
+END
+gflags_completions.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/!svn/ver/569/trunk/third_party/google-gflags/gen/arch/linux/x64/include/gflags/gflags_completions.h
+END
+gflags.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/569/trunk/third_party/google-gflags/gen/arch/linux/x64/include/gflags/gflags.h
+END

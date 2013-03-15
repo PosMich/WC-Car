@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools
+END
+neteq_rtpplay.cc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools/neteq_rtpplay.cc
+END
+rtp_generator.cc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools/rtp_generator.cc
+END
+rtp_generator.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools/rtp_generator.h
+END
+input_audio_file.cc
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools/input_audio_file.cc
+END
+input_audio_file.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/3425/trunk/webrtc/modules/audio_coding/neteq4/tools/input_audio_file.h
+END

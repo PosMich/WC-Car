@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/1808/trunk/third_party/google-gflags/gen/arch/android/arm/include/gflags
+END
+gflags_completions.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/!svn/ver/1808/trunk/third_party/google-gflags/gen/arch/android/arm/include/gflags/gflags_completions.h
+END
+gflags.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/1808/trunk/third_party/google-gflags/gen/arch/android/arm/include/gflags/gflags.h
+END

@@ -19,8 +19,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
 
 	    Button fwd 		= (Button) findViewById(R.id.buttonForward);
 	    Button bwd 		= (Button) findViewById(R.id.buttonBackward);
@@ -119,7 +119,9 @@ public class MainActivity extends Activity {
 	            return false;
 	        }
 	    });
-	    
+
+        TextView t = (TextView) findViewById(R.id.NativeSampleRate);
+        t.setText(AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC)+"Hz");	    
     }
 
 

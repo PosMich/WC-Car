@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp
+END
+H263_CIF_PFRAME.bin
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/H263_CIF_PFRAME.bin
+END
+H263Foreman_CIF_Iframe.bin
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/H263Foreman_CIF_Iframe.bin
+END
+RTCPPacketTMMBR0.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR0.bin
+END
+RTCPPacketTMMBR1.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR1.bin
+END
+RTCPPacketTMMBR2.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR2.bin
+END
+H263Foreman_CIF_Pframe.bin
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/H263Foreman_CIF_Pframe.bin
+END
+RTCPPacketTMMBR3.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR3.bin
+END
+H263_CIF_IFRAME.bin
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/H263_CIF_IFRAME.bin
+END
+RTCPPacketTMMBR4.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR4.bin
+END
+RTCPPacketTMMBR4_1.bin
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR4_1.bin
+END
+RTCPPacketTMMBR5.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR5.bin
+END
+RTCPPacketTMMBR4_2.bin
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/RTCPPacketTMMBR4_2.bin
+END
+H263_QCIF_IFRAME.bin
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/rtp_rtcp/H263_QCIF_IFRAME.bin
+END

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;WC-Car_AndroidApp/JNI&apos; to &apos;jni&apos;" description="Rename resource &apos;JNI&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="JNI" name="jni" stamp="1363195018917" updateReferences="true"/>
+</session>

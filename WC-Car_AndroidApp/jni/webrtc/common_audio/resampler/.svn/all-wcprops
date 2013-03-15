@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/3518/trunk/webrtc/common_audio/resampler
+END
+sinc_resampler_unittest.cc
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/3518/trunk/webrtc/common_audio/resampler/sinc_resampler_unittest.cc
+END
+sinc_resampler.cc
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/3518/trunk/webrtc/common_audio/resampler/sinc_resampler.cc
+END
+sinc_resampler.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/3518/trunk/webrtc/common_audio/resampler/sinc_resampler.h
+END
+resampler_unittest.cc
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2963/trunk/webrtc/common_audio/resampler/resampler_unittest.cc
+END
+resampler.cc
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/2963/trunk/webrtc/common_audio/resampler/resampler.cc
+END
+resampler.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/3518/trunk/webrtc/common_audio/resampler/resampler.gypi
+END
+Android.mk
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2963/trunk/webrtc/common_audio/resampler/Android.mk
+END

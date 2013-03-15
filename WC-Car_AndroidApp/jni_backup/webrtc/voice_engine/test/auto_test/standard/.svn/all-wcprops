@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3668/trunk/webrtc/voice_engine/test/auto_test/standard
+END
+mixing_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/3668/trunk/webrtc/voice_engine/test/auto_test/standard/mixing_test.cc
+END
+hardware_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/hardware_test.cc
+END
+rtp_rtcp_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/3668/trunk/webrtc/voice_engine/test/auto_test/standard/rtp_rtcp_test.cc
+END
+audio_processing_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/audio_processing_test.cc
+END
+voe_base_misc_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/3460/trunk/webrtc/voice_engine/test/auto_test/standard/voe_base_misc_test.cc
+END
+video_sync_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/video_sync_test.cc
+END
+call_report_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/call_report_test.cc
+END
+volume_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/3348/trunk/webrtc/voice_engine/test/auto_test/standard/volume_test.cc
+END
+codec_before_streaming_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/codec_before_streaming_test.cc
+END
+file_before_streaming_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/file_before_streaming_test.cc
+END
+neteq_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/3607/trunk/webrtc/voice_engine/test/auto_test/standard/neteq_test.cc
+END
+codec_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/codec_test.cc
+END
+file_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/3178/trunk/webrtc/voice_engine/test/auto_test/standard/file_test.cc
+END
+external_media_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/3273/trunk/webrtc/voice_engine/test/auto_test/standard/external_media_test.cc
+END
+manual_hold_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/manual_hold_test.cc
+END
+network_before_streaming_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/!svn/ver/3668/trunk/webrtc/voice_engine/test/auto_test/standard/network_before_streaming_test.cc
+END
+hardware_before_streaming_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/hardware_before_streaming_test.cc
+END
+rtp_rtcp_before_streaming_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/!svn/ver/3271/trunk/webrtc/voice_engine/test/auto_test/standard/rtp_rtcp_before_streaming_test.cc
+END
+network_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/3668/trunk/webrtc/voice_engine/test/auto_test/standard/network_test.cc
+END
+hardware_before_initializing_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/hardware_before_initializing_test.cc
+END
+dtmf_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/auto_test/standard/dtmf_test.cc
+END
+encryption_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/3180/trunk/webrtc/voice_engine/test/auto_test/standard/encryption_test.cc
+END
+neteq_stats_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/3289/trunk/webrtc/voice_engine/test/auto_test/standard/neteq_stats_test.cc
+END

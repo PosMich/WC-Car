@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/2983/trunk/webrtc/common_video/jpeg
+END
+Android.mk
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2963/trunk/webrtc/common_video/jpeg/Android.mk
+END
+data_manager.cc
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2963/trunk/webrtc/common_video/jpeg/data_manager.cc
+END
+jpeg_unittest.cc
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/2983/trunk/webrtc/common_video/jpeg/jpeg_unittest.cc
+END
+jpeg.cc
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2983/trunk/webrtc/common_video/jpeg/jpeg.cc
+END
+data_manager.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2963/trunk/webrtc/common_video/jpeg/data_manager.h
+END

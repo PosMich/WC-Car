@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3596/trunk/webrtc/modules/video_capture/android
+END
+OWNERS
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3069/trunk/webrtc/modules/video_capture/android/OWNERS
+END
+video_capture_android.cc
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/3554/trunk/webrtc/modules/video_capture/android/video_capture_android.cc
+END
+device_info_android.cc
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/3554/trunk/webrtc/modules/video_capture/android/device_info_android.cc
+END
+video_capture_android.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/3025/trunk/webrtc/modules/video_capture/android/video_capture_android.h
+END
+device_info_android.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/3554/trunk/webrtc/modules/video_capture/android/device_info_android.h
+END

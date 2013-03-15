@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/3663/trunk/webrtc/modules/rtp_rtcp/test
+END
+bwe_standalone.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/3392/trunk/webrtc/modules/rtp_rtcp/test/bwe_standalone.gypi
+END

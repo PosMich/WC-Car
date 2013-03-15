@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files
+END
+stereo_pcmu_vad.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcmu_vad.rtp
+END
+stereo_pcm16wb_jitter.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcm16wb_jitter.rtp
+END
+HRTF_pcm16wb_jitter.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/HRTF_pcm16wb_jitter.rtp
+END
+stereo_pcmu.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcmu.rtp
+END
+hrtf_g722_1C_48_jitterT2.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/hrtf_g722_1C_48_jitterT2.rtp
+END
+stereo_g729_jitter.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_g729_jitter.rtp
+END
+stereo_pcm16wb.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcm16wb.rtp
+END
+stereo_pcmu_vad_jitter.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcmu_vad_jitter.rtp
+END
+hrtf_g722_1C_48.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/hrtf_g722_1C_48.rtp
+END
+HRTF_pcm16wb.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/HRTF_pcm16wb.rtp
+END
+stereo_pcmu_jitter.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_pcmu_jitter.rtp
+END
+rtpplay.exe
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/rtpplay.exe
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/README.txt
+END
+stereo_g729.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/stereo_g729.rtp
+END
+toggling_stereo_g729_pt18_pt125.rtp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2280/trunk/data/voice_engine/stereo_rtp_files/toggling_stereo_g729_pt18_pt125.rtp
+END

@@ -1,0 +1,110 @@
+10
+
+dir
+3670
+http://webrtc.googlecode.com/svn/trunk/webrtc/modules
+http://webrtc.googlecode.com/svn
+
+
+
+2013-03-14T21:44:12.221736Z
+3669
+kma@webrtc.org
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4adac7df-926f-26a2-2b94-8c16560cd09d
+
+remote_bitrate_estimator
+dir
+
+audio_conference_mixer
+dir
+
+bitrate_controller
+dir
+
+rtp_rtcp
+dir
+
+audio_processing
+dir
+
+interface
+dir
+
+pacing
+dir
+
+video_processing
+dir
+
+utility
+dir
+
+udp_transport
+dir
+
+video_render
+dir
+
+modules.gyp
+file
+
+
+
+
+2013-03-14T23:57:40.777404Z
+7a7502080c48286c8a5490ab656de493
+2013-03-13T23:20:57.933294Z
+3668
+pwestin@webrtc.org
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2305
+
+media_file
+dir
+
+audio_device
+dir
+
+audio_coding
+dir
+
+video_coding
+dir
+
+video_capture
+dir
+

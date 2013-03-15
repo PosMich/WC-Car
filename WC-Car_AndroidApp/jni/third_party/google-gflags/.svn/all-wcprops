@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/3392/trunk/third_party/google-gflags
+END
+google-gflags.gyp
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3392/trunk/third_party/google-gflags/google-gflags.gyp
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/569/trunk/third_party/google-gflags/LICENSE
+END
+README.webrtc
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/569/trunk/third_party/google-gflags/README.webrtc
+END

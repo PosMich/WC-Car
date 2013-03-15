@@ -1,0 +1,10 @@
+K 10
+svn:ignore
+V 30
+clang
+gyp
+python
+valgrind
+win
+
+END

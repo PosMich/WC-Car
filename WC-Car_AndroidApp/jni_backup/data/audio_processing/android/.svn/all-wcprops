@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2280/trunk/data/audio_processing/android
+END
+output_data_float.pb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/2280/trunk/data/audio_processing/android/output_data_float.pb
+END
+output_data_fixed.pb
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/2280/trunk/data/audio_processing/android/output_data_fixed.pb
+END

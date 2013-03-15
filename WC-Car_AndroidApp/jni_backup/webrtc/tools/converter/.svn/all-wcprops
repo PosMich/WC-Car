@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/2963/trunk/webrtc/tools/converter
+END
+rgba_to_i420_converter.cc
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2963/trunk/webrtc/tools/converter/rgba_to_i420_converter.cc
+END
+converter.cc
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2963/trunk/webrtc/tools/converter/converter.cc
+END
+converter.h
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2963/trunk/webrtc/tools/converter/converter.h
+END

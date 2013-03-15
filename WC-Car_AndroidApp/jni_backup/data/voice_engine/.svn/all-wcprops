@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/2280/trunk/data/voice_engine
+END
+audio_tiny22.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny22.wav
+END
+audio_short16.pcm
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_short16.pcm
+END
+audio_long16big_endian.pcm
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long16big_endian.pcm
+END
+audio_tiny32.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny32.wav
+END
+audio_long16.pcm
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long16.pcm
+END
+audio_long8.pcm
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long8.pcm
+END
+audio_tiny16.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny16.wav
+END
+audio_tiny8.wav
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny8.wav
+END
+audio_tiny44.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny44.wav
+END
+audio_long8mulaw.wav
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long8mulaw.wav
+END
+audio_tiny48.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny48.wav
+END
+audio_tiny11.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_tiny11.wav
+END
+audio_long16noise.pcm
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long16noise.pcm
+END
+audio_long16.wav
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2280/trunk/data/voice_engine/audio_long16.wav
+END

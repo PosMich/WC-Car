@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/3464/trunk/webrtc/modules/video_coding/codecs/tools
+END
+video_codecs_tools.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/3464/trunk/webrtc/modules/video_coding/codecs/tools/video_codecs_tools.gypi
+END
+video_quality_measurement.cc
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2963/trunk/webrtc/modules/video_coding/codecs/tools/video_quality_measurement.cc
+END

@@ -1,0 +1,25 @@
+K 10
+svn:ignore
+V 183
+android_testrunner
+android_tools
+asan
+cygwin
+directxsdk
+expat
+gold
+google-gflags
+libjpeg
+libjpeg_turbo
+libvpx
+libyuv
+llvm
+llvm-build
+opus
+protobuf
+valgrind
+WebKit
+winsdk_samples
+yasm
+
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/3644/trunk/samples/js/apprtc
+END
+full.html
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/3578/trunk/samples/js/apprtc/full.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/3644/trunk/samples/js/apprtc/index.html
+END
+OWNERS
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/3578/trunk/samples/js/apprtc/OWNERS
+END
+apprtc.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/3627/trunk/samples/js/apprtc/apprtc.py
+END
+app.yaml
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/3578/trunk/samples/js/apprtc/app.yaml
+END

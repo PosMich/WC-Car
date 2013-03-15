@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/3373/trunk/webrtc/video_engine/test/libvietest/helpers
+END
+vie_to_file_renderer.cc
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/3373/trunk/webrtc/video_engine/test/libvietest/helpers/vie_to_file_renderer.cc
+END
+vie_fake_camera.cc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2963/trunk/webrtc/video_engine/test/libvietest/helpers/vie_fake_camera.cc
+END
+vie_file_capture_device.cc
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2963/trunk/webrtc/video_engine/test/libvietest/helpers/vie_file_capture_device.cc
+END

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/3519/trunk/tools/refactoring
+END
+removetrace.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/1687/trunk/tools/refactoring/removetrace.py
+END
+filemanagement.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/8/trunk/tools/refactoring/filemanagement.py
+END
+fixincludeguards.py
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/8/trunk/tools/refactoring/fixincludeguards.py
+END
+addfileheader.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/8/trunk/tools/refactoring/addfileheader.py
+END
+trimall.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/8/trunk/tools/refactoring/trimall.py
+END
+p4commands.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/8/trunk/tools/refactoring/p4commands.py
+END
+integratefiles.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/8/trunk/tools/refactoring/integratefiles.py
+END
+webrtc_reformat.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3519/trunk/tools/refactoring/webrtc_reformat.py
+END
+stringmanipulation.py
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/8/trunk/tools/refactoring/stringmanipulation.py
+END
+fixnames.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/8/trunk/tools/refactoring/fixnames.py
+END
+trim.py
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/8/trunk/tools/refactoring/trim.py
+END

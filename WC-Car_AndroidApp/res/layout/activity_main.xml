@@ -123,5 +123,23 @@
         android:layout_alignBottom="@+id/start"
         android:layout_centerHorizontal="true"
         android:text="@string/frequency" />
+
+    <TextView
+        android:id="@+id/NativeSampleRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="49dp"
+        android:text="@string/NativeSampleRate" />
+
+    <TextView
+        android:id="@+id/NativeSampleRateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="29dp"
+        android:text="@string/NativeSampleRateText" />
     
 </RelativeLayout>

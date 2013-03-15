@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/3670/trunk/samples/js/demos/html
+END
+dc1.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3578/trunk/samples/js/demos/html/dc1.html
+END
+rehydrate.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/rehydrate.html
+END
+gum1.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3578/trunk/samples/js/demos/html/gum1.html
+END
+gum2.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3578/trunk/samples/js/demos/html/gum2.html
+END
+dtmf1.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/3635/trunk/samples/js/demos/html/dtmf1.html
+END
+multiple.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/multiple.html
+END
+gum3.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3578/trunk/samples/js/demos/html/gum3.html
+END
+face.html
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/face.html
+END
+pc1-deprecated.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/3578/trunk/samples/js/demos/html/pc1-deprecated.html
+END
+pranswer.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/pranswer.html
+END
+pc1-audio.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3606/trunk/samples/js/demos/html/pc1-audio.html
+END
+pc1.html
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/pc1.html
+END
+constraints-and-stats.html
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/3649/trunk/samples/js/demos/html/constraints-and-stats.html
+END
+local-audio-rendering.html
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/3670/trunk/samples/js/demos/html/local-audio-rendering.html
+END

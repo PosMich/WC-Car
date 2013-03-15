@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/3540/trunk/webrtc/modules/remote_bitrate_estimator/include
+END
+rtp_to_ntp.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2963/trunk/webrtc/modules/remote_bitrate_estimator/include/rtp_to_ntp.h
+END
+bwe_defines.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/3455/trunk/webrtc/modules/remote_bitrate_estimator/include/bwe_defines.h
+END
+remote_bitrate_estimator.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/3540/trunk/webrtc/modules/remote_bitrate_estimator/include/remote_bitrate_estimator.h
+END

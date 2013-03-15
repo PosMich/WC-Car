@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/3660/trunk/webrtc/modules/audio_coding/codecs/isac
+END
+isac_test.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/isac/isac_test.gypi
+END
+isacfix_test.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/3464/trunk/webrtc/modules/audio_coding/codecs/isac/isacfix_test.gypi
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/android/android_test/jni
+END
+Android.mk
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/android/android_test/jni/Android.mk
+END
+Application.mk
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/android/android_test/jni/Application.mk
+END
+org_webrtc_voiceengine_test_AndroidTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/android/android_test/jni/org_webrtc_voiceengine_test_AndroidTest.h
+END
+android_test.cc
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/2963/trunk/webrtc/voice_engine/test/android/android_test/jni/android_test.cc
+END

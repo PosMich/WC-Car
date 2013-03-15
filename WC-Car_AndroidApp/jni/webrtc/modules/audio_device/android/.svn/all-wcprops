@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/3554/trunk/webrtc/modules/audio_device/android
+END
+audio_device_jni_android.cc
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/3313/trunk/webrtc/modules/audio_device/android/audio_device_jni_android.cc
+END
+audio_device_jni_android.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/3313/trunk/webrtc/modules/audio_device/android/audio_device_jni_android.h
+END
+audio_device_utility_android.cc
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_device/android/audio_device_utility_android.cc
+END
+audio_device_utility_android.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_device/android/audio_device_utility_android.h
+END
+audio_device_opensles_android.cc
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/3040/trunk/webrtc/modules/audio_device/android/audio_device_opensles_android.cc
+END
+OWNERS
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/3069/trunk/webrtc/modules/audio_device/android/OWNERS
+END
+audio_device_opensles_android.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/3040/trunk/webrtc/modules/audio_device/android/audio_device_opensles_android.h
+END

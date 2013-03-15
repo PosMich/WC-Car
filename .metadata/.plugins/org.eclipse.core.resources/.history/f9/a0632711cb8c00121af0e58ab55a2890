@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WC-Car</string>
+    <string name="version">0.2</string>
+    <string name="right">Rechts</string>
+    <string name="left">Links</string>
+    <string name="forward">4i</string>
+    <string name="backward">Zruck</string>
+    <string name="forwardRight">4i Rechts</string>
+    <string name="forwardLeft">4i Links</string>
+    <string name="backwardRight">Zruck Rechts</string>
+    <string name="backwardLeft">Zruck Links</string>
+    <string name="stop">hoit!</string>
+    <string name="start">weida!</string>
+    <string name="frequency">start</string>
+	<string name="NativeSampleRate">SampleRate</string>
+</resources>

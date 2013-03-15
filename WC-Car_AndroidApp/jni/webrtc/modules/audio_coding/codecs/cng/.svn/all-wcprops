@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3392/trunk/webrtc/modules/audio_coding/codecs/cng
+END
+cng_helpfuns.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/cng/cng_helpfuns.h
+END
+Android.mk
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/cng/Android.mk
+END
+cng_unittest.cc
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/cng/cng_unittest.cc
+END
+cng_helpfuns.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/cng/cng_helpfuns.c
+END
+cng.gypi
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/3392/trunk/webrtc/modules/audio_coding/codecs/cng/cng.gypi
+END
+webrtc_cng.c
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2963/trunk/webrtc/modules/audio_coding/codecs/cng/webrtc_cng.c
+END

@@ -27,6 +27,8 @@ public final class R {
         public static final int AppName=0x7f080000;
         public static final int AppVersion=0x7f080001;
         public static final int Frequency=0x7f08000c;
+        public static final int NativeSampleRate=0x7f08000d;
+        public static final int NativeSampleRateText=0x7f08000e;
         public static final int buttonBackward=0x7f080003;
         public static final int buttonBackwardLeft=0x7f080009;
         public static final int buttonBackwardRight=0x7f080004;
@@ -45,6 +47,8 @@ public final class R {
         public static final int main=0x7f070000;
     }
     public static final class string {
+        public static final int NativeSampleRate=0x7f05000d;
+        public static final int NativeSampleRateText=0x7f05000e;
         public static final int app_name=0x7f050000;
         public static final int backward=0x7f050005;
         public static final int backwardLeft=0x7f050009;
