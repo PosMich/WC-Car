@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/buttonShowCustomDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/credits" />
+
+    <TextView
+        android:id="@+id/textIPAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="74dp"
+        android:text="IP: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/buttonStopConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/buttonStartConnection"
+        android:layout_below="@+id/buttonStartConnection"
+        android:text="@string/stopConnection" />
+
+    <Button
+        android:id="@+id/buttonStartConnection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonShowCustomDialog"
+        android:layout_alignParentLeft="true"
+        android:text="@string/startConnection" />
+
+    <TextView
+        android:id="@+id/textViewAudioStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textIPAddress"
+        android:layout_below="@+id/textIPAddress"
+        android:layout_marginTop="87dp"
+        android:text="@string/audioStatus"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageViewAudioStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewAudioStatus"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/unplugged"
+        android:contentDescription="@string/contentDescriptionImageViewAudioStatus" />
+ 
+</RelativeLayout>
