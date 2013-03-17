@@ -104,3 +104,6 @@ org.eclipse.core.runtime.CoreException: No property tester contributes a propert
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 !SUBENTRY 1 org.eclipse.core.expressions 4 201 2013-03-18 00:32:34.995
 !MESSAGE No property tester contributes a property org.eclipse.linuxtools.systemtap.ui.ide.property.systemtap to type class java.util.ArrayList
+
+!ENTRY org.eclipse.ui 2 2 2013-03-18 00:38:37.109
+!MESSAGE Invalid property category path: ValidationPropertiesPage (bundle: org.eclipse.wst.xml.ui, propertyPage: org.eclipse.wst.xml.ui.propertyPage.project.validation)
