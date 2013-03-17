@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textCreditsDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/contentCredits"
+        android:textColor="#000"
+        android:textIsSelectable="true" />
+
+     <Button
+         android:id="@+id/dialogButtonOK"
+         android:layout_width="100dp"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/textCreditsDialog"
+         android:layout_centerHorizontal="true"
+         android:text=" Cancel " />
+ 
+</RelativeLayout>

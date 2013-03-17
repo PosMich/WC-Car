@@ -23,5 +23,4 @@
     <string name="stopConnection">Stop Connection</string>
     <string name="audioStatus">Audio Status: Unknown.</string>
     <string name="contentDescriptionImageViewAudioStatus">Image for visual feedback on un/plugged audio.</string>
-
 </resources>

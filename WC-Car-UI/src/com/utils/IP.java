@@ -5,8 +5,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-
 import org.apache.http.conn.util.InetAddressUtils;
 
 public class IP {
