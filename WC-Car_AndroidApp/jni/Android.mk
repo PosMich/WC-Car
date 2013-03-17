@@ -62,6 +62,12 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_PRELINK_MODULE := false
 
+LOCAL_CFLAGS    += -lstdc++
+LOCAL_LDLIBS    := -L$(NDK_ROOT)/sources/cxx-stl/gnu-libstdc++/4.6/libs/armeabi-v7a -llog -landroid -lEGL -lGLESv1_CM -lgnustl_static -lsupc++
+LOCAL_CFLAGS += -fno-rtti -fno-exceptions
+LOCAL_NDK_STL_VARIANT := gnustl_static
+
+
 ifndef NDK_ROOT
 include external/stlport/libstlport.mk
 endif
