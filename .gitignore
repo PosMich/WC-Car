@@ -28,4 +28,4 @@ proguard/
 *.iws
 .idea/
 
-.metadata
+.metadata/
