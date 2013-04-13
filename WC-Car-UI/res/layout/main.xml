@@ -4,6 +4,12 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal" >
 
+    <SurfaceView
+        android:id="@+id/surface_camera"
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="-250dip" />
+    
     <Button
         android:id="@+id/buttonShowCustomDialog"
         android:layout_width="wrap_content"
