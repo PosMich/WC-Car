@@ -19,9 +19,9 @@ public class CameraView implements SurfaceHolder.Callback{
  
     private List<Camera.Size> supportedSizes; 
     private Camera.Size procSize_;
-    private boolean inProcessing_ = false;
 
-    public CameraView(SurfaceView sv){
+    @SuppressWarnings("deprecation")
+	public CameraView(SurfaceView sv){
         surfaceView_ = sv;
 
         surfaceHolder_ = surfaceView_.getHolder();
@@ -70,12 +70,15 @@ public class CameraView implements SurfaceHolder.Callback{
     }
     
     public void setupCamera(int wid, int hei, PreviewCallback cb) {
+    	
         procSize_.width = wid;
         procSize_.height = hei;
         
-        Camera.Parameters p = camera_.getParameters();        
-        p.setPreviewSize(procSize_.width, procSize_.height);
-        camera_.setDisplayOrientation(0);
+        Camera.Parameters p = camera_.getParameters();
+        
+//        p.setPreviewFpsRange(10, 20);
+        
+        p.setPreviewSize(procSize_.width, procSize_.height);        
         camera_.setParameters(p);
         
         camera_.setPreviewCallback(cb);
@@ -84,14 +87,14 @@ public class CameraView implements SurfaceHolder.Callback{
     private void setupCamera() {
         camera_ = Camera.open();
         procSize_ = camera_.new Size(0, 0);
-        Camera.Parameters p = camera_.getParameters();        
+        Camera.Parameters p = camera_.getParameters();      
        
         supportedSizes = p.getSupportedPreviewSizes();
         procSize_ = supportedSizes.get( supportedSizes.size()/2 );
         p.setPreviewSize(procSize_.width, procSize_.height);
         
         camera_.setParameters(p);
-        camera_.setDisplayOrientation(0);
+        
         try {
             camera_.setPreviewDisplay(surfaceHolder_);
         } catch ( Exception ex) {

@@ -24,10 +24,7 @@ import java.util.TimeZone;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 
-import android.content.res.Resources;
 import android.content.res.AssetManager;
-import android.content.res.AssetFileDescriptor;
-import android.util.Log;
 
 /**
  * A simple, tiny, nicely embeddable HTTP 1.0 (partially 1.1) server in Java
@@ -91,7 +88,7 @@ public class NanoHTTPD
 	 */
 	public Response serve( String uri, String method, Properties header, Properties parms, Properties files )
 	{
-		System.out.println( method + " '" + uri + "' " );
+//		System.out.println( method + " '" + uri + "' " );
 
 		Enumeration e = header.propertyNames();
 		while ( e.hasMoreElements())
@@ -469,7 +466,7 @@ public class NanoHTTPD
 					}
 				}
 
-				// Ok, now do the serve()
+				// Ok, now do the )
 				Response r = serve( uri, method, header, parms, files );
 				if ( r == null )
 					sendError( HTTP_INTERNALERROR, "SERVER INTERNAL ERROR: Serve() returned a null response." );
