@@ -1,21 +1,32 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <title>Remote Video</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-</head> 
-<body> 
+<!DOCTYPE>
+<html lang='en-US'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='A demonstration simple watermarking' />
+    <meta name='author' content='Michael Poschacher' />
+    <title>Embedded Watermarking with Javascript</title>
+    
+    <link href="css/style.css" rel="stylesheet">
+    
+    <script language="javascript" type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="js/coffee-script.js"></script>
 
-<!-- 
-/*********************************************************
- * Main page 
- *
- *********************************************************/
--->
-<div>
-    <h1>BADAM</h1>
+    <script language="javascript" type="text/coffeescript" src="coffee/wc.coffee"></script>
+    <script>
+
+
+    </script>
+</head>
+<body>
+<div class="imgContainer">
+  <img id="imgStream"></img>
 </div>
-
+<div class="control">
+  <h1>Websocket Test</h1>
+  IP:Port: <input class="ip"></input>
+  <button class="connect">connect!</button>
+</div>
+<div class="menu"></div>
 </body>
 </html>
