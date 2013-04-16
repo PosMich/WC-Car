@@ -17,12 +17,29 @@
             android:name="com.mmt.webcar.WebCarActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.mmt.webcar.WebCarReleaseActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_web_car_release"
+            android:parentActivityName="com.mmt.webcar.WebCarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mmt.webcar.WebCarActivity" />
+        </activity>
+        <activity
+            android:name="com.mmt.webcar.WebCarReleaseAudioActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_web_car_release_audio"
+            android:theme="@style/FullscreenTheme" >
         </activity>
     </application>
 

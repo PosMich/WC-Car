@@ -3,6 +3,17 @@
 
     <string name="app_name">WebCar</string>
     <string name="dummy_button">Dummy Button</string>
+    <string name="content">Web\nCar</string>
+    <string name="release">Release</string>
+    <string name="control">Control</string>
+    <string name="title_activity_web_car_release">WebCarReleaseActivity</string>
+    <string name="release_heading">Release your\nWebCar</string>
+    <string name="release_content_plug_in">Step 1: Plug in the\nphone connector</string>
+    <string name="release_step_passphrase_heading">passphrase</string>
+    <string name="confirm_passphrase">Confirm</string>
+    <string name="passphrase_info">The passphrase is important for sharing the control of your WebCar. With the passphrase you may allways panic shut-down the connection, so you have the control every time.</string>
+    <string name="release_step_passphrase_reenter_heading">re-enter</string>
+    <string name="title_activity_web_car_release_audio">WebCarReleaseAudioActivity</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>
