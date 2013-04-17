@@ -6,6 +6,12 @@
     android:orientation="vertical"
     tools:context=".WebCarReleaseStreamActivity" >
 
+	<SurfaceView
+        android:id="@+id/surface_camera"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="-250dip" />
+    
    	<TextView
         android:id="@+id/textReleaseStreamingHeading"
         android:layout_width="match_parent"

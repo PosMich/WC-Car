@@ -36,7 +36,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int imageStatusAudio=0x7f07000e;
         public static final int imageStatusPassphrase=0x7f070006;
         public static final int imageStatusPassphraseReentered=0x7f070009;
-        public static final int imageStatusWLAN=0x7f070017;
+        public static final int imageStatusWLAN=0x7f070018;
+        public static final int surface_camera=0x7f070010;
         public static final int textAudioInfo=0x7f07000f;
         public static final int textPassphraseInfo=0x7f07000b;
         public static final int textReleaseAudioContent=0x7f07000d;
@@ -44,14 +45,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int textReleaseHeading=0x7f070003;
         public static final int textReleaseStepOne_Passphrase=0x7f070004;
         public static final int textReleaseStepOne_PassphraseReEnter=0x7f070007;
-        public static final int textReleaseStreamingContent=0x7f070011;
-        public static final int textReleaseStreamingContentNote=0x7f070013;
-        public static final int textReleaseStreamingHeading=0x7f070010;
-        public static final int textReleaseStreamingIP=0x7f070012;
-        public static final int textReleaseWLANContent=0x7f070016;
-        public static final int textReleaseWLANHeading=0x7f070015;
-        public static final int textStreamingInfo=0x7f070014;
-        public static final int textWLANInfo=0x7f070018;
+        public static final int textReleaseStreamingContent=0x7f070012;
+        public static final int textReleaseStreamingContentNote=0x7f070014;
+        public static final int textReleaseStreamingHeading=0x7f070011;
+        public static final int textReleaseStreamingIP=0x7f070013;
+        public static final int textReleaseWLANContent=0x7f070017;
+        public static final int textReleaseWLANHeading=0x7f070016;
+        public static final int textStreamingInfo=0x7f070015;
+        public static final int textWLANInfo=0x7f070019;
     }
     public static final class layout {
         public static final int activity_web_car=0x7f030000;
