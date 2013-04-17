@@ -4,10 +4,10 @@
     android:layout_height="fill_parent"
     android:background="#0099cc"
     android:orientation="vertical"
-    tools:context=".WebCarReleaseAudioActivity" >
-    
-    <TextView
-        android:id="@+id/textReleaseAudioHeading"
+    tools:context=".WebCarReleaseStreamActivity" >
+
+   	<TextView
+        android:id="@+id/textReleaseStreamingHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -17,42 +17,57 @@
         android:textColor="#ffffff"
         android:textSize="45sp"
         android:textStyle="bold" 
-        android:layout_weight="0"/>
-    
-    <TextView 
-        android:id="@+id/textReleaseAudioContent"
+        android:layout_weight="0" />
+   	
+ 	<TextView 
+        android:id="@+id/textReleaseStreamingContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="@string/release_audio_content" 
+        android:text="@string/release_streaming_content" 
         android:textColor="#CEEDF9"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_weight="0"
         android:padding="20dp" />
-
-    <ImageView
-        android:id="@+id/imageStatusAudio"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+ 	
+	<TextView 
+        android:id="@+id/textReleaseStreamingIP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        android:textStyle="bold"
         android:layout_weight="0"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/error"
-        android:contentDescription="@string/content_descr_image_status"
-        android:visibility="gone" />
-
+        android:padding="20dp" />
+	
+	<TextView 
+        android:id="@+id/textReleaseStreamingContentNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/release_streaming_content_note" 
+        android:textColor="#CEEDF9"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_weight="0"
+        android:padding="20dp" />
+	
 	<TextView
-        android:id="@+id/textAudioInfo"
+        android:id="@+id/textStreamingInfo"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="10"
         android:gravity="bottom|center_horizontal"
         android:padding="5dp"
-        android:text="@string/audio_info"
+        android:text="@string/streaming_info"
         android:textAlignment="center"
         android:textSize="16sp"
         android:layout_marginBottom="20dp"/>
 
-    
 </LinearLayout>

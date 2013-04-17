@@ -28,7 +28,7 @@ public class WebCarActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// Call new Activity
-			Intent releaseIntent = new Intent(WebCarActivity.this, WebCarReleaseActivity.class);
+			Intent releaseIntent = new Intent(WebCarActivity.this, WebCarReleaseWLANActivity.class);
 			WebCarActivity.this.startActivity(releaseIntent);
 		}
 	};

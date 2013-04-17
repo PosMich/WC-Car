@@ -8,12 +8,22 @@
     <string name="control">Control</string>
     <string name="title_activity_web_car_release">WebCarReleaseActivity</string>
     <string name="release_heading">Release your\nWebCar</string>
-    <string name="release_content_plug_in">Step 1: Plug in the\nphone connector</string>
+    <!-- <string name="release_content_plug_in">Step 1: Plug in the\nphone connector</string> -->
     <string name="release_step_passphrase_heading">passphrase</string>
     <string name="confirm_passphrase">Confirm</string>
     <string name="passphrase_info">The passphrase is important for sharing the control of your WebCar. With the passphrase you may allways panic shut-down the connection, so you have the control every time.</string>
     <string name="release_step_passphrase_reenter_heading">re-enter</string>
     <string name="title_activity_web_car_release_audio">WebCarReleaseAudioActivity</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="content_descr_image_status">Status Image (Success/Error)</string>
+    <string name="release_audio_content">Plug in the phone connector from your WebCar</string>
+    <string name="audio_info">To plug in your phone connector is important for control your car. The audio signals will be translated to the speed/directions/etc. The app will turn on your system volume when the phone connector is plugged in.</string>
+    <string name="title_activity_web_car_release_stream">WebCarReleaseStreamActivity</string>
+    <string name="release_streaming_content">Your WebCar is now ready to roll. On the controller device navigate to</string>
+    <string name="title_activity_web_car_release_wlan">WebCarReleaseWLANActivity</string>
+    <string name="release_wlan_content">For releasing your WebCar you need to establish a Wifi-Connection</string>
+    <string name="wlan_info">The Wifi-connection is important because the communication between the released and the controller device.</string>
+    <string name="streaming_info">Do NOT disconnect one of the devices during driving. The WebCar will stop immediately.</string>
+    <string name="release_streaming_content_note">Important Note: Both devices have to be in the same Wifi-Network.</string>
 
 </resources>

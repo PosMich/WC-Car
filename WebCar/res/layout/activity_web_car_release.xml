@@ -31,50 +31,87 @@
             android:id="@+id/textReleaseStepOne_Passphrase"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
             android:keepScreenOn="true"
             android:text="@string/release_step_passphrase_heading"
             android:textColor="#CEEDF9"
             android:textSize="20sp"
-            android:textStyle="bold" 
-            android:layout_weight="0"
-            android:layout_marginRight="10dp"/>
-
-        <EditText
-            android:id="@+id/editTextPassphrase"
+            android:textStyle="bold" />
+        
+        <FrameLayout 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" 
-            android:layout_weight="5" />
+            android:layout_weight="5" >
+            
+            <EditText
+	            android:id="@+id/editTextPassphrase"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:ems="10"
+	            android:inputType="textPassword"
+	            android:paddingRight="35dp" />
+
+            <ImageView
+                android:id="@+id/imageStatusPassphrase"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center_vertical"
+                android:contentDescription="@string/content_descr_image_status"
+                android:src="@drawable/error" 
+                android:visibility="gone" />
+            
+        </FrameLayout>
+
+        
         
     </LinearLayout>
     
     <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="10dp" 
-    android:layout_weight="0">
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal"
+	    android:padding="10dp" 
+	    android:layout_weight="0">
 
         <TextView
             android:id="@+id/textReleaseStepOne_PassphraseReEnter"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
             android:keepScreenOn="true"
             android:text="@string/release_step_passphrase_reenter_heading"
             android:textColor="#CEEDF9"
             android:textSize="20sp"
-            android:textStyle="bold" 
-            android:layout_weight="0"
-            android:layout_marginRight="10dp"/>
-
-        <EditText
-            android:id="@+id/editTextPassphraseReenter"
+            android:textStyle="bold" />
+        
+       <FrameLayout 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword" 
-            android:layout_weight="5" />
+            android:layout_weight="5" >
+
+	        <EditText
+	            android:id="@+id/editTextPassphraseReenter"
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:ems="10"
+	            android:inputType="textPassword" 
+	            android:paddingRight="35dp" />
+	        
+			<ImageView
+			    android:id="@+id/imageStatusPassphraseReentered"
+			    android:layout_width="30dp"
+			    android:layout_height="30dp"
+			    android:layout_gravity="right|center_vertical"
+			    android:layout_marginRight="5dp"
+			    android:contentDescription="@string/content_descr_image_status"
+			    android:src="@drawable/error"
+			    android:visibility="gone" />
+			
+		</FrameLayout>
         
     </LinearLayout>
 

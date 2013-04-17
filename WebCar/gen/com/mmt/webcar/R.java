@@ -22,42 +22,70 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int black_overlay=0x7f040000;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int error=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int okay=0x7f020002;
     }
     public static final class id {
-        public static final int btnConfirmPassphrase=0x7f070008;
+        public static final int btnConfirmPassphrase=0x7f07000a;
         public static final int btnControl=0x7f070001;
         public static final int btnRelease=0x7f070002;
-        public static final int dummy_button=0x7f07000b;
         public static final int editTextPassphrase=0x7f070005;
-        public static final int editTextPassphraseReenter=0x7f070007;
+        public static final int editTextPassphraseReenter=0x7f070008;
         public static final int fullscreen_content=0x7f070000;
-        public static final int fullscreen_content_controls=0x7f07000a;
-        public static final int textPassphraseInfo=0x7f070009;
+        public static final int imageStatusAudio=0x7f07000e;
+        public static final int imageStatusPassphrase=0x7f070006;
+        public static final int imageStatusPassphraseReentered=0x7f070009;
+        public static final int imageStatusWLAN=0x7f070017;
+        public static final int textAudioInfo=0x7f07000f;
+        public static final int textPassphraseInfo=0x7f07000b;
+        public static final int textReleaseAudioContent=0x7f07000d;
+        public static final int textReleaseAudioHeading=0x7f07000c;
         public static final int textReleaseHeading=0x7f070003;
         public static final int textReleaseStepOne_Passphrase=0x7f070004;
-        public static final int textReleaseStepOne_PassphraseReEnter=0x7f070006;
+        public static final int textReleaseStepOne_PassphraseReEnter=0x7f070007;
+        public static final int textReleaseStreamingContent=0x7f070011;
+        public static final int textReleaseStreamingContentNote=0x7f070013;
+        public static final int textReleaseStreamingHeading=0x7f070010;
+        public static final int textReleaseStreamingIP=0x7f070012;
+        public static final int textReleaseWLANContent=0x7f070016;
+        public static final int textReleaseWLANHeading=0x7f070015;
+        public static final int textStreamingInfo=0x7f070014;
+        public static final int textWLANInfo=0x7f070018;
     }
     public static final class layout {
         public static final int activity_web_car=0x7f030000;
         public static final int activity_web_car_release=0x7f030001;
         public static final int activity_web_car_release_audio=0x7f030002;
+        public static final int activity_web_car_release_stream=0x7f030003;
+        public static final int activity_web_car_release_wlan=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int confirm_passphrase=0x7f050009;
+        public static final int audio_info=0x7f05000f;
+        public static final int confirm_passphrase=0x7f050008;
         public static final int content=0x7f050002;
+        public static final int content_descr_image_status=0x7f05000d;
         public static final int control=0x7f050004;
         public static final int dummy_button=0x7f050001;
-        public static final int dummy_content=0x7f05000d;
-        public static final int passphrase_info=0x7f05000a;
+        public static final int dummy_content=0x7f05000c;
+        public static final int passphrase_info=0x7f050009;
         public static final int release=0x7f050003;
-        public static final int release_content_plug_in=0x7f050007;
+        public static final int release_audio_content=0x7f05000e;
         public static final int release_heading=0x7f050006;
-        public static final int release_step_passphrase_heading=0x7f050008;
-        public static final int release_step_passphrase_reenter_heading=0x7f05000b;
+        /**  <string name="release_content_plug_in">Step 1: Plug in the\nphone connector</string> 
+         */
+        public static final int release_step_passphrase_heading=0x7f050007;
+        public static final int release_step_passphrase_reenter_heading=0x7f05000a;
+        public static final int release_streaming_content=0x7f050011;
+        public static final int release_streaming_content_note=0x7f050016;
+        public static final int release_wlan_content=0x7f050013;
+        public static final int streaming_info=0x7f050015;
         public static final int title_activity_web_car_release=0x7f050005;
-        public static final int title_activity_web_car_release_audio=0x7f05000c;
+        public static final int title_activity_web_car_release_audio=0x7f05000b;
+        public static final int title_activity_web_car_release_stream=0x7f050010;
+        public static final int title_activity_web_car_release_wlan=0x7f050012;
+        public static final int wlan_info=0x7f050014;
     }
     public static final class style {
         /** 

@@ -4,10 +4,10 @@
     android:layout_height="fill_parent"
     android:background="#0099cc"
     android:orientation="vertical"
-    tools:context=".WebCarReleaseAudioActivity" >
-    
+    tools:context=".WebCarReleaseWLANActivity" >
+
     <TextView
-        android:id="@+id/textReleaseAudioHeading"
+        android:id="@+id/textReleaseWLANHeading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -17,15 +17,15 @@
         android:textColor="#ffffff"
         android:textSize="45sp"
         android:textStyle="bold" 
-        android:layout_weight="0"/>
+        android:layout_weight="0" />
     
     <TextView 
-        android:id="@+id/textReleaseAudioContent"
+        android:id="@+id/textReleaseWLANContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="@string/release_audio_content" 
+        android:text="@string/release_wlan_content" 
         android:textColor="#CEEDF9"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -33,7 +33,7 @@
         android:padding="20dp" />
 
     <ImageView
-        android:id="@+id/imageStatusAudio"
+        android:id="@+id/imageStatusWLAN"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_weight="0"
@@ -42,17 +42,18 @@
         android:contentDescription="@string/content_descr_image_status"
         android:visibility="gone" />
 
+    
 	<TextView
-        android:id="@+id/textAudioInfo"
+        android:id="@+id/textWLANInfo"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="10"
         android:gravity="bottom|center_horizontal"
         android:padding="5dp"
-        android:text="@string/audio_info"
+        android:text="@string/wlan_info"
         android:textAlignment="center"
         android:textSize="16sp"
         android:layout_marginBottom="20dp"/>
-
     
+
 </LinearLayout>
