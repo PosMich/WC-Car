@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.hardware.Camera.Size"/>
+<fullyQualifiedTypeName name="android.os.Message"/>
+<fullyQualifiedTypeName name="android.media.AudioTrack.OnPlaybackPositionUpdateListener"/>
+<fullyQualifiedTypeName name="com.example.myfirstapp.MainActivity.OnPlaybackListener"/>
+<fullyQualifiedTypeName name="com.example.myfirstapp.PlaySound"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+</qualifiedTypeNameHistroy>

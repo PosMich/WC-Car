@@ -1,21 +1,36 @@
 package com.example.myfirstapp;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.MotionEvent;
 import android.os.Handler;
+import android.hardware.Camera.Size;
 import android.media.AudioTrack;
 import android.media.AudioManager;
 import android.media.AudioFormat;
+import android.media.AudioTrack.OnPlaybackPositionUpdateListener;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
 
+	PlaySound AudioGenerator = new PlaySound();
+	
+	public void playSound(int Freq) {
+		try {
+			AudioGenerator.setFreq(Freq);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,135 +148,33 @@ public class MainActivity extends Activity {
     }
     
     
-    
-    //btn.add("fwd", (Button) findViewById(R.id.buttonForward));
-    /*
-    private Button[] bt = {
-	    (Button) findViewById(R.id.buttonForward),
-	    (Button) findViewById(R.id.buttonBackward),
-	    (Button) findViewById(R.id.buttonLeft),
-	    (Button) findViewById(R.id.buttonRight),
-	    (Button) findViewById(R.id.buttonForwardRight),
-	    (Button) findViewById(R.id.buttonForwardLeft),
-	    (Button) findViewById(R.id.buttonBackwardRight),
-	    (Button) findViewById(R.id.buttonBackwardLeft)
-    };*/
-    
     private final int STOP	= 10500;
     
-    private final int RIGHT 	= 20500;
-    private final int LEFT 	= 500;
-    private final int BACKWRD = 10000;
+    private final int RIGHT 	= 19500;
+    private final int LEFT 	= 01500;
+    private final int BACKWRD = 10100;
     private final int FORWRD 	= 10999;
     
-    private final int FORWRD_RIGHT 	= 20999;
-    private final int FORWRD_LEFT 	= 999;
-    private final int BACKWRD_RIGHT 	= 20000;
-    private final int BACKWRD_LEFT 	= 0;
+    private final int FORWRD_RIGHT 	= 19999;
+    private final int FORWRD_LEFT 	= 1999; // 01999
+    private final int BACKWRD_RIGHT 	= 1100;
+    private final int BACKWRD_LEFT 	= 1100;
 
-    private final int FREQ_MAX = 22500;
-    
-    // originally from http://marblemice.blogspot.com/2010/04/generate-and-play-tone-in-android.html
-    // and modified by Steve Pomeroy <steve@staticfree.info>
-    private final double duration = 5; // seconds
-    private final int sampleRate = 2*FREQ_MAX;
-    private final int numSamples = (int) (duration * sampleRate);
-    private final double sample[] = new double[numSamples];
-    private double freqOfTone = STOP; // hz
-    
-    private AudioTrack track = null;
-
-    private final byte generatedSnd[] = new byte[2 * numSamples];
-
-    Handler handler = new Handler();
-
-    @Override
-    protected void onStop() {
-    	super.onStop();
-    	
-    	track.pause();
-    }
-    
     
     @Override
     protected void onResume() {
         super.onResume();
-
     	getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
-        playSound(freqOfTone);
-        
-/*
-        // Use a new tread as this can take a while
-        final Thread thread = new Thread(new Runnable() {
-            public void run() {
-                genTone();
-                handler.post(new Runnable() {
-
-                    public void run() {
-                        playSound(freqOfTone);
-                    }
-                });
-            }
-        });
-        thread.start();
-        */
-    }
-    
-
-    void genTone(){
-        // fill out the array
-        for (int i = 0; i < numSamples; ++i) {
-            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/freqOfTone));
-        }
-
-        // convert to 16 bit pcm sound array
-        // assumes the sample buffer is normalised.
-        int idx = 0;
-        for (final double dVal : sample) {
-            // scale to maximum amplitude
-            final short val = (short) ((dVal * 32767));
-            // in 16 bit wav PCM, first byte is the low order byte
-            generatedSnd[idx++] = (byte) (val & 0x00ff);
-            generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
-
-        }
     }
     
     void stopSound() {
-    	track.pause();
+    	AudioGenerator.stop();
     }
     
     void startSound() {
     	playSound(STOP);
     }
 
-    void playSound(double Hz){
-    	if (track != null) {
-    		track.pause();
-    		track.stop();
-        	track.release();
-    	}
-    	
-
-        TextView t = (TextView) findViewById(R.id.Frequency);
-    	
-        t.setText(Hz+"Hz");
-        
-    	freqOfTone = Hz;
-    	
-    	genTone();
-        track = new AudioTrack(AudioManager.STREAM_MUSIC,
-                sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
-                AudioTrack.MODE_STATIC);
-        track.write(generatedSnd, 0, generatedSnd.length);
-        
-        track.setLoopPoints(0, generatedSnd.length/4 -1, -1);
-        track.play();
-    }
-
-    
     public void driveForward() {
     	playSound(FORWRD);
     }
@@ -295,5 +208,11 @@ public class MainActivity extends Activity {
 
     public void weida(View v) {
     	startSound();
+    }
+
+    @Override
+    protected void onDestroy() {
+    	AudioGenerator.stop();
+    	super.onDestroy();
     }
 }
