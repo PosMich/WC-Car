@@ -1,4 +1,5 @@
 avrdude/avrdudeUseConsole=true
+avrdude/avrdudeconf=/opt/arduino-1.0.4/hardware/tools/avrdude.conf
 avrdude/configs/programmerconfig.1/baudrate=57600
 avrdude/configs/programmerconfig.1/description=AVReclipse controlled arduino settings. You should not changes this manually
 avrdude/configs/programmerconfig.1/name=AVR Eclipse controlled Arduino settings for project Arduino_Pro_or_Pro_Mini__3_3V__8_MHz__w__ATmega328
@@ -15,9 +16,10 @@ avrdude/configs/programmerconfig.2/postAvrdudeDelayMs=
 avrdude/configs/programmerconfig.2/ppresetline=
 avrdude/configs/programmerconfig.2/ppvccline=
 avrdude/configs/programmerconfig.2/programmer=arduino
+avrdude/customconfigfile=true
 avrpaths//systempath/AVRGCC=/usr/bin
 avrpaths//systempath/MAKE=/usr/bin
-avrpaths/AVRDUDE=/opt/arduino-1.0.3/hardware/tools
+avrpaths/AVRDUDE=/opt/arduino-1.0.4/hardware/tools
 avrpaths/AVRGCC=System
 avrpaths/AVRINCLUDE=System
 avrpaths/MAKE=System
