@@ -43,7 +43,7 @@ server.configure ->
     server.set "port", process.env.PORT or config.port
     server.set "views", __dirname + "/views"
     server.set "view engine", "jade"
-    server.use express.favicon()
+    server.use express.favicon('public/images/favicon.ico')
     server.use express.logger("dev")
     server.use express.bodyParser()
     server.use express.methodOverride()
