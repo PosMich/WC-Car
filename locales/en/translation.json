@@ -1,0 +1,13 @@
+{
+    "app": {
+        "header": "Sample Application"
+    },
+    "navigation": {
+        "view1": "Here View1",
+        "view2": "Here View2"
+    },
+	"route": {
+		"view1": "View1",
+		"view2": "View2"
+	}
+}
