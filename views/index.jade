@@ -1,5 +1,5 @@
 !!! 5
-html(ng-app="myApp", lang="de")
+html(ng-app="WebCar", lang="de")
     head
         // Lets set up our page a bit.
         // ==========================================================================
@@ -14,13 +14,14 @@ html(ng-app="myApp", lang="de")
 
         // HTML5 shim, because IE's are horrible.
         //if lt IE 9
-            script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
-            != js("lib/angular-ui-0.2.0/angular-ui-ieshiv.min")
+            // script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+            // != js("lib/angular-ui-0.2.0/angular-ui-ieshiv.min")
         
         // Include our Stylesheets. See /assets/css.
         // ==========================================================================
-        != css("lib/angular-ui-0.2.0/angular-ui.min")
+        // != css("lib/angular-ui-0.2.0/angular-ui.min")
         != css("lib/simplex.css")
+        != css("lib/style.css")
 
 
         // The content of our page.
@@ -40,6 +41,8 @@ html(ng-app="myApp", lang="de")
                                         a(href='#member') Das Team
                                     li
                                         a(href='#impressum') Impressum
+                                    li(ng-controller="DialogDemoCtrl")
+                                        a(href='#', ng-click="openDialog()") Login or Signup
         .container_context
             #container_about
                 section#about
@@ -141,14 +144,13 @@ html(ng-app="myApp", lang="de")
                                 br
                                 | Österreich
 
-
         // Include our Scripts. See /assets/js.
         // ============================================================================
         // Load jQuery
         != js("lib/jquery-2.0.0.min")
         // Load Angular
-        != js("lib/angular-1.0.1/angular-1.0.1.min")
-        != js("lib/angular-ui-0.2.0/angular-ui.min")
+        != js("lib/angular-1.0.6/angular.min")
+        != js("lib/bootstrap-gh-pages/ui-bootstrap-0.3.0.min.js")
         // Load Angular Configuration
         != js("app")
         != js("controllers")

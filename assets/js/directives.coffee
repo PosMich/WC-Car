@@ -2,7 +2,7 @@
 
 # Directives 
 
-angular.module("myApp.directives", [])
+angular.module("WebCar.directives", [])
 	.directive "appVersion", ["version", (version) ->
 	  (scope, elm, attrs) ->
 	    elm.text version

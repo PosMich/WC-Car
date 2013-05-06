@@ -1,0 +1,15 @@
+#container_login
+            form(name="asdf", class="well form-horizontal")
+                fieldset
+                    legend Anmeldedaten
+                    .control-group
+                        label(for="username", class="control-label") Username:
+                        .controls
+                            input(type="text", name="username", class="input-xlarge", id="username", ng-model="username")
+                    .control-group
+                        label(for="password", class="control-label") Passwort:
+                        .controls
+                            input(type="password", name="password", class="input-xlarge", id="password", ng-model="password")
+                    .form-actions
+                        button(class="btn btn-inverse", ng-click="close(result)") Login
+                        button(class="btn", ng-click="close()") Cancel

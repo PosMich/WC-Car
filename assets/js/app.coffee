@@ -2,7 +2,9 @@
 
 # Declare app level module which depends on filters, and services
 
-angular.module("myApp", ["ui","myApp.filters", "myApp.services", "myApp.directives"]).config ["$routeProvider", "$locationProvider", ($routeProvider, $locationProvider) ->
+@app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"])
+	.config ["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
+		
     $routeProvider.when "/view1",
         templateUrl: "partials/view1"
         controller: MyCtrl1
@@ -11,6 +13,11 @@ angular.module("myApp", ["ui","myApp.filters", "myApp.services", "myApp.directiv
         templateUrl: "partials/view2"
         controller: MyCtrl2
 
+    $routeProvider.when "partials/login"
+    	templateUrl: "partials/login"
+    	# controller: DialogCtrl
+
     $routeProvider.otherwise redirectTo: "/view1"
     $locationProvider.html5Mode true
+    
 ]
