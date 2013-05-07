@@ -1,0 +1,24 @@
+#container_login
+  form(name="signup", class="well form-horizontal")
+    fieldset
+      legend Signup
+      .control-group
+        label(for="email", class="control-label") Email:
+        .controls
+          input(type="email", name="email", class="input-xlarge", id="username", ng-model="user.mail")
+      .control-group
+        label(for="username", class="control-label") Username:
+        .controls
+          input(type="text", name="username", class="input-xlarge", id="username", ng-model="user.name")
+      .control-group
+        label(for="password", class="control-label") Passwort:
+        .controls
+          input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
+      .control-group
+        label(for="repeat-password", class="control-label") Repeat Password:
+        .controls
+          input(type="password", name="password", class="input-xlarge", id="pwd_repeat", ng-model="user.pwd_repeat")
+
+      .form-actions
+        a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Sign Up
+        a(href="#", class="btn btn-large", ng-click="close()") Cancel

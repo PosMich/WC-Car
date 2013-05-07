@@ -43,6 +43,8 @@ server.configure ->
     server.set "port", process.env.PORT or config.port
     server.set "views", __dirname + "/views"
     server.set "view engine", "jade"
+    server.set "view options",
+        layout: false
     server.use express.favicon('public/images/favicon.ico')
     server.use express.logger("dev")
     server.use express.bodyParser()

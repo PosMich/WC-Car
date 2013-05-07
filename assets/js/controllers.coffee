@@ -10,75 +10,42 @@
   ).error (data, status, headers, config) ->
     $scope.name = "Error!"
 ##
-@MyCtrl1 = ($scope, $http) ->
-  $scope.name = "World"
-MyCtrl1.$inject = ['$scope','$http']
 
+@DialogCtrl = ($scope, $dialog) ->
 
-@MyCtrl2 = ($scope, $http) ->
-  $scope.name = "Bear"
-MyCtrl2.$inject = ['$scope','$http']
-
-@DialogDemoCtrl = ($scope, $dialog) ->
-         
-  $scope.opts =
+    $scope.openDialog = (pathToView, controller) -> 
+      $scope.opts =
       backdrop: true,
       keyboard: true,
       backdropClick: true,
       dialogFade: true,
-      dialogClass: "modal dialogWidthFixed",
-      templateUrl: "partials/login",
-      controller: "TestDialogController"
+      templateUrl: "partials/" + pathToView,
+      controller: controller
 
-    $scope.openDialog = -> 
       d = $dialog.dialog $scope.opts
-      d.open().then (result) ->
-        if result
-          alert "dialog closed with result: " + result
 
-    $scope.openMessageBox = -> 
-      @title = "This is a message box"
-      @msg = "This is the content of the message box"
-      @btns = [
-        result: "cancel"
-        label: "Cancel"
-      ,
-        result: "ok"
-        label: "OK"
-        cssClass: "btn-primary"
-      ]
+      d.open()
 
-      $dialog.messageBox(title, msg, btns).open().then() -> 
-          alert "dialog closed with result: " + result
+@LogInCtrl = ($scope, dialog) ->
 
-  # the dialog is injected in the specified controller
-@TestDialogController = ($scope, dialog) ->
-  $scope.close = (result) -> 
-    dialog.close result
-    ###
-    d = $dialog.dialog(
-      modalFade: false
-      
-      resolve:
-        item: ->
-          angular.copy item
-      
-    )
-   d.open "views/partials/login", "EditItemController"
-   
+  $scope.update = (user) ->
+    console.log dialog.close()
+    console.log user
+    dialog.close
 
+  $scope.close = (user) ->
+    dialog.close()
 
-# note that the resolved item as well as the dialog are injected in the dialog's controller
-app.controller "EditItemController", ["$scope", "dialog", "item", ($scope, dialog, item) ->
-  $scope.item = item
-  $scope.submit = ->
-    dialog.close "ok"
-]
+  $scope.close
 
-@DialogDemoCtrl = ($scope, $dialog) ->
-    # Inlined template for demo
+@SignUpCtrl = ($scope, dialog) ->
 
-    DialogDemoCtrl = ($scope, $dialog) ->
-      
+  $scope.update = (user) ->
+    console.log dialog.close()
+    console.log user
+    dialog.close
 
-###
+  $scope.close = (user) ->
+    dialog.close()
+
+  $scope.close

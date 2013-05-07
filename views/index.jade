@@ -1,162 +1,102 @@
-!!! 5
-html(ng-app="WebCar", lang="de")
-    head
-        // Lets set up our page a bit.
-        // ==========================================================================
-        title WebCar
-        meta(http-equiv="Content-Type",content="text/html; charset=UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(name="description", content="WebCar")
-        meta(name="author", content="Lisa Maria Lederer, Sebastian Slamanig, MIchael Poschacher")
 
-        link(type="image/x-icon", rel="icon", href="/favicon.ico")
-        link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
+extends layout
+block mainContent
+      #container_about
+        section#about
+          .page-header
+            h1 Das Projekt
+          .row
+            .span8
+              h4 Die Idee
+              p.
+                  Die Idee ist es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den 
+                  Browser steuern zu können.
+              p.
+                  In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden. 
+                  Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in
+                  Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt dies dann in Steuersignale
+                  für das ferngesteuerte Auto um.
+              p.
+                  Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen 
+                  dem Arduino-Board) umgesetzt.
+            .span4
+              h4 Die Technik
+              b WebCar
+              p.
+                  Carrera-RC Jeep Wrangler Rubicon<br>
+                  Arduino Pro Mini<br>
+              b WebApp
+              p.
+                  node.js (express.js)<br>
+                  angular.js
 
-        // HTML5 shim, because IE's are horrible.
-        //if lt IE 9
-            // script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
-            // != js("lib/angular-ui-0.2.0/angular-ui-ieshiv.min")
-        
-        // Include our Stylesheets. See /assets/css.
-        // ==========================================================================
-        // != css("lib/angular-ui-0.2.0/angular-ui.min")
-        != css("lib/simplex.css")
-        != css("lib/style.css")
+      #container_member
+        section#member
+          .page-header
+            h1 Das Team
+          .row
+            .span3
+              center
+                h4 Lisa Maria Lederer
+                img(src="https://secure.gravatar.com/avatar/e789a2561890fea7e0e505a2bfa1fa76")
+                p
+                  | Programmierung
+            .span3
+              center
+                h4 Laura Gstöttenmayr
+                img(src="http://portfolio2.s3.amazonaws.com/system/users/954/avatar/avatar.jpg", width="80", height="80")
+                p
+                  | Design - Instruktionen 
+            .span3
+              center
+                h4 Sebastian Slamanig
+                img(src="https://secure.gravatar.com/avatar/b28edaf0acc7933ab2af0496bb0137af")
+                p
+                  | Programmierung
+            .span3
+              center
+                h4 Michael Poschacher
+                img(src="https://secure.gravatar.com/avatar/73737c93a992456c14e4785f46019af5")
+                p
+                  | Programmierung 
 
+      #container_impressum
+        section#impressum
+          .page-header
+              h1 Impressum
+          .row
+            .span8
+              h4 WebCar
+                p.
+                    WebCar wurde im Rahmen eines Basisqualifikationsprojekts für das Sommersemester 2013 von Studenten 
+                    der Fachochschule Salzburg aus den Studiengängen MultiMediaTechnology & MultiMediaTechnology erstellt.
+                h4 Autorinnen & Autoren
+                b Konzept
+                p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
+                b Umsetzung
+                p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
+                b Design - Instruktionen
+                p Laura Gstöttenmayr    
 
-        // The content of our page.
-        // ==========================================================================
-    body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
-        .nav-black
-            .nav-bg
-                .navbar.navbar-fixed-top
-                    .navbar-inner
-                        .container
-                            a.brand(href='../') Web Car
-                            #main-menu.nav-collapse.collapse
-                                ul#main-menu-left.nav
-                                    li
-                                        a(href='#about') Das Projekt
-                                    li
-                                        a(href='#member') Das Team
-                                    li
-                                        a(href='#impressum') Impressum
-                                    li(ng-controller="DialogDemoCtrl")
-                                        a(href='#', ng-click="openDialog()") Login or Signup
-        .container_context
-            #container_about
-                section#about
-                    .page-header
-                        h1 Das Projekt
-                    .row
-                        .span8
-                            h4 Die Idee
-                            p.
-                                Die Idee ist es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den 
-                                Browser steuern zu können.
-                            p.
-                                In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden. 
-                                Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in
-                                Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt dies dann in Steuersignale
-                                für das ferngesteuerte Auto um.
-                            p.
-                                Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen 
-                                dem Arduino-Board) umgesetzt.
-                        .span4
-                            h4 Die Technik
-                            b WebCar
-                            p.
-                                Carrera-RC Jeep Wrangler Rubicon<br>
-                                Arduino Pro Mini<br>
-                            b WebApp
-                            p.
-                                node.js (express.js)<br>
-                                angular.js
-
-
-            #container_member
-                section#member
-                    .page-header
-                        h1 Das Team
-                    .row
-                        .span3
-                            center
-                                h4 Lisa Maria Lederer
-                                img(src="https://secure.gravatar.com/avatar/e789a2561890fea7e0e505a2bfa1fa76")
-                                p
-                                    | Programmierung
-                        .span3
-                            center
-                                h4 Laura Gstöttenmayr
-                                img(src="http://portfolio2.s3.amazonaws.com/system/users/954/avatar/avatar.jpg", width="80", height="80")
-                                p
-                                    | Design - Instruktionen 
-                        .span3
-                            center
-                                h4 Sebastian Slamanig
-                                img(src="https://secure.gravatar.com/avatar/b28edaf0acc7933ab2af0496bb0137af")
-                                p
-                                    | Programmierung
-                        .span3
-                            center
-                                h4 Michael Poschacher
-                                img(src="https://secure.gravatar.com/avatar/73737c93a992456c14e4785f46019af5")
-                                p
-                                    | Programmierung 
-            #container_impressum
-                section#impressum
-                    .page-header
-                        h1 Impressum
-                    .row
-                        .span8
-                            h4 WebCar
-                            p.
-                                WebCar wurde im Rahmen eines Basisqualifikationsprojekts für das Sommersemester 2013 von Studenten 
-                                der Fachochschule Salzburg aus den Studiengängen MultiMediaTechnology & MultiMediaTechnology erstellt.
-                            h4 Autorinnen & Autoren
-                            b Konzept
-                            p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
-                            b Umsetzung
-                            p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
-                            b Design - Instruktionen
-                            p Laura Gstöttenmayr    
-
-                        .span4
-                            h4 Kontakt
-                            b Lisa Maria Lederer
-                            br
-                            a(href="mailto:llederer.mmt-b2011@fh-salzburg.ac.at") llederer.mmt-b2011@fh-salzburg.ac.at
-                            br
-                            b Sebastian Slamanig
-                            br
-                            a(href="mailto:sebastian.slamanig@gmail.com") sebastian.slamanig@gmail.com
-                            br
-                            b Michael Poschacher
-                            br
-                            a(href="mailto:michael.poschacher@gmail.com") michael.poschacher@gmail.com
-                            h4 Copyright
-                            adress
-                                strong Fachhochschule Salzburg GmbH
-                                br
-                                | Urstein Süd 1
-                                br
-                                | A-5412 Puch/Salzburg
-                                br
-                                | Österreich
-
-        // Include our Scripts. See /assets/js.
-        // ============================================================================
-        // Load jQuery
-        != js("lib/jquery-2.0.0.min")
-        // Load Angular
-        != js("lib/angular-1.0.6/angular.min")
-        != js("lib/bootstrap-gh-pages/ui-bootstrap-0.3.0.min.js")
-        // Load Angular Configuration
-        != js("app")
-        != js("controllers")
-        != js("directives")
-        != js("filters")
-        != js("services")
-        // load specific stuff
-        != js("lib/jquery.scrollTo-1.4.3.1-min")
-        != js("main")
+              .span4
+                h4 Kontakt
+                b Lisa Maria Lederer
+                br
+                a(href="mailto:llederer.mmt-b2011@fh-salzburg.ac.at") llederer.mmt-b2011@fh-salzburg.ac.at
+                br
+                b Sebastian Slamanig
+                br
+                a(href="mailto:sebastian.slamanig@gmail.com") sebastian.slamanig@gmail.com
+                br
+                b Michael Poschacher
+                br
+                a(href="mailto:michael.poschacher@gmail.com") michael.poschacher@gmail.com
+                h4 Copyright
+                adress
+                  strong Fachhochschule Salzburg GmbH
+                  br
+                  | Urstein Süd 1
+                  br
+                  | A-5412 Puch/Salzburg
+                  br
+                  | Österreich

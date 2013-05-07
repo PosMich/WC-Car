@@ -1,0 +1,51 @@
+!!! 5
+html(ng-app="WebCar", lang="de")
+    head
+        title WebCar
+        meta(http-equiv="Content-Type",content="text/html; charset=UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="description", content="WebCar")
+        meta(name="author", content="Lisa Maria Lederer, Sebastian Slamanig, MIchael Poschacher")
+
+        link(type="image/x-icon", rel="icon", href="/favicon.ico")
+        link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
+
+        != css("lib/simplex.css")
+        != css("lib/style.css")
+
+    body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
+      .nav-black
+      .nav-bg
+        .navbar.navbar-fixed-top
+            .navbar-inner
+              .container
+                a.brand(href='../') Web Car
+                #main-menu.nav-collapse.collapse
+                  ul#main-menu-left.nav
+                    li
+                      a(href='#about') Das Projekt
+                    li
+                      a(href='#member') Das Team
+                    li
+                      a(href='#impressum') Impressum
+                    li(ng-controller="DialogCtrl")
+                      a(href='#', ng-click="openDialog('login', 'LogInCtrl')") Login or Signup
+      .container_context
+        block mainContent
+
+// Include our Scripts. See /assets/js.
+// ============================================================================
+// Load jQuery
+!= js("lib/jquery-2.0.0.min")
+// Load Angular
+!= js("lib/angular-1.0.6/angular.min")
+!= js("lib/bootstrap-gh-pages/ui-bootstrap-0.3.0.min.js")
+// Load Angular Configuration
+!= js("app")
+!= js("controllers")
+!= js("directives")
+!= js("filters")
+!= js("services")
+// load specific stuff
+!= js("lib/jquery.scrollTo-1.4.3.1-min")
+!= js("main")
