@@ -13,6 +13,9 @@
     	templateUrl: "partials/login"
     	# controller: DialogCtrl
 
+    $routeProvider.when "partials/signup"
+        templateUrl: "partials/signup"
+
     $routeProvider.otherwise redirectTo: "/"
     $locationProvider.html5Mode true
     
