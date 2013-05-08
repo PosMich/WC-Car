@@ -49,3 +49,15 @@
     dialog.close()
 
   $scope.close
+
+@SettingsCtrl = ($scope, dialog) ->
+
+  $scope.update = (user) ->
+    console.log dialog.close()
+    console.log user
+    dialog.close
+
+  $scope.close = (user) ->
+    dialog.close()
+
+  $scope.close

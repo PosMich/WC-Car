@@ -43,3 +43,26 @@
 .btn-fb.active {
   background-color: #003399 \9;
 }
+
+.interim {
+  height: 100px; clear: both;
+}
+
+.img_container {
+  background-color: #333;
+  width: 80px;
+  height: 80px;
+  padding: 5px;
+  margin: auto;
+}
+
+.img_dummy {
+  width: 80px; height: 80px; background-color: #ccc;
+  margin: auto;
+}
+
+.input-file {
+  line-height: 30px;
+  height: 30px;
+  font-size: 11px;
+}

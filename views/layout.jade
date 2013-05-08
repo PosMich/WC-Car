@@ -29,6 +29,8 @@ html(ng-app="WebCar", lang="de")
                     li
                       a(href='#impressum') Impressum
                     li(ng-controller="DialogCtrl")
+                      a(href='#', ng-click="openDialog('settings', 'SettingsCtrl')") Einstellungen
+                    li(ng-controller="DialogCtrl")
                       a(href='#', ng-click="openDialog('login', 'LogInCtrl')") Login or Signup
       .container_context
         block mainContent

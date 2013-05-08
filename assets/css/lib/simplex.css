@@ -12,12 +12,12 @@
 
  /*Own stuff */
 
-#about, #member, #impressum {
+#about, #member, #impressum, #settings {
   height: auto;
   margin-bottom:20px;
 }
 
-#member > .page-header, #impressum > .page-header{
+#member > .page-header, #impressum > .page-header, #settings > .page-header {
   margin-top: -60px;
   border-color: #d5d5d4;
 }
@@ -27,7 +27,7 @@ section {
   margin: 0px auto;
 }
 
-#container_about, #container_member, #container_impressum {
+#container_about, #container_member, #container_impressum, #container_settings {
   width: 100%;
   height: auto;
   border-top: 1px solid transparent;
