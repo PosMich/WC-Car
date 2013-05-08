@@ -6,7 +6,7 @@
 	.config ["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
 		
     $routeProvider.when "/",
-        templateUrl: "/index"
+        templateUrl: "/partials/index"
         controller: AppCtrl
 
     $routeProvider.when "partials/login"

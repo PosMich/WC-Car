@@ -78,7 +78,7 @@ i18n.serveWebTranslate(server, {
     Define routes
 ###
 server.get "/", (req, res) ->
-    res.render "index"
+    res.render "layout"
 
 # All partials. This is used by Angular.
 server.get "/partials/:name", (req, res) ->

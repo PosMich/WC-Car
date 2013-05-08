@@ -33,7 +33,7 @@ html(ng-app="WebCar", lang="de")
                     li(ng-controller="DialogCtrl")
                       a(href='#', ng-click="openDialog('login', 'LogInCtrl')") Login or Signup
       .container_context
-        block mainContent
+      div(ng-view)
 
 // Include our Scripts. See /assets/js.
 // ============================================================================
