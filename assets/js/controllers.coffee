@@ -13,12 +13,14 @@
 
 @DialogCtrl = ($scope, $dialog) ->
 
-    $scope.openDialog = (pathToView, controller) -> 
+    $scope.openDialog = (pathToView, controller, additionalclass = "") -> 
       $scope.opts =
       backdrop: true,
       keyboard: true,
       backdropClick: true,
       dialogFade: true,
+      scroll: true,
+      dialogClass: "modal " + additionalclass, 
       templateUrl: "partials/" + pathToView,
       controller: controller
 
