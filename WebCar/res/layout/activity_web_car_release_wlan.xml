@@ -41,7 +41,6 @@
         android:src="@drawable/error"
         android:contentDescription="@string/content_descr_image_status"
         android:visibility="gone" />
-
     
 	<TextView
         android:id="@+id/textWLANInfo"

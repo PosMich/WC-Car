@@ -3,6 +3,9 @@ package com.mmt.webcar;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
+import java.util.UUID;
 
 import org.java_websocket.WebSocketImpl;
 
@@ -30,8 +33,12 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	CameraView.CameraReadyCallback {
 	
 	private static final String TAG = "WebCar :: Stream";
+	private static final int TOKEN_LENGTH = 8; 
+	private String mToken;
+	private SecureRandom mPrng;
 	
 	private TextView mTextIP;
+	private TextView mTextToken;
 	
 	boolean inProcessing = false;
 	
@@ -48,9 +55,19 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		setContentView(R.layout.activity_web_car_release_stream);
 		
 		mTextIP = (TextView) findViewById(R.id.textReleaseStreamingIP);
-		mTextIP.setText(IP.getIPAddress(true) + ":8080");
+		mTextToken = (TextView) findViewById(R.id.textReleaseStreamingToken);
+		try {
+			mPrng = SecureRandom.getInstance( "SHA1PRNG" );
+			mToken = "Token: " + Integer.valueOf(mPrng.nextInt()).toString();
+			
+			mTextIP.setText(IP.getIPAddress(true) + ":8080");
+			mTextToken.setText(mToken);
+		} catch (GeneralSecurityException e) {
+			Log.e( TAG, e.getMessage() );
+		}
+		
 
-		final View contentView = findViewById(R.id.fullscreen_content);
+//		final View contentView = findViewById(R.id.fullscreen_content);
 		
 		initCamera();
 	}

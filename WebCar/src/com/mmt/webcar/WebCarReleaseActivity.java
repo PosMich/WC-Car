@@ -1,21 +1,13 @@
 package com.mmt.webcar;
 
-import com.mmt.webcar.util.SystemUiHider;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -31,8 +23,7 @@ public class WebCarReleaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_web_car_release);
-
-		final View contentView = findViewById(R.id.fullscreen_content);
+		
 		final Button btnConfirm = (Button) findViewById(R.id.btnConfirmPassphrase);
 		
 		mPassphrase = (EditText) findViewById(R.id.editTextPassphrase);
@@ -46,7 +37,11 @@ public class WebCarReleaseActivity extends Activity {
 		
 		btnConfirm.setOnClickListener(btnConfirmAction);
 		
-		
+		if( !((WebCarApplication)getApplication()).getPassphrase().equals("") ) {
+			mPassphrase.setText( ((WebCarApplication)getApplication()).getPassphrase() );
+			mPassphraseReentered.setText( ((WebCarApplication)getApplication()).getPassphrase() );
+		}
+				
 	}
 	
 	OnClickListener btnConfirmAction = new OnClickListener() {
@@ -68,6 +63,7 @@ public class WebCarReleaseActivity extends Activity {
 			} else if( ! phrase.equals(phraseReenterd ) ) {
 //				mPassphraseReentered.setError("passphrases have to match.");
 			} else {
+				((WebCarApplication)getApplication()).setPassphrase( phrase );
 				Intent releaseIntent = new Intent(WebCarReleaseActivity.this, WebCarReleaseAudioActivity.class);
 				WebCarReleaseActivity.this.startActivity(releaseIntent);
 			}

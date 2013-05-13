@@ -21,7 +21,7 @@
         android:keepScreenOn="true"
         android:text="@string/release_heading"
         android:textColor="#ffffff"
-        android:textSize="45sp"
+        android:textSize="40sp"
         android:textStyle="bold" 
         android:layout_weight="0" />
    	
@@ -36,7 +36,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_weight="0"
-        android:padding="20dp" />
+        android:padding="10dp" />
  	
 	<TextView 
         android:id="@+id/textReleaseStreamingIP"
@@ -46,10 +46,23 @@
         android:gravity="center_horizontal"
         android:text=""
         android:textColor="#FFFFFF"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:layout_weight="0"
-        android:padding="20dp" />
+        android:padding="10dp" />
+	
+	<TextView 
+        android:id="@+id/textReleaseStreamingToken"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_weight="0"
+        android:padding="10dp"
+        android:text="@string/release_streaming_token" />
 	
 	<TextView 
         android:id="@+id/textReleaseStreamingContentNote"
