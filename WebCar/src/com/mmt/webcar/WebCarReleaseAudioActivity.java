@@ -15,7 +15,7 @@ public class WebCarReleaseAudioActivity extends Activity {
 	private static final String TAG = "WebCar :: Audio";
 	
 	final Context context = this;
-	private MusicIntentReciever musicReciever;
+	private MusicIntentReceiver mMusicReceiver;
 	private AudioManager mAudioManager;
 	private ImageView mStatusAudio;
 
@@ -31,14 +31,14 @@ public class WebCarReleaseAudioActivity extends Activity {
 		// audio manager for manipulating volume
 		mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
 		
-		// reciever for phone connector
-		musicReciever = new MusicIntentReciever();
+		// receiver for phone connector
+		mMusicReceiver = new MusicIntentReceiver();
 		
 		// set the global volume of the phone to change it back on pause/close
 		((WebCarApplication)getApplication()).setVolume( mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) );
 	}
 	
-	private class MusicIntentReciever extends BroadcastReceiver {
+	private class MusicIntentReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
@@ -78,14 +78,14 @@ public class WebCarReleaseAudioActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		unregisterReceiver(musicReciever);
+		unregisterReceiver(mMusicReceiver);
 		finish();
 	}
 	
 	@Override
 	public void onResume() {
 		IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-		registerReceiver(musicReciever, filter);
+		registerReceiver(mMusicReceiver, filter);
 		super.onResume();
 	}
 	

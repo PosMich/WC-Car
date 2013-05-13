@@ -17,7 +17,6 @@ public class WebCarActivity extends Activity {
 
         setContentView(R.layout.activity_web_car);
 
-        final View contentView = findViewById(R.id.fullscreen_content);
         final Button releaseButton = (Button) findViewById(R.id.btnRelease);
         releaseButton.setOnClickListener(onBtnRelease);
 

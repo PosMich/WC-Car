@@ -12,7 +12,8 @@ import android.util.Log;
 
 public class WCSocket extends WebSocketServer {
 	
-	private static final String TAG = "WC-Socket";
+	private static final String TAG = "WebCar :: Socket";
+	private int mMembers = 0;
 
 	public WCSocket( int port ) throws UnknownHostException {
 		super( new InetSocketAddress( port ) );
@@ -45,15 +46,6 @@ public class WCSocket extends WebSocketServer {
 			// some errors like port binding failed may not be assignable to a specific websocket
 		}
 	}
-
-	/**
-	 * Sends <var>text</var> to all currently connected WebSocket clients.
-	 * 
-	 * @param text
-	 *            The String to send across the network.
-	 * @throws InterruptedException
-	 *             When socket related I/O errors occur.
-	 */
 	
 	public void send( String text ) {
 		Collection<WebSocket> con = connections();
