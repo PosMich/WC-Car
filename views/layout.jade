@@ -23,13 +23,15 @@ html(ng-app="WebCar", lang="de")
                 #main-menu.nav-collapse.collapse
                   ul#main-menu-left.nav
                     li
-                      a(href='#about') Das Projekt
+                      a(href='/#about') Das Projekt
                     li
-                      a(href='#member') Das Team
+                      a(href='/#member') Das Team
                     li
-                      a(href='#impressum') Impressum
-                    li(ng-controller="DialogCtrl")
-                      a(href='#', ng-click="openDialog('settings', 'SettingsCtrl', 'modal-settings')") Einstellungen
+                      a(href='/#impressum') Impressum
+                    //- li(ng-controller="DialogCtrl")
+                    //-   a(href='#', ng-click="openDialog('settings', 'SettingsCtrl', 'modal-settings')") Einstellungen
+                    li
+                      a(href="settings") Einstellungen
                     li(ng-controller="DialogCtrl")
                       a(href='#', ng-click="openDialog('login', 'LogInCtrl')") Login or Signup
       .container_context

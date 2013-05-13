@@ -1,37 +1,45 @@
 #container_settings
   form(name="settings", class="well form-horizontal")
-    fieldset
-      legend Persönliches
-      .control-group
-        label(for="acronym", class="control-label") Anzeigename:
-        .controls
-          input(type="text", name="acronym", class="input-xlarge", id="acronym", ng-model="user.acronym")
-      .control-group
-        label(for="email", class="control-label") Email:
-        .controls
-          input(type="email", name="email", class="input-xlarge", id="email", ng-model="user.mail")
+    section#settings
+      .page-header
+        h1 Einstellungen
+      .row
+        .span8
+          fieldset
+            legend Persönliches
+            .control-group
+              label(for="acronym", class="control-label") Anzeigename:
+              .controls
+                input(type="text", name="acronym", class="input-xlarge", id="acronym", ng-model="user.acronym")
+            .control-group
+              label(for="email", class="control-label") Email:
+              .controls
+                input(type="email", name="email", class="input-xlarge", id="email", ng-model="user.mail")
 
-      .control-group
-        label(for="password_old", class="control-label") Altes Passwort:
-        .controls
-          input(type="password", name="password_old", class="input-xlarge", id="password_old", ng-model="user.pwd_old")
-      .control-group
-        label(for="password", class="control-label") Neues Passwort:
-        .controls
-          input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
-      .control-group
-        label(for="pwd_repeat", class="control-label") Passwort wiederholen:
-        .controls
-          input(type="password", name="pwd_repeat", class="input-xlarge", id="pwd_repeat", ng-model="user.pwd_repeat")
-    fieldset
-      legend Avatar
-        .control-group
-          div.img_container
-            div.img_dummy
-          label(for="user_img", class="control-label") Avatar:
-          .controls
-            input(type="file", name="user_img", class="input-file", id="user_img", ng-model="user.user_img")
-    .pull-center
-        a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Übernehmen
-        a(href="#", class="btn btn-large", ng-click="close()") Cancel
+            .control-group
+              label(for="password_old", class="control-label") Altes Passwort:
+              .controls
+                input(type="password", name="password_old", class="input-xlarge", id="password_old", ng-model="user.pwd_old")
+            .control-group
+              label(for="password", class="control-label") Neues Passwort:
+              .controls
+                input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
+            .control-group
+              label(for="pwd_repeat", class="control-label") Passwort wiederholen:
+              .controls
+                input(type="password", name="pwd_repeat", class="input-xlarge", id="pwd_repeat", ng-model="user.pwd_repeat")
+        .span4
+          fieldset
+            legend Avatar
+              .control-group
+                div.img_container
+                  div.img_dummy
+                label(for="user_img", class="control-label") Avatar:
+                .controls
+                  input(type="file", name="user_img", class="input-file", id="user_img", ng-model="user.user_img")
+      .row
+        .span12
+          .pull-center
+              a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Übernehmen
+              a(href="#", class="btn btn-large", ng-click="close()") Cancel
         

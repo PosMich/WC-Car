@@ -2,6 +2,9 @@
 
 # Controllers 
 @AppCtrl = ($scope, $http) ->
+
+  console.log($scope)
+
   $http(
     method: "GET"
     url: "/api/name"
