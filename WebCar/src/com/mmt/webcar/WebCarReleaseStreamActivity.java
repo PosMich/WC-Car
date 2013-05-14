@@ -3,6 +3,9 @@ package com.mmt.webcar;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.security.SecureRandom;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
@@ -17,26 +20,32 @@ import com.mmt.utils.WCServer;
 import com.mmt.utils.WCSocket;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
 import android.widget.TextView;
 
 public class WebCarReleaseStreamActivity extends Activity implements
 	CameraView.CameraReadyCallback {
 	
-	private static final String TAG = "WebCar :: Stream";
+	private static final String TAG = "WebCar :: Stream"; 
+	private String mToken;
+	private SecureRandom mPrng;
 	
 	private TextView mTextIP;
+	private TextView mTextToken;
 	
 	boolean inProcessing = false;
 	
@@ -44,6 +53,13 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	private WCSocket mSocket = null;
 	private CameraView mCameraView;
 	private Motion2Sound Driver= null;
+	
+	/* receivers for phone connector & wifi */
+	private MusicIntentReceiver mMusicReceiver;
+	private WifiIntentReceiver mWifiReceiver;
+	
+	private WifiManager mWifi;
+	private Timer timer;
 	
 	final Context context = this;
 	
@@ -69,9 +85,34 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		setContentView(R.layout.activity_web_car_release_stream);
 		
 		mTextIP = (TextView) findViewById(R.id.textReleaseStreamingIP);
-		mTextIP.setText(IP.getIPAddress(true) + ":8080");
-
-		final View contentView = findViewById(R.id.fullscreen_content);
+		mTextToken = (TextView) findViewById(R.id.textReleaseStreamingToken);
+		
+		try {
+			mPrng = SecureRandom.getInstance( "SHA1PRNG" );
+			mToken = "Token: " + Integer.valueOf(mPrng.nextInt()).toString();
+			
+			mTextIP.setText(IP.getIPAddress(true) + ":8080");
+			mTextToken.setText(mToken);
+			
+			mMusicReceiver = new MusicIntentReceiver();
+			mWifiReceiver = new WifiIntentReceiver();
+			
+			timer = new Timer();			
+			mWifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+			
+			timer.scheduleAtFixedRate(new TimerTask() {
+				  @Override
+				  public void run() {
+					  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
+					  Log.d( TAG + " :: Speed", "Current Speed: " + linkSpeed);
+				  }
+				}, 1000, 1000);
+			
+			initCamera();
+			
+		} catch (Exception e) {
+			Log.e( TAG, e.getMessage() );
+		}
 		
 		try {
 			Driver = new Motion2Sound(
@@ -91,8 +132,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			e.printStackTrace();
 		}
 
-		
-		initCamera();
 	}
 	
 	@Override
@@ -104,14 +143,24 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			mServer.stop();
 		mCameraView.StopPreview();
 		
+		// unregister receivers
+		unregisterReceiver(mMusicReceiver);
+		unregisterReceiver(mWifiReceiver);
+		
 		finish();
+	}
+	
+	@Override
+	public void onResume() {
+		registerReceiver(mMusicReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
+		registerReceiver(mWifiReceiver, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+		super.onResume();
 	}
 	
 	@Override
 	public void onCameraReady() {
 		boolean initws = initWebServer();
-		String test = (initws) ? "true" : "false";
-		Log.d( TAG, test );
+		
 		if ( initws ) {
 			
 			int wid = mCameraView.Width();
@@ -120,6 +169,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			mCameraView.setupCamera(wid, hei, previewCb_);
 			mCameraView.StartPreview();
 		}
+		
 	}
 
 	@Override
@@ -136,13 +186,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	public void onBackPressed() {
 		super.onBackPressed();
 	}
-
-/*	@Override
-	public boolean onTouch(View v, MotionEvent evt) {
-
-		return false;
-	}*/
-
+	
 	private void initCamera() {
 		SurfaceView cameraSurface = (SurfaceView) findViewById(R.id.surface_camera);
 		mCameraView = new CameraView(cameraSurface);
@@ -179,8 +223,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					int picWidth = mCameraView.Width();
 					int picHeight = mCameraView.Height();
 					
-					Log.d( TAG, picWidth + " x " + picHeight );
-					
 					boolean ret;
 					
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -188,11 +230,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					YuvImage newImage = new YuvImage(frame, ImageFormat.NV21,
 						picWidth, picHeight, null);
 					
-					
-					
 					ret = newImage.compressToJpeg( new Rect( 0, 0, picWidth, picHeight ), 40, out );
-					
-					Log.d( TAG + " :: Image", "File to send is " + out.size() + "byte large.");
 					
 					if( ret ) {
 						byte[] imageBytes = out.toByteArray();
@@ -245,8 +283,47 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		
 
 		mSocket.start();
-		Log.d("WC-Socket", "WebCar Socket started on port: " + mSocket.getPort());
+		Log.d(TAG, "WebCar Socket started on port: " + mSocket.getPort());
 
+	}
+	
+	private class WifiIntentReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			
+			if ( intent.getAction().equals( WifiManager.NETWORK_STATE_CHANGED_ACTION ) ) {
+			  NetworkInfo info = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+			  if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
+				  Log.d( TAG, "Wifi - Network has changed to CONNECTED");
+			  } else if (info.getState().equals(NetworkInfo.State.DISCONNECTED)) {
+				  Log.d( TAG, "Wifi - Network has changed to DISCONNECTED");
+			  }
+			}
+
+		}
+	}
+	
+	private class MusicIntentReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
+				int state = intent.getIntExtra("state", -1);
+				switch (state) {
+					case 0:
+						// unplugged
+						Log.d( TAG, "Phone connector has been unplugged." );
+						break;
+					case 1:
+						// plugged in
+						Log.d( TAG, "Phone connector has been plugged in." );
+						break;
+					default:
+						// unknown
+						Log.d( TAG, "Phone connector status is unknown." );
+						break;
+				}
+			}
+		}
 	}
 
 }

@@ -25,5 +25,6 @@
     <string name="wlan_info">The Wifi-connection is important because the communication between the released and the controller device.</string>
     <string name="streaming_info">Do NOT disconnect one of the devices during driving. The WebCar will stop immediately.</string>
     <string name="release_streaming_content_note">Important Note: Both devices have to be in the same Wifi-Network.</string>
+    <string name="release_streaming_token">Token: </string>
 
 </resources>

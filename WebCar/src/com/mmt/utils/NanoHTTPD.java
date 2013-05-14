@@ -94,22 +94,22 @@ public class NanoHTTPD
 		while ( e.hasMoreElements())
 		{
 			String value = (String)e.nextElement();
-			System.out.println( "  HDR: '" + value + "' = '" +
-								header.getProperty( value ) + "'" );
+//			System.out.println( "  HDR: '" + value + "' = '" +
+//								header.getProperty( value ) + "'" );
 		}
 		e = parms.propertyNames();
 		while ( e.hasMoreElements())
 		{
 			String value = (String)e.nextElement();
-			System.out.println( "  PRM: '" + value + "' = '" +
-								parms.getProperty( value ) + "'" );
+//			System.out.println( "  PRM: '" + value + "' = '" +
+//								parms.getProperty( value ) + "'" );
 		}
 		e = files.propertyNames();
 		while ( e.hasMoreElements())
 		{
 			String value = (String)e.nextElement();
-			System.out.println( "  UPLOADED: '" + value + "' = '" +
-								files.getProperty( value ) + "'" );
+//			System.out.println( "  UPLOADED: '" + value + "' = '" +
+//								files.getProperty( value ) + "'" );
 		}
 
 		return serveFile( uri, header, myRootDir, true );
@@ -323,8 +323,8 @@ public class NanoHTTPD
 			System.exit( -1 );
 		}
 
-		System.out.println( "Now serving files in port " + port + " from \"" + wwwroot + "\"" );
-		System.out.println( "Hit Enter to stop.\n" );
+//		System.out.println( "Now serving files in port " + port + " from \"" + wwwroot + "\"" );
+//		System.out.println( "Hit Enter to stop.\n" );
 
 		try { System.in.read(); } catch( Throwable t ) {}
 	}

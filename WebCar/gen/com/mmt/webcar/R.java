@@ -36,7 +36,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int imageStatusAudio=0x7f07000e;
         public static final int imageStatusPassphrase=0x7f070006;
         public static final int imageStatusPassphraseReentered=0x7f070009;
-        public static final int imageStatusWLAN=0x7f070018;
+        public static final int imageStatusWLAN=0x7f070019;
         public static final int surface_camera=0x7f070010;
         public static final int textAudioInfo=0x7f07000f;
         public static final int textPassphraseInfo=0x7f07000b;
@@ -46,13 +46,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int textReleaseStepOne_Passphrase=0x7f070004;
         public static final int textReleaseStepOne_PassphraseReEnter=0x7f070007;
         public static final int textReleaseStreamingContent=0x7f070012;
-        public static final int textReleaseStreamingContentNote=0x7f070014;
+        public static final int textReleaseStreamingContentNote=0x7f070015;
         public static final int textReleaseStreamingHeading=0x7f070011;
         public static final int textReleaseStreamingIP=0x7f070013;
-        public static final int textReleaseWLANContent=0x7f070017;
-        public static final int textReleaseWLANHeading=0x7f070016;
-        public static final int textStreamingInfo=0x7f070015;
-        public static final int textWLANInfo=0x7f070019;
+        public static final int textReleaseStreamingToken=0x7f070014;
+        public static final int textReleaseWLANContent=0x7f070018;
+        public static final int textReleaseWLANHeading=0x7f070017;
+        public static final int textStreamingInfo=0x7f070016;
+        public static final int textWLANInfo=0x7f07001a;
     }
     public static final class layout {
         public static final int activity_web_car=0x7f030000;
@@ -80,6 +81,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int release_step_passphrase_reenter_heading=0x7f05000a;
         public static final int release_streaming_content=0x7f050011;
         public static final int release_streaming_content_note=0x7f050016;
+        public static final int release_streaming_token=0x7f050017;
         public static final int release_wlan_content=0x7f050013;
         public static final int streaming_info=0x7f050015;
         public static final int title_activity_web_car_release=0x7f050005;

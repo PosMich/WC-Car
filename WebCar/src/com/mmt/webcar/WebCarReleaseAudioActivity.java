@@ -8,19 +8,16 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class WebCarReleaseAudioActivity extends Activity {
 	
 	private static final String TAG = "WebCar :: Audio";
 	
 	final Context context = this;
-	private MusicIntentReciever musicReciever;
+	private MusicIntentReceiver mMusicReceiver;
 	private AudioManager mAudioManager;
 	private ImageView mStatusAudio;
-	private int mVolume = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +25,20 @@ public class WebCarReleaseAudioActivity extends Activity {
 
 		setContentView(R.layout.activity_web_car_release_audio);
 
-		final View contentView = findViewById(R.id.fullscreen_content);
+		// status image for phone connector
 		mStatusAudio = (ImageView) findViewById(R.id.imageStatusAudio);
 		
+		// audio manager for manipulating volume
 		mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
 		
-		musicReciever = new MusicIntentReciever();
+		// receiver for phone connector
+		mMusicReceiver = new MusicIntentReceiver();
+		
+		// set the global volume of the phone to change it back on pause/close
+		((WebCarApplication)getApplication()).setVolume( mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC) );
 	}
 	
-	private class MusicIntentReciever extends BroadcastReceiver {
+	private class MusicIntentReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)) {
@@ -76,14 +78,14 @@ public class WebCarReleaseAudioActivity extends Activity {
 	@Override
 	public void onPause() {
 		super.onPause();
-		unregisterReceiver(musicReciever);
+		unregisterReceiver(mMusicReceiver);
 		finish();
 	}
 	
 	@Override
 	public void onResume() {
 		IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-		registerReceiver(musicReciever, filter);
+		registerReceiver(mMusicReceiver, filter);
 		super.onResume();
 	}
 	
@@ -93,10 +95,9 @@ public class WebCarReleaseAudioActivity extends Activity {
 				mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
 				AudioManager.FLAG_SHOW_UI);
 		} else {
-			if(mVolume != -1) {
-				mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mVolume,
-					AudioManager.FLAG_SHOW_UI);
-			}
+			// reset global system volume
+			mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, ((WebCarApplication)getApplication()).getVolume(),
+				AudioManager.FLAG_SHOW_UI);
 		}
 	}
 }
