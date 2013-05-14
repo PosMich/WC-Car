@@ -5,7 +5,7 @@ import android.content.Context;
 
 public class WCServer extends NanoHTTPD
 {
-	private static final String TAG = "WebCar :: Server";
+//	private static final String TAG = "WebCar :: Server";
     
     public WCServer(int port, Context ctx) throws IOException {
         super(port, ctx.getAssets());
