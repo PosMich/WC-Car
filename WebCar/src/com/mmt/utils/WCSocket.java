@@ -13,7 +13,9 @@ import android.util.Log;
 public class WCSocket extends WebSocketServer {
 	
 	private static final String TAG = "WC-Socket";
-
+	public WCSocket() throws UnknownHostException {
+		super();
+	}
 	public WCSocket( int port ) throws UnknownHostException {
 		super( new InetSocketAddress( port ) );
 	}
@@ -29,13 +31,13 @@ public class WCSocket extends WebSocketServer {
 
 	@Override
 	public void onClose( WebSocket conn, int code, String reason, boolean remote ) {
-		Log.d( TAG,  conn + " has left the room!" );
+		Log.d( TAG,  conn + " has left" );
 	}
 
 	@Override
 	public void onMessage( WebSocket conn, String message ) {
 		Log.d( TAG,  conn + ": " + message );
-		this.send( message );
+		//Double.parseDouble(message);
 	}
 
 	@Override

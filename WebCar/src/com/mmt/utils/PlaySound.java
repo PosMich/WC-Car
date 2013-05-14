@@ -8,13 +8,15 @@ import android.util.Log;
 
 
 public class PlaySound {
+	
+	private static PlaySound playSound = null;
+	
 	public class InvalidFrequencyException extends Exception {
 		public InvalidFrequencyException() {	
 		}
 		public InvalidFrequencyException(String s) {
 			super(s);
-		}
-		
+		}	
 	}
 	
 	private int maxFreq;
@@ -27,20 +29,26 @@ public class PlaySound {
     private double sample[];
     private byte generatedSnd[];
     
+    
 	/*
 	 * constructor
 	 * 	
 	 */
-	public PlaySound() {
+	private PlaySound() {
 		sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
 		maxFreq = sampleRate/2;
 		Log.d("PlaySound", "constructor called");
 		Log.d("PlaySound", "sampleRate: "+sampleRate);
 		Log.d("PlaySound", "maxFreq: "+maxFreq);
-		
 	}
 	
-	public void setFreq(int Freq) throws Exception {
+	public static PlaySound getInstance(){
+		if (playSound == null)
+			playSound = new PlaySound();
+		return playSound;
+	}
+	
+	public void setFreq(int Freq) throws InvalidFrequencyException {
 		
 		if (Freq > maxFreq)
 			throw new InvalidFrequencyException("Frequency out of range!\nMax: "+maxFreq+"\ninput: "+Freq);

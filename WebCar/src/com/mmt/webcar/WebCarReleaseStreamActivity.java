@@ -4,10 +4,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
+import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.mmt.utils.CameraView;
 import com.mmt.utils.IP;
+import com.mmt.utils.Motion2Sound;
+import com.mmt.utils.Motion2Sound.InvalidFrequencyException;
 import com.mmt.utils.WCServer;
 import com.mmt.utils.WCSocket;
 
@@ -38,8 +43,24 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	private WCServer mServer = null;
 	private WCSocket mSocket = null;
 	private CameraView mCameraView;
+	private Motion2Sound Driver= null;
 	
 	final Context context = this;
+	
+	public enum Type {
+		CONNECT(0),
+		DRIVE(1),
+		KILL(2);
+		
+		private int code;
+		private Type(int c) {
+			code = c;
+		}
+		
+		public int val() {
+			return code;
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +72,25 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mTextIP.setText(IP.getIPAddress(true) + ":8080");
 
 		final View contentView = findViewById(R.id.fullscreen_content);
+		
+		try {
+			Driver = new Motion2Sound(
+					1000,	// min left frequency
+					9000,	// max left frequency
+					11000,	// min right frequency
+					20000,	// max right frequency
+					100,	// min backward frequency
+					400,	// max backward frequency
+					600,	// min forward frequency
+					900,	// max forward frequency
+					10000, 	// straightFreq
+					500		//stopFreq
+					);
+		} catch (InvalidFrequencyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
 		initCamera();
 	}
@@ -174,12 +214,38 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	};
 
 	public void setupSocket(int port) throws UnknownHostException {
-
+		
 		WebSocketImpl.DEBUG = true;
-		mSocket = new WCSocket(port);
+		mSocket = new WCSocket(port) {
+			@Override
+			public void onMessage( WebSocket conn, String message ) {
+				try {
+					JSONObject json = new JSONObject(message);
+					
+					if (json.getInt("type") == Type.CONNECT.val()) {
+						
+					} else if (json.getInt("type") == Type.DRIVE.val()) {
+						try {
+							Driver.drive(json.getDouble("l2r"), json.getDouble("b2f"));
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else if (json.getInt("type") == Type.KILL.val()) {
+						
+					}
+					
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		
 
 		mSocket.start();
-		Log.d("WC-Socket", "ChatServer started on port: " + mSocket.getPort());
+		Log.d("WC-Socket", "WebCar Socket started on port: " + mSocket.getPort());
 
 	}
 

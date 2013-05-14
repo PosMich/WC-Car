@@ -1,6 +1,6 @@
 $ ->
 	$(".connect").click (e)->
-		console.log "click"
+		#console.log "click"
 		e.preventDefault()
 		$(".connect").after("<img />");
 
@@ -24,15 +24,12 @@ $ ->
 			"transform": "rotate(90deg)"
 		}
 
-		conn = new WebSocket("ws://"+$(".ip").val());
-		conn = new WebSocket("ws://"+$(".ip").val());
+		match = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/i.exec document.URL
 
-		#window.lock = true;
-		#setInterval (->window.lock = false), 100
-
+		conn = new WebSocket("ws://"+match+":8081");
 
 		conn.onmessage = (e)->
-			console.log e
+			#console.log e
 			$("#imgStream").attr "src", "data:image/jpg;base64,"+e.data
 
 		window.connection = conn
