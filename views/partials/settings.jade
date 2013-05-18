@@ -8,26 +8,32 @@
           fieldset
             legend Persönliches
             .control-group
-              label(for="acronym", class="control-label") Anzeigename:
+              label(for="acronym", class="control-label") Name:
               .controls
-                input(type="text", name="acronym", class="input-xlarge", id="acronym", ng-model="user.acronym")
+                input(type="text", name="acronym", class="input-xlarge", 
+                  id="acronym", ng-model="user.acronym", readonly)
             .control-group
               label(for="email", class="control-label") Email:
               .controls
-                input(type="email", name="email", class="input-xlarge", id="email", ng-model="user.mail")
+                input(type="email", name="mail", 
+                  class="input-xlarge", id="mail", ng-model="user.mail")
+                span(ng-show="settings.mail.$error.email", class="help-inline") Email is invalid
 
             .control-group
               label(for="password_old", class="control-label") Altes Passwort:
               .controls
-                input(type="password", name="password_old", class="input-xlarge", id="password_old", ng-model="user.pwd_old")
+                input(type="password", name="password_old", 
+                  class="input-xlarge", id="password_old", ng-model="user.pwd_old")
             .control-group
               label(for="password", class="control-label") Neues Passwort:
               .controls
-                input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
+                input(type="password", name="password", 
+                  class="input-xlarge", id="password", ng-model="user.new_password")
             .control-group
               label(for="pwd_repeat", class="control-label") Passwort wiederholen:
               .controls
-                input(type="password", name="pwd_repeat", class="input-xlarge", id="pwd_repeat", ng-model="user.pwd_repeat")
+                input(type="password", name="pwd_repeat", 
+                  class="input-xlarge", id="pwd_repeat", ng-model="user.new_password_repeat")
         .span4
           fieldset
             legend Avatar
@@ -40,6 +46,7 @@
       .row
         .span12
           .pull-center
-              a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Übernehmen
+              a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)", 
+                ng-diabled="settings.$invalid || isUnchanged(user)") Übernehmen
               a(href="#", class="btn btn-large", ng-click="close()") Cancel
         

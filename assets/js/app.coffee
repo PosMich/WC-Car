@@ -11,7 +11,7 @@
 
     $routeProvider.when "/settings",
       templateUrl: "/partials/settings"
-      controller: AppCtrl
+      controller: SettingsCtrl
 
     $routeProvider.when "partials/login"
     	templateUrl: "partials/login"

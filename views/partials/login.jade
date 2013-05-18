@@ -5,14 +5,20 @@
       .control-group
         label(for="username", class="control-label") Username:
         .controls
-          input(type="text", name="username", class="input-xlarge", id="username", ng-model="user.name")
+          input(type="text", ng-minlength="5", pattern=".{5,}", name="name", 
+            class="input-xlarge", id="name", ng-model="user.name", required)
+          span(ng-show="login.name.$error.required", class="help-inline") Username is required
+          span(ng-show="login.name.$error.minlength", class="help-inline") Username is too short
       .control-group
         label(for="password", class="control-label") Passwort:
         .controls
-          input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
+          input(type="password", ng-minlength="5", pattern=".{5,}", name="password", 
+            class="input-xlarge", id="password", ng-model="user.password", required)
+          span(ng-show="login.password.$error.required", class="help-inline") Password is required
+          span(ng-show="login.password.$error.minlength", class="help-inline") Password is too short
       .pull-center(ng-controller="DialogCtrl")
-        a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Login
-        a(href="#", class="btn btn-fb btn-large") Login via Facebook
+        a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="login.$invalid") Login
+        a(href="#", class="btn btn-fb btn-large", ng-disabled="login.$invalid") Login via Facebook
         a(href="#", class="btn btn-success btn-large", ng-click="openDialog('signup', 'SignUpCtrl')") Signup now
   .pull-center
     a(href="#", class="btn btn-large", ng-click="close()") Cancel

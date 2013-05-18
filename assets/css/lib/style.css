@@ -88,3 +88,11 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
     background-color: #000;
 }
+
+.css-form input.ng-invalid.ng-dirty {
+  /*background-color: #FA787E;*/
+}
+
+.css-form input.ng-valid.ng-dirty {
+  /*background-color: #78FA89;*/
+}
