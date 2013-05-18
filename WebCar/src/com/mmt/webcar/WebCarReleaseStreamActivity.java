@@ -38,6 +38,7 @@ import android.media.AudioManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -50,6 +51,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	private String mToken;
 	private SecureRandom mPrng;
 	private boolean connected;
+	private Handler mHandler;
 	
 	private TextView mTextIP;
 	private TextView mTextToken;
@@ -90,6 +92,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_web_car_release_stream);
+		mHandler = new Handler();
 		
 		inProcessing = false;
 		connected = false;
@@ -100,7 +103,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			
 			mTextIP.setText(IP.getIPAddress(true) + ":8080");
 			setToken();
-			mTextToken.setText(mToken);
+			mTextToken.setText("Token: " + mToken);
 			
 			mMusicReceiver = new MusicIntentReceiver();
 			mWifiReceiver = new WifiIntentReceiver();
@@ -135,13 +138,12 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	
 	private void setToken() {
 		
-			try {
-				mPrng = SecureRandom.getInstance( "SHA1PRNG" );
-			} catch (NoSuchAlgorithmException e) {
-				Log.e( TAG, e.getMessage() );
-			}
-			mToken = "Token: " + Integer.valueOf(mPrng.nextInt()).toString();
-		
+		try {
+			mPrng = SecureRandom.getInstance( "SHA1PRNG" );
+		} catch (NoSuchAlgorithmException e) {
+			Log.e( TAG, e.getMessage() );
+		}
+		mToken = Integer.valueOf(mPrng.nextInt()).toString();
 	}
 	
 	private void startTimer() {
@@ -278,6 +280,9 @@ public class WebCarReleaseStreamActivity extends Activity implements
 						if( method.equalsIgnoreCase( "POST" ) ) {
 							// check admin passphrase and server admin interface
 							String passphrase = ((WebCarApplication)getApplication()).getPassphrase();
+							Log.d( TAG + " :: Connection", "Got a post request. " + "Param: " + 
+									parms.getProperty("passphrase") + " - should be: " + passphrase );
+							
 							if( parms.getProperty("passphrase").equals(passphrase) ) {
 								Collection<WebSocket> con = mSocket.connections();
 								synchronized ( con ) {
@@ -286,6 +291,16 @@ public class WebCarReleaseStreamActivity extends Activity implements
 									}
 								}
 								setToken();
+								
+								mHandler.post(new Runnable() {
+						            @Override
+						            public void run() {
+						                // This gets executed on the UI thread so it can safely modify Views
+						            	mTextToken.setText("Token: " + mToken);
+						            }
+						        });
+								
+								
 							}
 						}
 						
@@ -311,12 +326,15 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mSocket = new WCSocket(port) {
 			@Override
 			public void onMessage( WebSocket conn, String message ) {
+				Log.d( TAG + " :: Message", message );
 				try {
 					JSONObject json = new JSONObject(message);
 					
 					if (json.getInt("type") == Type.CONNECT.val()) {
-						if( !connected ) {
-							if( json.getString("token") == mToken ) {
+						Log.d( TAG + " :: Message", "Type is correct." );
+						if( !connected ) {							
+							if( json.getString("token").equals(mToken) ) {
+								Log.d( TAG + " :: Message", "Token is correct." );
 								connected = true;
 							} else {
 								conn.close();
@@ -341,11 +359,21 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			}
 			
 			@Override
+			public void send( String text ) {
+				if( connected )
+					super.send( text );
+			}
+			
+			@Override
 			protected boolean addConnection( WebSocket ws ) {
-				if( this.connections().size() == 0 )
+				if( this.connections().size() == 0 ) {
+					Log.d(TAG + " :: Connection", "i've added a connection.");
 					return super.addConnection(ws);
-				else
+				} else {
+					Log.d(TAG + " :: Connection", "i've blocked a connection.");
+					ws.close();
 					return false;
+				}
 			}
 			
 			@Override
