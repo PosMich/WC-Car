@@ -5,6 +5,7 @@ import android.app.Application;
 public class WebCarApplication extends Application{
 	private int mVolume = -1;
 	private String mPassphrase;
+	private int mToken;
 	
 	public void setVolume( int vVolume ) {
 		mVolume = vVolume;
@@ -20,6 +21,14 @@ public class WebCarApplication extends Application{
 	
 	public String getPassphrase() {
 		return mPassphrase;
+	}
+	
+	public void setToken( int vToken ) {
+		mToken = vToken;
+	}
+	
+	public int getToken() {
+		return mToken;
 	}
 	
 	@Override

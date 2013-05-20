@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<html lang='en-US'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='A demonstration of how to tap into the iOS accelerometer with JavaScript' />
+    <meta name='keywords' content='javascript, accelerometer, gyroscope, html5, iPad, iPhone, iOS, zepto, jquery' />
+    <meta name='author' content='Joe Longstreet' />
+    <title>Using JavaScript to Utilize the Accelerometer and Gyroscope in iOS</title>
+    <link rel='stylesheet' type='text/css' href='style.css' />
+    <script src='zepto.js'></script>
+    <script language="javascript" type="text/javascript" src="coffee-script.js"></script>
+    <script language="javascript" type="text/coffeescript" src="mobile_test.coffee"></script>
+  </head>
+  <body>
+    <div class='main'>
+      <div class='gyroscope'>
+        <h2>Device Motion (gyroscope):</h2>
+        <ul>
+          <li>a:<span class='a'></span></li>
+          <li>b:<span class='b'> --&gt; rechts/links max.</span></li>
+          <li>g:<span class='g'> --&gt; gas/bremse</span></li>
+        </ul>
+      </div>
+      <div class='fbwd' style='border:1px solid red;height: 50px; width:20px; float:left;'>
+        <div class='fbwd_clr' style='position:relative; background-color:blue; height:2px; width:20px;'></div>
+      </div>
+      <div class="fbwd_text"></div>
+      <div style="clear:both">&nbsp;</div>
+      <div class='rl' style='border:1px solid red;height:20px; width:50px;float:left;'>
+        <div class='rl_clr' style='position:relative;background-color:blue; width:2px; height:20px;'></div>
+      </div>
+      <div class="rl_text"></div>
+      <div style="clear:both">&nbsp;</div>
+      <button class="calib">calib</button>
+    </div>
+  </body>
+</html>
+

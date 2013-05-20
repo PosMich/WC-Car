@@ -2,6 +2,7 @@ body {
 	margin:0 auto;
 	padding:0;
 	overflow:hidden;
+	font-family: "Arial";
 }
 
 .menu {
@@ -26,4 +27,37 @@ body {
 .imgContainer > img {
 	position:absolute;
 	z-index:-2;
+}
+
+h1 {
+	
+}
+
+.control {
+	padding: 20px;
+}
+
+button, input {
+	font-family: "Arial";
+	padding: 5px;
+}
+
+label {
+	width: 120px;
+	position: relative;
+	float: left;
+	color: #fff;
+	font-size: 1.2em;
+	height: 40px;
+	line-height: 40px;
+	font-size: 1.2em;
+}
+
+button {
+	width: 100px;
+	font-size: 1.2em;
+}
+
+.clear {
+	clear:both;
 }

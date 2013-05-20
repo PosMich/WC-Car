@@ -1,0 +1,48 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>WebCar GyroSensors</title>
+    <link rel='stylesheet' type='text/css' href='style/simplex.css' />
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src='script/sensors.js'></script> 
+
+  </head>
+
+   <body>
+    <div class='main'>
+
+      <div class=".gyroValues">
+          <h4>Values of Gyroscope:</h4>
+          <div id="slider-vertical"></div>
+
+          <h5>Orientation:</h5>
+          <p id="orient"></p>
+
+          <h5>Beta (left/right):</h5>
+          <p id="gBeta"></p>
+
+          <h5>Gamma (forwards/backwards):</h5>
+          <p id="gGamma"></p>
+
+          <div id="slider"></div>
+
+          <button class="calibrate">Calibrate</button>
+
+
+      </div>
+
+      <div id="notify">
+        <div id="dialog" title="Wrong Orientation">
+          <p>Wrong Device Orientation!<br/>Please go back to Landscape mode</p>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
+
+

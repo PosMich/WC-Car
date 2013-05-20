@@ -4,28 +4,28 @@
     <meta charset='UTF-8' />
     <meta name='description' content='A demonstration simple watermarking' />
     <meta name='author' content='Michael Poschacher' />
-    <title>Embedded Watermarking with Javascript</title>
+    <title>WebCar Control-Center</title>
     
     <link href="css/style.css" rel="stylesheet">
     
-    <script language="javascript" type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-    
+    <script language="javascript" type="text/javascript" src="js/zepto.js"></script>
     <script language="javascript" type="text/javascript" src="js/coffee-script.js"></script>
-
     <script language="javascript" type="text/coffeescript" src="coffee/wc.coffee"></script>
-    <script>
 
-
-    </script>
 </head>
 <body>
 <div class="imgContainer">
   <img id="imgStream"></img>
 </div>
 <div class="control">
-  <h1>Websocket Test</h1>
-  IP:Port: <!--<input class="ip"></input>-->
-  <button class="connect">connect!</button>
+  <h1>WebCar Control-Center</h1>
+  <label for"token">Token</label>
+  <input type="text" id="token" placeholder="Token"></input>
+  <button class="connect">Drive!</button> <br/> 
+  <div class="clear"></div>
+  <label for"token">Passphrase</label>
+  <input type="password" id="passphrase" placeholder="Passphrase"></input>
+  <button class="kill">Kill!</button>
 </div>
 <div class="menu"></div>
 </body>

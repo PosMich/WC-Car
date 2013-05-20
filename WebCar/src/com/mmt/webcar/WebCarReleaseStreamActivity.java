@@ -3,12 +3,16 @@ package com.mmt.webcar;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Collection;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
+import org.java_websocket.handshake.Handshakedata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +20,7 @@ import com.mmt.utils.CameraView;
 import com.mmt.utils.IP;
 import com.mmt.utils.Motion2Sound;
 import com.mmt.utils.Motion2Sound.InvalidFrequencyException;
+import com.mmt.utils.NanoHTTPD.Response;
 import com.mmt.utils.WCServer;
 import com.mmt.utils.WCSocket;
 
@@ -29,9 +34,11 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
+import android.media.AudioManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -43,11 +50,13 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	private static final String TAG = "WebCar :: Stream"; 
 	private String mToken;
 	private SecureRandom mPrng;
+	private boolean connected;
+	private Handler mHandler;
 	
 	private TextView mTextIP;
 	private TextView mTextToken;
 	
-	boolean inProcessing = false;
+	boolean inProcessing;
 	
 	private WCServer mServer = null;
 	private WCSocket mSocket = null;
@@ -59,7 +68,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	private WifiIntentReceiver mWifiReceiver;
 	
 	private WifiManager mWifi;
-	private Timer timer;
+	private Timer mTimer;
 	
 	final Context context = this;
 	
@@ -83,30 +92,23 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_web_car_release_stream);
+		mHandler = new Handler();
 		
+		inProcessing = false;
+		connected = false;
 		mTextIP = (TextView) findViewById(R.id.textReleaseStreamingIP);
 		mTextToken = (TextView) findViewById(R.id.textReleaseStreamingToken);
 		
 		try {
-			mPrng = SecureRandom.getInstance( "SHA1PRNG" );
-			mToken = "Token: " + Integer.valueOf(mPrng.nextInt()).toString();
 			
 			mTextIP.setText(IP.getIPAddress(true) + ":8080");
-			mTextToken.setText(mToken);
+			setToken();
+			mTextToken.setText("Token: " + mToken);
 			
 			mMusicReceiver = new MusicIntentReceiver();
 			mWifiReceiver = new WifiIntentReceiver();
 			
-			timer = new Timer();			
 			mWifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			
-			timer.scheduleAtFixedRate(new TimerTask() {
-				  @Override
-				  public void run() {
-					  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
-					  Log.d( TAG + " :: Speed", "Current Speed: " + linkSpeed);
-				  }
-				}, 1000, 1000);
 			
 			initCamera();
 			
@@ -139,6 +141,32 @@ public class WebCarReleaseStreamActivity extends Activity implements
 
 	}
 	
+	private void setToken() {
+		
+		try {
+			mPrng = SecureRandom.getInstance( "SHA1PRNG" );
+		} catch (NoSuchAlgorithmException e) {
+			Log.e( TAG, e.getMessage() );
+		}
+		mToken = Integer.valueOf(mPrng.nextInt()).toString();
+	}
+	
+	private void startTimer() {
+		mTimer = new Timer();
+		mTimer.scheduleAtFixedRate(new TimerTask() {
+			  @Override
+			  public void run() {
+				  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
+				  Log.d( TAG + " :: Speed", "Current Speed: " + linkSpeed);
+			  }
+			}, 1000, 1000);
+	}
+	
+	private void stopTimer() {
+		mTimer.cancel();
+		mTimer.purge();
+	}
+	
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -148,17 +176,23 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			mServer.stop();
 		mCameraView.StopPreview();
 		
+		stopTimer();
+		
 		// unregister receivers
 		unregisterReceiver(mMusicReceiver);
 		unregisterReceiver(mWifiReceiver);
 		
-		finish();
 	}
 	
 	@Override
 	public void onResume() {
+		
+		startTimer();
+		inProcessing = false;
+		
 		registerReceiver(mMusicReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
 		registerReceiver(mWifiReceiver, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+		
 		super.onResume();
 	}
 	
@@ -167,7 +201,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		boolean initws = initWebServer();
 		
 		if ( initws ) {
-			
 			int wid = mCameraView.Width();
 			int hei = mCameraView.Height();
 			mCameraView.StopPreview();
@@ -198,30 +231,13 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mCameraView.setCameraReadyCallback(this);
 	}
 
-	private boolean initWebServer() {
-		String ipAddr = IP.getIPAddress(true);
-		if (ipAddr != null) {
-			try {
-				setupSocket(8081);
-				mServer = new WCServer(8080, this);
-
-			} catch (IOException e) {
-				mServer = null;
-			}
-		}
-		if (mServer != null)
-			return true;
-		else
-			return false;
-		
-	}
-
 	private PreviewCallback previewCb_ = new PreviewCallback() {
 
 		@Override
 		public void onPreviewFrame(byte[] frame, Camera camera) {
+			
 			if (!inProcessing) {
-				inProcessing = true;			
+				inProcessing = true;
 
 				try {
 				
@@ -255,6 +271,59 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			
 		}
 	};
+	
+	
+	private boolean initWebServer() {
+		String ipAddr = IP.getIPAddress(true);
+		if (ipAddr != null) {
+			try {
+				setupSocket(8081);
+				mServer = new WCServer(8080, this) {
+					@Override
+					public Response serve( String uri, String method, Properties header, Properties parms, Properties files ) {
+						
+						if( method.equalsIgnoreCase( "POST" ) ) {
+							// check admin passphrase and server admin interface
+							String passphrase = ((WebCarApplication)getApplication()).getPassphrase();
+							Log.d( TAG + " :: Connection", "Got a post request. " + "Param: " + 
+									parms.getProperty("passphrase") + " - should be: " + passphrase );
+							
+							if( parms.getProperty("passphrase").equals(passphrase) ) {
+								Collection<WebSocket> con = mSocket.connections();
+								synchronized ( con ) {
+									for( WebSocket c : con ) {
+										c.close();
+									}
+								}
+								setToken();
+								
+								mHandler.post(new Runnable() {
+						            @Override
+						            public void run() {
+						                // This gets executed on the UI thread so it can safely modify Views
+						            	mTextToken.setText("Token: " + mToken);
+						            }
+						        });
+								
+								
+							}
+						}
+						
+						return super.serve( uri, method, header, parms, files );
+					}
+				};
+
+			} catch (IOException e) {
+				mServer = null;
+			}
+		}
+		if (mServer != null)
+			return true;
+		else
+			return false;
+		
+	}
+	
 
 	public void setupSocket(int port) throws UnknownHostException {
 		
@@ -262,12 +331,21 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mSocket = new WCSocket(port) {
 			@Override
 			public void onMessage( WebSocket conn, String message ) {
+				Log.d( TAG + " :: Message", message );
 				try {
 					JSONObject json = new JSONObject(message);
 					
 					if (json.getInt("type") == Type.CONNECT.val()) {
-						
-					} else if (json.getInt("type") == Type.DRIVE.val()) {
+						Log.d( TAG + " :: Message", "Type is correct." );
+						if( !connected ) {							
+							if( json.getString("token").equals(mToken) ) {
+								Log.d( TAG + " :: Message", "Token is correct." );
+								connected = true;
+							} else {
+								conn.close();
+							}
+						}
+					} else if (json.getInt("type") == Type.DRIVE.val() && connected ) {
 						try {
 							Driver.drive(json.getDouble("l2r"), json.getDouble("b2f"));
 						} catch (Exception e) {
@@ -284,12 +362,47 @@ public class WebCarReleaseStreamActivity extends Activity implements
 				}
 				
 			}
+			
+			@Override
+			public void send( String text ) {
+				if( connected )
+					super.send( text );
+			}
+			
+			@Override
+			protected boolean addConnection( WebSocket ws ) {
+				if( this.connections().size() == 0 ) {
+					Log.d(TAG + " :: Connection", "i've added a connection.");
+					return super.addConnection(ws);
+				} else {
+					Log.d(TAG + " :: Connection", "i've blocked a connection.");
+					ws.close();
+					return false;
+				}
+			}
+			
+			@Override
+			public void onClose( WebSocket conn, int code, String reason, boolean remote ) {
+				connected = false;
+				super.onClose(conn, code, reason, remote);
+			}
 		};
 		
 
 		mSocket.start();
 		Log.d(TAG, "WebCar Socket started on port: " + mSocket.getPort());
 
+	}
+	
+	@Override
+	public void onStop() {
+		try {
+			mSocket.stop();
+		} catch(Exception e) {
+			Log.e( TAG, e.getMessage() );
+		}
+		
+		super.onStop();
 	}
 	
 	private class WifiIntentReceiver extends BroadcastReceiver {
