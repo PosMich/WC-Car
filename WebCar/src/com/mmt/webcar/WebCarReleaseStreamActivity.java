@@ -127,7 +127,12 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					10000, 	// straightFreq
 					500		//stopFreq
 					);
+
+			Driver.drive(0.5, 0.5);
 		} catch (InvalidFrequencyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
