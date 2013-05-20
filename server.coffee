@@ -1,96 +1,92 @@
 ###
     Requires
 ###
-express = require 'express'
-assets  = require 'connect-assets'
-path    = require 'path'
-http    = require 'http'
-coffee  = require 'coffee-script'
+coffee    = require "coffee-script"
+express   = require "express"
+assets    = require "connect-assets"
+path      = require "path"
+http      = require "http"
+everyauth = require "everyauth"
+config    = require "./config"
+WebSocketServer = require("ws").Server
 
-#i18n    = require 'i18next'
 
-config  = require './config'
+usersById = {}
+nextUserId = 0
+
+addUser = (source, sourceUser) ->
+    user = undefined
+    if arguments_.length is 1 # password-based
+        user = sourceUser = source
+        user.id = ++nextUserId
+        return usersById[nextUserId] = user
+    else # non-password-based
+        user = usersById[++nextUserId] = id: nextUserId
+        user[source] = sourceUser
+        user
+
+usersByFbId = {}
+
+everyauth.facebook
+  .appId(config.fb.appId)
+  .appSecret(config.fb.appSecret)
+  .findOrCreateUser((session, accessToken, accessTokenExtra, fbUserMetadata) ->
+    usersByFbId[fbUserMetadata.id] or (usersByFbId[fbUserMetadata.id] = addUser("facebook", fbUserMetadata))
+  ).redirectPath "/"
 
 ###
     Declare & Configure the Server
 ###
-server  = express()
+app  = express()
 
-###
-i18n.init {
-    saveMissing: true,
-    debug: true,
-    preload: ['de','en'],
-    ignoreRoutes: ['images/', 'public/', 'css/', 'js/'],
-    detectLngFromPath: 0
-    }
-##,
-    (t) ->
-        i18n.addRoute '/',['de','en'], server, 'get', (req, res)-> 
-            res.render "index"
-        i18n.addRoute '/:lng/route.view1', ['de','en'], server, 'get', (req, res)-> 
-            res.render "index"
-        i18n.addRoute '/:lng/route.view2', ['de','en'], server, 'get', (req, res)-> 
-            res.render "index"
-        i18n.addRoute '/:lng/route.partials/:name', ['de','en'], server, 'get', (req, res)-> 
-            name = req.params.name
-            res.render "partials/" + name
-        i18n.addRoute '/:lng/', ['de','en'], server, 'get', (req, res)-> 
-            res.render "index"
-###
-
-server.configure ->
-    server.set "port", process.env.PORT or config.port
-    server.set "views", __dirname + "/views"
-    server.set "view engine", "jade"
-    server.set "view options",
+app.configure ->
+    app.set "port", process.env.PORT or config.port
+    app.set "views", __dirname + "/views"
+    app.set "view engine", "jade"
+    app.set "view options",
         layout: false
-    server.use express.favicon('public/images/favicon.ico')
-    server.use express.logger("dev")
-    server.use express.bodyParser()
-    server.use express.methodOverride()
-    server.use assets()
-    server.use express.cookieParser(config.cookieSecret)
-    server.use express.session()
-    #server.use i18n.handle # i18n handler
-    server.use server.router
-    server.use express.static(path.join(__dirname, "public"))
-
-###
-i18n.registerAppHelper server
-i18n.serveClientScript server
-i18n.serveDynamicResources server
-i18n.serveMissingKeyRoute server
-
-i18n.serveWebTranslate(server, {
-    i18nextWTOptions: {
-      languages: ['de', 'en',  'dev'],
-      resGetPath: "locales/resources.json?lng=__lng__&ns=__ns__",
-      resChangePath: 'locales/change/__lng__/__ns__',
-      resRemovePath: 'locales/remove/__lng__/__ns__',
-      fallbackLng: "dev",
-      dynamicLoad: true
-    }
-});
-###
+    app.use express.favicon('public/images/favicon.ico')
+    app.use express.logger("dev")
+    app.use express.bodyParser()
+    app.use express.methodOverride()
+    app.use assets()
+    app.use express.cookieParser(config.cookieSecret)
+    app.use express.session(config.secret)
+    app.use everyauth.middleware(app)
+    app.use app.router
+    app.use express.static(path.join(__dirname, "public"))
 
 ###
     Define routes
 ###
-server.get "/", (req, res) ->
-    res.render "layout"
+app.get "/", (req, res) ->
+    console.log req.user
+    res.render "home"
+
+app.get "/login", (req, res) ->
+    res.render "login"
 
 # All partials. This is used by Angular.
-server.get "/partials/:name", (req, res) ->
-  name = req.params.name
-  res.render "partials/" + name
-
-# Views that are direct linkable
-# server.get ["/view1", "/view2"], (req, res) ->
-#  res.render "index"
+app.get "/partials/:name", (req, res) ->
+    name = req.params.name
+    res.render "partials/" + name
 
 ###
     Startup and log.
 ###
-http.createServer(server).listen server.get("port"), ->
-    console.log "Express server listening on port " + server.get("port")
+server = http.createServer(app).listen app.get("port"), ->
+    console.log "Express server listening on port " + app.get("port")
+
+
+wss = new WebSocketServer(server: server)
+wss.on "connection", (ws) ->
+  id = setInterval(->
+    ws.send JSON.stringify(process.memoryUsage()), -> # ignore errors
+
+  , 100)
+  console.log "started client interval"
+  ws.on "close", ->
+    console.log "stopping client interval"
+    clearInterval id
+  ws.on "message", (msg) ->
+    console.log 'received: %s', msg
