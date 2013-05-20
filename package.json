@@ -25,17 +25,21 @@
     "url": "https://github.com/PosMich/WC-Car"
   },
   "dependencies": {
-    "express"        : "3.x",
-    "coffee-script"  : "1.x",
-    "connect-assets" : "2.x",
-    "jade"           : "0.30.x",
-    "stylus"         : "0.32.x",
-    "everyauth"      : "0.2.34",
-    "sqlite3"        : "2.1.x",
-    "ws"             : "0.4.25"
+    "express"           : "3.x",
+    "coffee-script"     : "1.x",
+    "connect-assets"    : "2.x",
+    "jade"              : "0.30.x",
+    "stylus"            : "0.32.x",
+    "sqlite3"           : "2.1.x",
+    "ws"                : "0.4.25",
+    "passport"          : "0.1.17",
+    "passport-facebook" : "0.1.5",
+    "passport-local"    : "0.2.3",
+    "pwd"               : "0.0.2",
+    "connect-flash"     : "0.1.1"
   },
   "engines": {
     "node": ">=0.10"
   },
-  "_everyauth"      : "git://github.com/bnoguchi/everyauth.git#express3","
+  "_everyauth"      : "git://github.com/bnoguchi/everyauth.git#express3"
 }

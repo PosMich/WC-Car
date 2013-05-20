@@ -1,105 +1,125 @@
 ###
     Requires
 ###
+config    = require "./config"
+
 coffee    = require "coffee-script"
 express   = require "express"
 assets    = require "connect-assets"
 path      = require "path"
 http      = require "http"
-everyauth = require "everyauth"
-config    = require "./config"
+
+passport  = require "passport"
+FacebookStrategy = require("passport-facebook").Strategy
+LocalStrategy = require("passport-local").Strategy
+var pass = require "pwd"
+
 WebSocketServer = require("ws").Server
 sqlite3   = require("sqlite3").verbose()
 
-everyauth.debug = true
 
-initDatabase = ->
+User = (name, fb, slt, h, mail, pic) ->
+    username: name || ""
+    fbId:     fb   || ""    #fb only
+    salt:     slt  || ""    #pw only
+    hash:     h    || ""
+    email:    mail || ""
+    avatar:   pic  || ""
+
+###
+    DB STUFF
+###
+
+initDatabase = (cb) ->
     console.log "create"
-    db.run "CREATE TABLE IF NOT EXISTS Users (info TEXT)", insertRow
+    db.run "
+CREATE TABLE IF NOT EXISTS users (
+username TEXT,
+fbId TEXT,
+salt TEXT,
+hash TEXT,
+email TEXT,
+avatar TEXT)
+"
 
-insertRow = ->
-    console.log "insert"
-    db.run "INSERT INTO lorem VALUES ('asdf')", readRows
+insertUser = (user, cb)->
+    db.run "INSERT INTO Users(?name, ?fbId, ?salt, ?hash, ?email, ?avatar)",
+        $name: user.username
+        $fbId: user.fbId
+        $salt: user.salt
+        $hash: user.hash
+        $email: user.email
+        $avatar: user.avatar
+    , cb()
 
-readRows = ->
-    console.log "read"
-    db.all("SELECT rowid AS id, info FROM lorem", (err, rows) ->
-        rows.forEach( (row)  ->
-            console.log row.id + ": " + row.info
-        )
-    )
+getUserData = (id, cb) ->
+    return if id is undefined
+    db.run "SELECT * FROM users WHERE id=?", id, cb()
+
+getUserByEMail = (email, cb) ->
+    return if email is undefined
+    db.run "SELECT * FROM users WHERE email=?", email, cb()
+
+getUserByName = (name, cb) ->
+    return if name is undefined
+    db.run "SELECT * FROM users WHERE name=?", name, cb()
+
+getFbUserData = (id, cb) ->
+    return if id is undefined
+    db.run "SELECT * FROM users WHERE fbId=?", id, cb()
+
 
 db = new sqlite3.Database "./db/development.sqlite" #, initDatabase
 
+###
+    Passport: Local Strategy
+###
+passport.use new LocalStrategy((username, password, cb) ->
+    user = getUserByName(username)
+
+    #can't find user, return
+    if user is undefined
+        cb null, false,
+            message: "Wrong Username"
+
+    #check password
+    hash passwort, user.salt, (err, hash) ->
+        return cb(err) if err
+        return cb(null, user) if hash is user.hash
+        cb null, false,
+            message: "Wrong Password!"
+)
+
+###
+    Passport: Facebook Strategy
+###
+passport.use new FacebookStrategy(
+    clientID: config.fb.appId
+    clientSecret: config.fb.appSecret
+    callbackURL: "http://localhost:8000/auth/facebook/callback"
+, (accessToken, refreshToken, profile, cb) ->
+    user = getFbUserData profile.id
+
+    #if user exists, return it
+    cb( null, user ) if user is not undefined
+
+    #if user doesn't exist, create new one
+    user = new User(profile.displayName, profile.id, "", "", profile.emails[0].value, profile.photos[0].value)
+    insertUser user, (err) ->
+        cb null, false,
+            message: "Wasn't able to create User"
+
+    cb null, user
+)
+
+passport.serializeUser (user, done) ->
+  done null, user.id
+
+passport.deserializeUser (id, done) ->
+  User.findById id, (err, user) ->
+    done err, user
 
 
-usersById = {}
-nextUserId = 0
-
-addUser = (source, sourceUser) ->
-    user = undefined
-    if arguments.length is 1 # password-based
-        user = sourceUser = source
-        user.id = ++nextUserId
-        return usersById[nextUserId] = user
-    else # non-password-based
-        user = usersById[++nextUserId] = id: nextUserId
-        user[source] = sourceUser
-        return user
-
-
-usersByFbId = {}
-
-everyauth.everymodule.findUserById (id, callback) ->
-    callback null, usersById[id]
-
-everyauth.everymodule.logoutRedirectPath "/asdf"
-
-
-everyauth.facebook
-    .appId(config.fb.appId)
-    .appSecret(config.fb.appSecret)
-    .fields("id,name,email,picture")
-    .findOrCreateUser((session, accessToken, accessTokenExtra, fbUserMetadata) ->
-        usersByFbId[fbUserMetadata.id] or (usersByFbId[fbUserMetadata.id] = addUser("facebook", fbUserMetadata))
-    ).redirectPath "/"
-
-everyauth.password
-    .loginWith("email")
-    .getLoginPath("/login")
-    .postLoginPath("/login")
-    .loginView("login.jade")
-    .loginLocals((req, res, done) ->
-        setTimeout (->
-            done null,
-            title: "Async login"
-        ), 200
-    ).authenticate((login, password) ->
-        errors = []
-        errors.push "Missing login"  unless login
-        errors.push "Missing password"  unless password
-        return errors  if errors.length
-        user = usersByLogin[login]
-        return ["Login failed"]  unless user
-        return ["Login failed"]  if user.password isnt password
-        user
-    ).getRegisterPath("/register")
-    .postRegisterPath("/register")
-    .registerView("register.jade")
-    .registerLocals((req, res, done) ->
-        setTimeout (->
-            done null,
-            title: "Async Register"
-        ), 200
-    ).validateRegistration((newUserAttrs, errors) ->
-        login = newUserAttrs.login
-        errors.push "Login already taken"  if usersByLogin[login]
-        errors
-    ).registerUser((newUserAttrs) ->
-        login = newUserAttrs[@loginKey()]
-        usersByLogin[login] = addUser(newUserAttrs)
-    ).loginSuccessRedirect("/")
-    .registerSuccessRedirect "/"
 
 ###
     Declare & Configure the Server
@@ -117,9 +137,10 @@ app.configure ->
     app.use express.bodyParser()
     app.use express.methodOverride()
     app.use assets()
+    app.use passport.initialize()
+    app.use passport.session()
     app.use express.cookieParser(config.cookieSecret)
     app.use express.session(config.secret)
-    app.use everyauth.middleware(app)
     app.use app.router
     app.use express.static(path.join(__dirname, "public"))
 
@@ -128,7 +149,7 @@ app.configure ->
 ###
 app.get "/", (req, res) ->
     console.log req.user
-    res.render "home"
+    res.render "layout"
 
 app.get "/login", (req, res) ->
     res.render "login"
@@ -137,6 +158,19 @@ app.get "/login", (req, res) ->
 app.get "/partials/:name", (req, res) ->
     name = req.params.name
     res.render "partials/" + name
+
+app.get "/auth/facebook", passport.authenticate("facebook")
+
+app.get "/auth/facebook/callback", passport.authenticate("facebook",
+  successRedirect: "/"
+  failureRedirect: "/login"
+)
+
+app.post "/login", passport.authenticate("local",
+  successRedirect: "/"
+  failureRedirect: "/login"
+  failureFlash: true
+)
 
 ###
     Startup and log.
