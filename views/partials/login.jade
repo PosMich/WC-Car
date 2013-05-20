@@ -5,7 +5,6 @@
       .control-group
         label(for="username", class="control-label") Username:
         .controls
-          input(type="text", name="username", class="input-xlarge", id="username", ng-model="user.name")
           input(type="text", ng-minlength="5", pattern=".{5,}", name="name", 
             class="input-xlarge", id="name", ng-model="user.name", required)
           span(ng-show="login.name.$error.required", class="help-inline") Username is required

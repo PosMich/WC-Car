@@ -66,6 +66,9 @@ app.get "/", (req, res) ->
 app.get "/login", (req, res) ->
     res.render "login"
 
+app.get "/release", (req, res) ->
+    res.render "layout"
+
 # All partials. This is used by Angular.
 app.get "/partials/:name", (req, res) ->
     name = req.params.name
@@ -77,16 +80,12 @@ app.get "/partials/:name", (req, res) ->
 server = http.createServer(app).listen app.get("port"), ->
     console.log "Express server listening on port " + app.get("port")
 
+clients = []
 
 wss = new WebSocketServer(server: server)
 wss.on "connection", (ws) ->
-  id = setInterval(->
-    ws.send JSON.stringify(process.memoryUsage()), -> # ignore errors
-
-  , 100)
-  console.log "started client interval"
+  console.log "new connection"
   ws.on "close", ->
-    console.log "stopping client interval"
-    clearInterval id
+    console.log "connection closed"
   ws.on "message", (msg) ->
     console.log 'received: %s', msg
