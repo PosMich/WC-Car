@@ -30,9 +30,12 @@
     "connect-assets" : "2.x",
     "jade"           : "0.30.x",
     "stylus"         : "0.32.x",
-    "everyauth"      : "git://github.com/bnoguchi/everyauth.git#express3"
+    "everyauth"      : "0.2.34",
+    "sqlite3"        : "2.1.x",
+    "ws"             : "0.4.25"
   },
   "engines": {
     "node": ">=0.10"
-  }
+  },
+  "_everyauth"      : "git://github.com/bnoguchi/everyauth.git#express3","
 }

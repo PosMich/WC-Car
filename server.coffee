@@ -9,6 +9,28 @@ http      = require "http"
 everyauth = require "everyauth"
 config    = require "./config"
 WebSocketServer = require("ws").Server
+sqlite3   = require("sqlite3").verbose()
+
+everyauth.debug = true
+
+initDatabase = ->
+    console.log "create"
+    db.run "CREATE TABLE IF NOT EXISTS Users (info TEXT)", insertRow
+
+insertRow = ->
+    console.log "insert"
+    db.run "INSERT INTO lorem VALUES ('asdf')", readRows
+
+readRows = ->
+    console.log "read"
+    db.all("SELECT rowid AS id, info FROM lorem", (err, rows) ->
+        rows.forEach( (row)  ->
+            console.log row.id + ": " + row.info
+        )
+    )
+
+db = new sqlite3.Database "./db/development.sqlite" #, initDatabase
+
 
 
 usersById = {}
@@ -16,23 +38,68 @@ nextUserId = 0
 
 addUser = (source, sourceUser) ->
     user = undefined
-    if arguments_.length is 1 # password-based
+    if arguments.length is 1 # password-based
         user = sourceUser = source
         user.id = ++nextUserId
         return usersById[nextUserId] = user
     else # non-password-based
         user = usersById[++nextUserId] = id: nextUserId
         user[source] = sourceUser
-        user
+        return user
+
 
 usersByFbId = {}
 
+everyauth.everymodule.findUserById (id, callback) ->
+    callback null, usersById[id]
+
+everyauth.everymodule.logoutRedirectPath "/asdf"
+
+
 everyauth.facebook
-  .appId(config.fb.appId)
-  .appSecret(config.fb.appSecret)
-  .findOrCreateUser((session, accessToken, accessTokenExtra, fbUserMetadata) ->
-    usersByFbId[fbUserMetadata.id] or (usersByFbId[fbUserMetadata.id] = addUser("facebook", fbUserMetadata))
-  ).redirectPath "/"
+    .appId(config.fb.appId)
+    .appSecret(config.fb.appSecret)
+    .fields("id,name,email,picture")
+    .findOrCreateUser((session, accessToken, accessTokenExtra, fbUserMetadata) ->
+        usersByFbId[fbUserMetadata.id] or (usersByFbId[fbUserMetadata.id] = addUser("facebook", fbUserMetadata))
+    ).redirectPath "/"
+
+everyauth.password
+    .loginWith("email")
+    .getLoginPath("/login")
+    .postLoginPath("/login")
+    .loginView("login.jade")
+    .loginLocals((req, res, done) ->
+        setTimeout (->
+            done null,
+            title: "Async login"
+        ), 200
+    ).authenticate((login, password) ->
+        errors = []
+        errors.push "Missing login"  unless login
+        errors.push "Missing password"  unless password
+        return errors  if errors.length
+        user = usersByLogin[login]
+        return ["Login failed"]  unless user
+        return ["Login failed"]  if user.password isnt password
+        user
+    ).getRegisterPath("/register")
+    .postRegisterPath("/register")
+    .registerView("register.jade")
+    .registerLocals((req, res, done) ->
+        setTimeout (->
+            done null,
+            title: "Async Register"
+        ), 200
+    ).validateRegistration((newUserAttrs, errors) ->
+        login = newUserAttrs.login
+        errors.push "Login already taken"  if usersByLogin[login]
+        errors
+    ).registerUser((newUserAttrs) ->
+        login = newUserAttrs[@loginKey()]
+        usersByLogin[login] = addUser(newUserAttrs)
+    ).loginSuccessRedirect("/")
+    .registerSuccessRedirect "/"
 
 ###
     Declare & Configure the Server
