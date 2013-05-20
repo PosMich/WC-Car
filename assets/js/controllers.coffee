@@ -3,6 +3,7 @@
 # Controllers
 @AppCtrl = ($scope, $http) ->
 
+###
   console.log($scope)
 
   $http(
@@ -12,7 +13,7 @@
     $scope.name = data.name
   ).error (data, status, headers, config) ->
     $scope.name = "Error!"
-##
+###
 
 @DialogCtrl = ($scope, $dialog) ->
 
@@ -33,10 +34,22 @@
 
 @LogInCtrl = ($scope, dialog) ->
 
-  $scope.update = (user) ->
-    console.log dialog.close()
-    console.log user
-    dialog.close
+  $scope.update = (user, method = 'webcar') ->
+    if $scope.login.$valid
+      conn = new WebSocket( "ws://localhost:8000" )
+      conn.onopen = ->
+        conn.send JSON.stringify( {
+          "type": "login_data",
+          "method": method,
+          "username": user.name, 
+          "password": user.pwd
+        } )
+
+      conn.onmessage = (data) ->
+        if data.authenticated
+          dialog.close
+        else
+          console.log "error"
 
   $scope.close = (user) ->
     dialog.close()

@@ -61,7 +61,7 @@ app.configure ->
 ###
 app.get "/", (req, res) ->
     console.log req.user
-    res.render "home"
+    res.render "layout"
 
 app.get "/login", (req, res) ->
     res.render "login"
