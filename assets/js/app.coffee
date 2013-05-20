@@ -7,7 +7,15 @@
 		
     $routeProvider.when "/",
       templateUrl: "/partials/index"
-      controller: AppCtrl      
+      controller: AppCtrl
+
+    $routeProvider.when "/release",
+      templateUrl: "/partials/release"
+      controller: ReleaseCtrl
+
+    $routeProvider.when "/control",
+      templateUrl: "/partials/control"
+      controller: ControlCtrl
 
     $routeProvider.when "/settings",
       templateUrl: "/partials/settings"

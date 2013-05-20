@@ -4,4 +4,3 @@ $(document).ready ->
     $.scrollTo @hash or 0, 400,
       offset:
         top: -60
-  console.log "test"

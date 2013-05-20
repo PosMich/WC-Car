@@ -12,7 +12,7 @@
 
  /*Own stuff */
 
-#about, #member, #impressum, #settings {
+#about, #member, #impressum, #settings, #release, #control {
   height: auto;
   margin-bottom:20px;
 }
@@ -27,7 +27,7 @@ section {
   margin: 0px auto;
 }
 
-#container_about, #container_member, #container_impressum, #container_settings {
+#container_about, #container_member, #container_impressum, #container_settings, #container_release, #container_control {
   width: 100%;
   height: auto;
   border-top: 1px solid transparent;
