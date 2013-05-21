@@ -10,7 +10,6 @@
             .control-group
               label(for="acronym", class="control-label") Name:
               .controls
-                input(type="text", name="acronym", class="input-xlarge", 
                   id="acronym", ng-model="user.name", readonly)
             .control-group
               label(for="email", class="control-label") Email:
@@ -59,8 +58,8 @@
                 span(ng-show="settings.new_password_repeat.$error.sameAs", class="help-inline") New password confirmation is not correct.
 
       .row
-        .span12
+        .span8
           .pull-center
-              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid") Übernehmen
-              a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen
+            button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid") Übernehmen
+            a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen
         

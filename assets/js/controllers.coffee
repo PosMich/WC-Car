@@ -18,10 +18,6 @@
 @DialogCtrl = ($scope, $dialog) ->
 
     $scope.openDialog = (pathToView, controller, additionalclass = "") ->
-
-      if $scope.dialog
-        $scope.dialog.close()
-
       $scope.opts =
       backdrop: true,
       keyboard: true,
@@ -121,13 +117,10 @@
 
   $scope.reset = ->
     
-
   $scope.isUnchanged = (user) ->
-    console.log angular.equals user, $scope.master
     return angular.equals user, $scope.master
 
   $scope.init()
-
 
 # WebRTC stuff here.
 

@@ -87,8 +87,11 @@
     border-radius: 5px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
     background-color: #000;
+<<<<<<< HEAD
 }
 
 #container_signup label {
   line-height: 30px;
+=======
+>>>>>>> 48646261e1ae4610fcf7a9094088ea826d5e8a7f
 }
