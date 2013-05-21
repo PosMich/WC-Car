@@ -18,6 +18,10 @@
 @DialogCtrl = ($scope, $dialog) ->
 
     $scope.openDialog = (pathToView, controller, additionalclass = "") ->
+
+      if $scope.dialog
+        $scope.dialog.close()
+
       $scope.opts =
       backdrop: true,
       keyboard: true,
@@ -32,74 +36,75 @@
 
       d.open()
 
-@LogInCtrl = ($scope, $window, dialog, ConnectionService) ->
+@LogInCtrl = ($scope, $window, dialog, $http) ->
   $scope.facebook = ->
     $window.location.href = "/auth/facebook"
   $scope.update = (user, method = 'webcar') ->
     if $scope.login.$valid
-      $scope.conn = ConnectionService.handle()
-      console.log $scope.conn
-      $scope.conn.onopen = ->
-        $scope.conn.send JSON.stringify({
-          "type": "login_data",
-          "method": method,
-          "username": user.name,
-          "password": user.password
-          })
+      userdata = $.param(
+        name: user.name
+        password: user.password
+      )
 
-      $scope.conn.onmessage = (data) ->
-        if data.authenticated
-          dialog.close
+      $http(
+        method: "POST"
+        url: "/login"
+        data: userdata
+        headers:
+          "Content-Type": "application/x-www-form-urlencoded"
+      ).success (response) ->
+        dialog.close()
+        $window.location.href = "/"
 
-        else
-          # set error message in dialog
-
+      
   $scope.close = (user) ->
     dialog.close()
 
+  $scope.signup = () ->
+    dialog.close()
+    $window.location.href = "/signup"
+
   $scope.close
 
-@SignUpCtrl = ($scope, dialog, ConnectionService) ->
+@SignUpCtrl = ($scope, $http, $window) ->
 
   $scope.update = (user) ->
     if $scope.signup.$valid
+      userdata = $.param(
+        name: user.name
+        password: user.password
+        email: user.email
+        avatar: user.avatar
+      )
 
-      $scope.conn = ConnectionService.handle()
-      $scope.conn.onopen = ->
-        $scope.conn.send JSON.stringify({
-          "type": "signup_data",
-          "email": user.email,
-          "username": user.name,
-          "password": user.password
-          })
+      $http(
+        method: "POST"
+        url: "/signup"
+        data: userdata
+        headers:
+          "Content-Type": "application/x-www-form-urlencoded"
+      ).success (response) ->
+        dialog.close()
 
-      $scope.conn.onmessage = (data) ->
-        if data.authenticated
-          dialog.close
 
-        else
-          # set error message in dialog
+  $scope.close = () ->
+    $window.location.href = "/"
 
-  $scope.close = (user) ->
-    dialog.close()
+@SettingsCtrl = ($rootScope, $scope, $http) ->
 
-  $scope.close
+  console.log "call controller"
 
-@SettingsCtrl = ($scope, ConnectionService) ->
+  $scope.user = []
 
-  $scope.conn = ConnectionService.handle()
-
-  console.log $scope.conn
-
-  # send request for available data
-  $scope.conn.send JSON.stringify({
-    "type": "settings_available"
-    })
-
-  $scope.conn.onmessage = (data) ->
-    $scope.user.name = data.user.name
-    $scope.user.email = data.user.email
-    $scope.user.avatar = data.user.avatar
+  $scope.init = ->
+    $http(
+      method: "GET"
+      url: "/settings"
+    ).success (response) ->
+      console.log response.name
+      $scope.user.name = response.name
+      $scope.user.email = response.email
+      $scope.user.avatar = response.avatar
 
     $scope.master = $scope.user
 
@@ -114,11 +119,14 @@
         "email": user.email
       }
 
-  $scope.close = (user) ->
-    dialog.close()
+  $scope.reset = ->
+    
 
   $scope.isUnchanged = (user) ->
+    console.log angular.equals user, $scope.master
     return angular.equals user, $scope.master
+
+  $scope.init()
 
 
 # WebRTC stuff here.

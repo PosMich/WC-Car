@@ -179,7 +179,7 @@ userExist = (req, res, next) ->
         if count is 0
             next()
         else
-            res.redirect "/singup"
+            res.redirect "/signup"
 
 ###
 Type of Messages:
@@ -221,7 +221,9 @@ app.post "/login", passport.authenticate("local",
 
 # signup --> get, show signup template
 app.get "/signup", (req, res) ->
-    res.render "signup"
+    res.render "layout",
+        user: null
+        message: req.flash("info")
 
 # signup --> post check if user exist
 app.post "/signup", userExist, (req, res, next) ->
@@ -258,10 +260,10 @@ app.get "/auth/facebook/callback", passport.authenticate("facebook",
     res.render "layout",
         user: req.user
 
-# profile path
-app.get "/profile", authenticatedOrNot, (req, res) ->
-    res.render "profile",
-        user: req.user
+# settings path
+app.get "/settings", authenticatedOrNot, (req, res) ->
+    res.format
+        "application/json": -> res.send req.user
 
 # logout
 app.get "/logout", (req, res) ->

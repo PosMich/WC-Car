@@ -10,26 +10,27 @@
       templateUrl: "partials/index"
       controller: AppCtrl
 
-    $routeProvider.when "release",
+    $routeProvider.when "/release",
       templateUrl: "partials/release"
       controller: ReleaseCtrl
 
-    $routeProvider.when "control",
+    $routeProvider.when "/control",
       templateUrl: "partials/control"
       controller: ControlCtrl
 
-    $routeProvider.when "settings",
-      templateUrl: "partials/settings"
+    $routeProvider.when "/settings",
+      templateUrl: "/partials/settings"
       controller: SettingsCtrl
 
-    $routeProvider.when "partials/login"
+    $routeProvider.when "partials/login",
       templateUrl: "partials/login"
       # controller: DialogCtrl
 
-    $routeProvider.when "partials/signup"
-      templateUrl: "partials/signup"
+    $routeProvider.when "/signup",
+      templateUrl: "/partials/signup"
+      controller: SignUpCtrl
 
-    $routeProvider.when "/logout"
+    $routeProvider.when "/logout",
       controller: LogoutCtrl
       templateUrl: "partials/index"
 

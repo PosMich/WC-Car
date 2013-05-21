@@ -11,22 +11,25 @@
               label(for="acronym", class="control-label") Name:
               .controls
                 input(type="text", name="acronym", class="input-xlarge", 
-                  id="acronym", ng-model="user.acronym", readonly)
+                  id="acronym", ng-model="user.name", readonly)
             .control-group
               label(for="email", class="control-label") Email:
               .controls
-                input(type="email", name="mail", 
-                  class="input-xlarge", id="mail", ng-model="user.mail")
-                span(ng-show="settings.mail.$error.email", class="help-inline") Email is invalid
+                input(type="email", name="email", 
+                  class="input-xlarge", id="email", ng-model="user.email", required)
+                span(ng-show="settings.email.$error.required", class="help-inline") Email is required.
+                span(ng-show="settings.email.$error.email", class="help-inline") Email is invalid.
         .span4
           fieldset
             legend Avatar
               .control-group
-                div.img_container
-                  div.img_dummy
+                div.img_container(ng-model="user")
+                  img.img_dummy(src="{{user.avatar}}")
                 label(for="user_img", class="control-label") Datei:
                 .controls
-                  input(type="file", name="user_img", class="input-file", id="user_img", ng-model="user.user_img")
+                  input(type="url", name="avatar",
+                    class="input-xlarge", id="avatar", ng-model="user.avatar")
+                  span(ng-show="settings.avatar.$error.url", class="help-inline") Not a correct URL.
       .row
         .span8
           fieldset
@@ -58,6 +61,6 @@
       .row
         .span12
           .pull-center
-              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid || isUnchanged(user)") Übernehmen
+              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid") Übernehmen
               a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen
         
