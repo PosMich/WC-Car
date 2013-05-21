@@ -84,7 +84,7 @@
         headers:
           "Content-Type": "application/x-www-form-urlencoded"
       ).success (response) ->
-        dialog.close()
+        $window.location.href = "/"
 
 
   $scope.close = () ->

@@ -26,8 +26,9 @@
       templateUrl: "partials/login"
       # controller: DialogCtrl
 
-    $routeProvider.when "partials/signup"
+    $routeProvider.when "/signup"
       templateUrl: "partials/signup"
+      controller: SignUpCtrl
 
     $routeProvider.when "/logout"
       controller: LogoutCtrl
