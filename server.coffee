@@ -78,7 +78,7 @@ passport.use new LocalStrategy(
 passport.use new FacebookStrategy(
     clientID: config.fb.appId
     clientSecret: config.fb.appSecret
-    callbackURL: config.siteUrl + "/auth/facebook/callback"
+    callbackURL: config.siteUrl+":"+config.port+"/auth/facebook/callback"
     profileFields: ["id", "displayName", "photos", "emails"]
 , (accessToken, refreshToken, profile, done) ->
     FbUsers.findOne
