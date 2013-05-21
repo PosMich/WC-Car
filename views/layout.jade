@@ -38,55 +38,6 @@ html(ng-app="WebCar", lang="de")
                       else
                         a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
       .container_context
-        //-if message !== null
-        //-  p #{message}
-      //-
-        .row
-          .span4
-            &nbsp;
-          .span4.alert.alert-block
-            a.close x
-            h4.alert-heading Alert!
-            p Hallöchen erstmal
-
-        .row
-          .span4
-            &nbsp;
-          .span4.alert.alert-error
-            a.close x
-            strong Error
-            |  Das hier ist eine super tolle Error Message!
-
-        .row
-          .span4
-            &nbsp;
-          .span4.alert.alert-success
-            a.close x
-            strong Success
-            |  Das hier ist eine super tolle Success Message!
-
-        .row
-          .span4
-            &nbsp;
-          .span4.alert.alert-info
-            a.close x
-            strong Information
-            |  Info :P
-
-        if user === null
-          h1 Hi
-        else if user.name
-          h1 Hi #{user.name}
-          a(href="/logout") Logout
-          br
-          a(href="/profile") Profile
-        else
-          h1 Hi #{user.name}
-          br
-          a(href="/profile") Profile
-
-
-      .container_context
         div(ng-view)
 
 

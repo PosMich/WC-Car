@@ -19,6 +19,6 @@
       .pull-center(ng-controller="DialogCtrl")
         a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="login.$invalid") Login
         a(href="#", class="btn btn-fb btn-large", ng-click="facebook()") Login via Facebook
-        a(href="#", class="btn btn-success btn-large", ng-click="signup()") Signup now
+        a(href="#", class="btn btn-success btn-large", ng-click="openDialog('signup', 'SignUpCtrl')") Signup now
   .pull-center
     a(href="#", class="btn btn-large", ng-click="close()") Cancel
