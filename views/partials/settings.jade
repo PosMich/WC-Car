@@ -8,38 +8,56 @@
           fieldset
             legend Persönliches
             .control-group
-              label(for="acronym", class="control-label") Anzeigename:
+              label(for="acronym", class="control-label") Name:
               .controls
-                input(type="text", name="acronym", class="input-xlarge", id="acronym", ng-model="user.acronym")
+                input(type="text", name="acronym", class="input-xlarge", 
+                  id="acronym", ng-model="user.acronym", readonly)
             .control-group
               label(for="email", class="control-label") Email:
               .controls
-                input(type="email", name="email", class="input-xlarge", id="email", ng-model="user.mail")
-
-            .control-group
-              label(for="password_old", class="control-label") Altes Passwort:
-              .controls
-                input(type="password", name="password_old", class="input-xlarge", id="password_old", ng-model="user.pwd_old")
-            .control-group
-              label(for="password", class="control-label") Neues Passwort:
-              .controls
-                input(type="password", name="password", class="input-xlarge", id="password", ng-model="user.pwd")
-            .control-group
-              label(for="pwd_repeat", class="control-label") Passwort wiederholen:
-              .controls
-                input(type="password", name="pwd_repeat", class="input-xlarge", id="pwd_repeat", ng-model="user.pwd_repeat")
+                input(type="email", name="mail", 
+                  class="input-xlarge", id="mail", ng-model="user.mail")
+                span(ng-show="settings.mail.$error.email", class="help-inline") Email is invalid
         .span4
           fieldset
             legend Avatar
               .control-group
                 div.img_container
                   div.img_dummy
-                label(for="user_img", class="control-label") Avatar:
+                label(for="user_img", class="control-label") Datei:
                 .controls
                   input(type="file", name="user_img", class="input-file", id="user_img", ng-model="user.user_img")
       .row
+        .span8
+          fieldset
+            legend Passwort
+            .control-group
+              label(for="old_password", class="control-label") Altes Passwort:
+              .controls
+                input(type="password", name="old_password", 
+                  class="input-xlarge", id="old_password", ng-model="user.old_password")
+
+            .control-group
+              label(for="password", class="control-label") Neues Passwort:
+              .controls
+                input(type="password", name="password", ng-minlength="5", pattern=".{5,}"
+                  class="input-xlarge", id="password", ng-model="user.password", ng-required="user.old_password")
+                span(ng-show="settings.password.$error.required", class="help-inline") New password is required.
+                span(ng-show="settings.password.$error.minlength", class="help-inline") New password is too short.
+
+            .control-group
+              label(for="new_password_repeat", class="control-label") Neues Passwort wiederholen:
+              .controls
+                input(type="password", name="new_password_repeat", ng-minlength="5", pattern=".{5,}"
+                  class="input-xlarge", id="new_password_repeat", ng-model="user.new_password_repeat", 
+                  ng-required="user.old_password", same-as="user.password")
+                span(ng-show="settings.new_password_repeat.$error.required", class="help-inline") New password confirmation is required.
+                span(ng-show="settings.new_password_repeat.$error.minlength", class="help-inline") New password confirmation is too short.
+                span(ng-show="settings.new_password_repeat.$error.sameAs", class="help-inline") New password confirmation is not correct.
+
+      .row
         .span12
           .pull-center
-              a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)") Übernehmen
-              a(href="#", class="btn btn-large", ng-click="close()") Cancel
+              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid || isUnchanged(user)") Übernehmen
+              a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen
         

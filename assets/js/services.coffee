@@ -1,9 +1,9 @@
 "use strict"
-
-# Services 
-
-# Demonstrate how to register services
-# In this case it is a simple value service.
-
-angular.module("WebCar.services", [])
-	.value "version", "0.1"
+angular.module("WebCar.services", []).factory "ConnectionService", ->
+  isConnected = false
+  connection = undefined
+  handle: ->
+    unless isConnected
+      connection = new WebSocket("ws://localhost:8000")
+      isConnected = true
+    connection

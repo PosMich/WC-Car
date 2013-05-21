@@ -32,8 +32,11 @@ html(ng-app="WebCar", lang="de")
                     //-   a(href='#', ng-click="openDialog('settings', 'SettingsCtrl', 'modal-settings')") Einstellungen
                     li
                       a(href="settings") Einstellungen
-                    li(ng-controller="DialogCtrl")
-                      a(href='#', ng-click="openDialog('login', 'LogInCtrl')") Login or Signup
+                    li
+                      if user === null
+                        a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
+                      else
+                        a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
       .container_context
         //-if message !== null
         //-  p #{message}

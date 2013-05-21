@@ -1,32 +1,31 @@
 ###
     Requires
 ###
+
 config    = require "./config"
 
 coffee    = require "coffee-script"
+
 path      = require "path"
 http      = require "http"
+WebSocketServer = require("ws").Server
 
 express   = require "express"
 assets    = require "connect-assets"
 flash     = require "connect-flash"
 
-passport  = require "passport"
-FacebookStrategy = require("passport-facebook").Strategy
-LocalStrategy = require("passport-local").Strategy
-
-hash = require("./pass").hash
-
 mongoose = require "mongoose"
 ObjectID = require("mongodb").ObjectID
 
-WebSocketServer = require("ws").Server
+passport         = require "passport"
+FacebookStrategy = require("passport-facebook").Strategy
+LocalStrategy    = require("passport-local").Strategy
+hash             = require("./pass").hash
 
 
 ###
     DB Stuff
 ###
-
 mongoose.connect config.mongo.url, config.mongo.database,
     user: config.mongo.user
     pass: config.mongo.pwd
@@ -42,10 +41,9 @@ LocalUserSchema = new mongoose.Schema
     salt:           String
     hash:           String
 
-
 Users = mongoose.model "userauths", LocalUserSchema
 
-#Facebook Users Schema
+# Facebook Users Schema
 FacebookUserSchema = new mongoose.Schema
     fbId:           String
     email:
@@ -56,7 +54,6 @@ FacebookUserSchema = new mongoose.Schema
 
 FbUsers = mongoose.model "fbauths", FacebookUserSchema
 
-
 ###
     passport stuff
 ###
@@ -66,14 +63,14 @@ passport.use new LocalStrategy(
         Users.findOne
             name: username
         , (err, user) ->
-            return done(err)  if err
+            return done(err) if err
             unless user
                 return done(null, false,
                     message: "Incorrect username."
                 )
             hash password, user.salt, (err, hash) ->
-                return done(err)  if err
-                return done(null, user)  if hash is user.hash
+                return done(err) if err
+                return done(null, user) if hash is user.hash
                 done null, false,
                     message: "Incorrect password."
 )
@@ -106,15 +103,13 @@ passport.serializeUser (user, done) ->
 
 passport.deserializeUser (id, done) ->
     FbUsers.findById id, (err, user) ->
-        done err  if err
+        done err if err
         if user
             done null, user
         else
             Users.findById id, (err, user) ->
-                done err  if err
+                done err if err
                 done null, user
-
-
 
 
 ###
@@ -145,11 +140,10 @@ app.configure ->
     app.use app.router
     app.use express.static(path.join(__dirname, "public"))
 
+
 ###
     Define routes
 ###
-
-
 # Error Handling
 app.use (req, res, next) ->
     res.status 404
@@ -188,13 +182,11 @@ userExist = (req, res, next) ->
             res.redirect "/singup"
 
 ###
-
 Type of Messages:
     Alert
     Error
     Success
     Information
-
 ###
 
 
@@ -215,9 +207,11 @@ app.get "/", (req, res) ->
             user: null
             message: req.flash("info")
 
+
 # login -> get, show login gemplate
 app.get "/login", (req, res) ->
     res.render "login"
+
 
 # login -> post, perform authentication
 app.post "/login", passport.authenticate("local",
@@ -273,12 +267,14 @@ app.get "/profile", authenticatedOrNot, (req, res) ->
 app.get "/logout", (req, res) ->
     console.log "logout"
     req.logout()
-    res.redirect "/login"
+    res.redirect "/"
 
 app.post "/logout", (req, res) ->
     req.logout()
-    res.redirect "/login"
+    res.redirect "/"
 
+app.get "/release", (req, res) ->
+    res.render "layout"
 
 # All partials. This is used by Angular.
 app.get "/partials/:name", (req, res) ->
@@ -292,18 +288,15 @@ app.get "/partials/:name", (req, res) ->
 server = http.createServer(app).listen app.get("port"), ->
     console.log "Express server listening on port " + app.get("port")
 
+
 ###
     WebSocket stuff
 ###
+
 wss = new WebSocketServer(server: server)
 wss.on "connection", (ws) ->
-    id = setInterval(->
-        ws.send JSON.stringify(process.memoryUsage()), -> # ignore errors
-
-    , 100)
-    console.log "started client interval"
-    ws.on "close", ->
-        console.log "stopping client interval"
-        clearInterval id
-    ws.on "message", (msg) ->
-        console.log 'received: %s', msg
+  console.log "new connection"
+  ws.on "close", ->
+    console.log "connection closed"
+  ws.on "message", (msg) ->
+    console.log 'received: %s', msg
