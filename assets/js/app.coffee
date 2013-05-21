@@ -3,7 +3,7 @@
 # Declare app level module which depends on filters, and services
 
 @app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"])
-	.config ["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
+  .config(["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
     $locationProvider.html5Mode true
 
     $routeProvider.when "/",
@@ -35,5 +35,4 @@
       templateUrl: "partials/index"
 
     $routeProvider.otherwise redirectTo: "/"
-
-]
+])
