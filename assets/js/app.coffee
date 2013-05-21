@@ -1,38 +1,31 @@
 "use strict"
+@app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"]).config(["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
+  $locationProvider.html5Mode true
+  $routeProvider.when "/",
+    templateUrl: "partials/index"
+    controller: AppCtrl
 
-# Declare app level module which depends on filters, and services
+  $routeProvider.when "release",
+    templateUrl: "partials/release"
+    controller: ReleaseCtrl
 
-@app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"])
-  .config ["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
-    $locationProvider.html5Mode true
+  $routeProvider.when "control",
+    templateUrl: "partials/control"
+    controller: ControlCtrl
 
-    $routeProvider.when "/",
-      templateUrl: "partials/index"
-      controller: AppCtrl
+  $routeProvider.when "settings",
+    templateUrl: "partials/settings"
+    controller: SettingsCtrl
 
-    $routeProvider.when "release",
-      templateUrl: "partials/release"
-      controller: ReleaseCtrl
+  $routeProvider.when "partials/login",
+    templateUrl: "partials/login"
 
-    $routeProvider.when "control",
-      templateUrl: "partials/control"
-      controller: ControlCtrl
+  $routeProvider.when "partials/signup",
+    templateUrl: "partials/signup"
 
-    $routeProvider.when "settings",
-      templateUrl: "partials/settings"
-      controller: SettingsCtrl
+  $routeProvider.when "/logout",
+    controller: LogoutCtrl
+    templateUrl: "partials/index"
 
-    $routeProvider.when "partials/login"
-      templateUrl: "partials/login"
-      # controller: DialogCtrl
-
-    $routeProvider.when "partials/signup"
-      templateUrl: "partials/signup"
-
-    $routeProvider.when "/logout"
-      controller: LogoutCtrl
-      templateUrl: "partials/index"
-
-    $routeProvider.otherwise redirectTo: "/"
-
-]
+  $routeProvider.otherwise redirectTo: "/"
+])
