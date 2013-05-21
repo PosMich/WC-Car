@@ -1,0 +1,34 @@
+if message !== null
+    p #{message}
+
+    .alert.alert-block
+        a.close x
+        h4.alert-heading Alert!
+        p text
+
+    .alert.alert-error
+        a.close x
+        strong Error
+        asdfasdf
+
+    .alert.alert-success
+        a.close x
+        strong Success
+        | adsfkjasdlf
+
+    .alert.alert-info
+        a.close x
+        strong Information
+        | adfsasdfadsf
+
+if user === null
+    h1 Hi
+else if user.name
+    h1 Hi #{user.name}
+    a(href="/logout") Logout
+    br
+    a(href="/profile") Profile
+else
+    h1 Hi #{user.name}
+    br
+    a(href="/profile") Profile

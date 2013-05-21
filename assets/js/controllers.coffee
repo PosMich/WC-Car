@@ -178,4 +178,3 @@
 
 @ControlCtrl = ($scope) ->
   console.log "coontrol here."
-

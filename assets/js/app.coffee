@@ -4,7 +4,7 @@
 
 @app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"])
 	.config ["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
-		
+
     $routeProvider.when "/",
       templateUrl: "/partials/index"
       controller: AppCtrl
@@ -28,7 +28,9 @@
     $routeProvider.when "partials/signup"
       templateUrl: "partials/signup"
 
+    $routeProvider.ignore "/logout"
+
     $routeProvider.otherwise redirectTo: "/"
     $locationProvider.html5Mode true
-    
+
 ]
