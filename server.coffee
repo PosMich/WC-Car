@@ -207,23 +207,11 @@ app.get "/", (req, res) ->
             user: null
             message: req.flash("info")
 
-
-# login -> get, show login gemplate
-app.get "/login", (req, res) ->
-    res.render "login"
-
-
 # login -> post, perform authentication
 app.post "/login", passport.authenticate("local",
     successRedirect: "/"
     failureRedirect: "/login"
 )
-
-# signup --> get, show signup template
-app.get "/signup", (req, res) ->
-    res.render "layout",
-        user: null
-        message: req.flash("info")
 
 # signup --> post check if user exist
 app.post "/signup", userExist, (req, res, next) ->
@@ -263,11 +251,14 @@ app.get "/auth/facebook/callback", passport.authenticate("facebook",
 # settings path
 app.get "/settings", authenticatedOrNot, (req, res) ->
     res.format
-        "application/json": -> res.send req.user
+        "application/json": ->
+            console.log "json"
+            res.send req.user
+        "*/*": ->
+            console.log "AAAA"
 
 # logout
 app.get "/logout", (req, res) ->
-    console.log "logout"
     req.logout()
     res.redirect "/"
 
@@ -275,13 +266,14 @@ app.post "/logout", (req, res) ->
     req.logout()
     res.redirect "/"
 
-app.get "/release", (req, res) ->
-    res.render "layout"
-
 # All partials. This is used by Angular.
 app.get "/partials/:name", (req, res) ->
     name = req.params.name
     res.render "partials/" + name
+
+app.get "*", (req, res) ->
+    res.render "layout",
+        user: res.user
 
 
 ###

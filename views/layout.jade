@@ -30,8 +30,9 @@ html(ng-app="WebCar", lang="de")
                       a(href='/#impressum') Impressum
                     //- li(ng-controller="DialogCtrl")
                     //-   a(href='#', ng-click="openDialog('settings', 'SettingsCtrl', 'modal-settings')") Einstellungen
-                    li
-                      a(href="settings") Einstellungen
+                    if user !== null
+                      li
+                        a(href="settings") Einstellungen
                     li
                       if user === null
                         a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
