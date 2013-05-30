@@ -26,6 +26,7 @@ hash             = require("./pass").hash
 ###
     DB Stuff
 ###
+console.log "Connect to: "+config.mongo.url+" database "+config.mongo.database+" with user "+config.mongo.user+" and pw "+config.mongo.user
 mongoose.connect config.mongo.url, config.mongo.database,
     user: config.mongo.user
     pass: config.mongo.pwd
@@ -182,6 +183,11 @@ userExist = (req, res, next) ->
             res.redirect "/signup"
 
 ###
+http://www.jmanzano.es/blog/?p=603
+###
+
+
+###
 Type of Messages:
     Alert
     Error
@@ -271,10 +277,24 @@ app.get "/partials/:name", (req, res) ->
     name = req.params.name
     res.render "partials/" + name
 
+
+# controls
+app.get "/control/key", (req, res) ->
+    res.render "controls/key",
+        control: "keyboard"
+
+app.get "/control/key2", (req, res) ->
+    res.render "controls/key2",
+        control: "keyboard2"
+
+app.get "/control/gyro", (req, res) ->
+    res.render "controls/gyro",
+        control: "gyro"
+
+
 app.get "*", (req, res) ->
     res.render "layout",
         user: res.user
-
 
 ###
     Startup and log.
