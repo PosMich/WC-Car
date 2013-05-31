@@ -1,0 +1,229 @@
+@import url('//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700');
+
+body {
+    font-family: 'Open Sans', Calibri, Arial;
+    background-image: url(pattern.png);
+    background-repeat: repeat;
+    background-color: #FFF;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: normal;
+    color: #666;
+}
+
+h4 {
+    font-weight: normal;
+    padding-top: 20px;
+}
+
+a {
+    color: #c30101;
+}
+
+a:hover {
+    color: #ac0202;
+}
+
+.page-header {
+    margin-bottom: 10px;
+}
+
+.pull-center .btn {
+    margin-bottom: 5%;
+    margin-left: 1em;
+}
+
+.pull-center {
+    width: auto;
+    text-align: center;
+}
+
+#member > .page-header, #impressum > .page-header, #settings > .page-header {
+    border-color: #D5D5D4;
+}
+
+.btn-large {
+    margin: 20px 20px 20px 0px;
+}
+
+.navbar-inner .container {
+    padding-left: 50px;
+}
+
+.navbar {
+    border-style: solid; 
+    border-width: 0px 0px 7px; 
+
+    -moz-border-image: url(../../stripes.png) 0 0 7 repeat; 
+    -webkit-border-image: url(stripes.png) 0 0 7 repeat; 
+    -o-border-image: url(stripes.png) 0 0 7 repeat; 
+    border-image: url(stripes.png) 0 0 7 fill repeat;
+}
+
+.navbar-inner {
+    background-color: #000000;
+    background-image: linear-gradient(to bottom, #000000, #1D1D1D);
+    background-repeat: repeat-x;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    min-height: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid #000;
+}
+
+.navbar .btn-navbar {
+    background-image: none;
+    background-color: transparent;
+    margin: 12px 30px 0px 0px;
+    border: none;
+    box-shadow: none;
+}
+
+.navbar .btn-navbar:hover {
+    background-image: none;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+
+#main-menu-left {
+    padding-top: 8px;
+}
+
+#main-menu-left li a {
+    color: #FFF;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+#main-menu-left li a:hover {
+    color: #999;
+    background-color: transparent;
+}
+
+.navbar .brand  {
+    color: #FFF;
+    text-shadow: none;
+    background: url("/img/icon.png") no-repeat scroll 0 0 transparent;
+    padding: 10px 40px 18px;
+    margin-top: 5px;
+}
+
+.navbar .brand:hover  {
+    color: #999;
+}
+
+section {
+    margin-top: 40px;
+    padding-top: 80px;
+    margin: 0 auto;
+}
+
+/*SETTINGS*/
+
+
+.well {
+    background-color: #fbfbfb;
+}
+
+legend {
+    width: 100%;
+}
+
+#settings h1 {
+    margin-top: -70px;
+}
+
+#settings .span8 {
+    margin-top: 40px;
+}
+
+
+
+@media (max-width: 979px) and (min-width: 768px) {
+    .navbar-inner .container {
+        padding-left: 0px;
+    }
+
+    .navbar .brand  {
+        margin-left: 30px ;
+    }
+
+    #main-menu-left li a {
+        padding-left: 35px;
+    }
+
+    #main-menu-left li a:hover {
+        color: #999;
+    }
+
+    #main-menu-left li:last-child {
+        margin-bottom: -10px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    .container {
+        padding: 0px 30px 0px 30px;
+    }
+
+    .span3 {
+        float: left;
+        text-align: left;
+        margin: 0px 0px 0px 0px;
+        width: 50%;
+        padding-bottom: 10px;
+    }
+
+    .navbar-inner .container {
+        padding-left: 0px;
+    }
+
+    .navbar .brand  {
+        margin-left: 30px ;
+    }
+
+    #main-menu-left li a {
+        padding-left: 35px;
+    }
+
+    #main-menu-left li a:hover {
+        color: #999;
+        background-color: #202020;
+    }
+
+    #main-menu-left li:last-child {
+        margin-bottom: -10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0px 20px 0px 20px;
+    }
+
+    .navbar-inner .container {
+        padding-left: 0px;
+    }
+
+    .navbar .brand  {
+        margin-left: 30px ;
+    }
+
+    #main-menu-left li a {
+        padding-left: 35px;
+    }
+
+    #main-menu-left li a:hover {
+        color: #999;
+        background-color: #202020;
+    }
+
+    #main-menu-left li:last-child {
+        margin-bottom: -10px;
+    }
+}
+
