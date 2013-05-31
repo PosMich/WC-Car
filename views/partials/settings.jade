@@ -1,3 +1,4 @@
+
 #container_settings
   form(name="settings", class="well form-horizontal")
     section#settings
@@ -19,7 +20,7 @@
                   class="input-xlarge", id="email", ng-model="user.email", required)
                 span(ng-show="settings.email.$error.required", class="help-inline") Email is required.
                 span(ng-show="settings.email.$error.email", class="help-inline") Email is invalid.
-        .span4
+        .span8
           fieldset
             legend Avatar
               .control-group
