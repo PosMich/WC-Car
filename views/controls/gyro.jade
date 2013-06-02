@@ -1,0 +1,41 @@
+extends ./layout
+
+block content
+    #notification
+        #notificationHeader Wrong device orientation
+        #notificationBody Please turn your mobile Device into landscape mode for proper device orientation control.
+    #blackening
+    .main
+        #contentWrapper
+            h1.noPadding Values of Gyroscope:
+            #slider-vertical
+            p Orientation: 
+            #orient 0
+            p Beta (left/right):
+            #gBeta 0
+            p Gamma (forwards/backwards):
+            #gGamma 0
+        #speedWrapper
+
+            span#forwardLabel forward
+            #forward
+                #boxForward
+                    #thumbForward
+                    #middleForward
+            span#backLabel back
+
+        #directionWrapper
+            // Display Direction 
+            span#leftLabel left
+            span#rightLabel right
+            #direction
+                #boxDirection
+                #thumbDirection
+                #middleDirection
+
+      //#notify
+          #dialog(title='Wrong Orientation')
+              p
+                  | Wrong Device Orientation!
+              br
+                  | Please go back to Landscape mode

@@ -2,31 +2,30 @@ extends ./layout
 
 block content
     .main
-        .gyroValues
-            #contentWrapper
-                h3.noPadding Values of Keypress:
-                  //Speed 
-                h4 Speed:
-                p#speedKeypress
-                h4 Direction:
-                p#directionKeypress
-            #forwardButton.buttonsKeypress
-            #leftButton.buttonsKeypress
-            #rightButton.buttonsKeypress
-            #speedWrapper
-                // Display speed 
-                span#forwardLabel Forward
-                #forward
-                    #boxForward
-                        #thumbForward
-                        #middleForward
-                span#backLabel Back
-            #directionWrapper
-                // Display Direction 
-                span#leftLabel left
-                span#rightLabel right
-                #direction
-                    #boxDirection
-                    #thumbDirection
-                    #middleDirection
-            #backButton.buttonsKeypress
+        #contentWrapper
+            h3.noPadding Values of Keypress:
+              //Speed 
+            p Speed:
+            #speedKeypress
+            p Direction:
+            #directionKeypress
+        #forwardButton.buttonsKeypress
+        #leftButton.buttonsKeypress
+        #rightButton.buttonsKeypress
+        #speedWrapper
+            // Display speed 
+            span#forwardLabel forward
+            #forward
+                #boxForward
+                    #thumbForward
+                    #middleForward
+            span#backLabel back
+        #directionWrapper
+            // Display Direction 
+            span#leftLabel left
+            span#rightLabel right
+            #direction
+                #boxDirection
+                #thumbDirection
+                #middleDirection
+        #backButton.buttonsKeypress

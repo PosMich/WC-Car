@@ -9,7 +9,7 @@ html(ng-app="WebCar", lang="de")
 
         link(type="image/x-icon", rel="icon", href="/favicon.ico")
         link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
-
+        
         != css("controls.css")
 
     body
@@ -18,9 +18,11 @@ html(ng-app="WebCar", lang="de")
 // ============================================================================
 // Load jQuery
 != js("lib/jquery-2.0.0.min")
+//!= js("lib/jquery-ui-1.10.3.custom.min")
+!= js("lib/keydrown")
 if control == "gyro"
     != js("control/script/sensors")
 else if control == "keyboard"
-    != js("control/script/keypress")
+    != js("control/script/keypress2")
 else if control == "keyboard2"
     != js("control/script/keypress2")
