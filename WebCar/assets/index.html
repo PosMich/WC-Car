@@ -10,13 +10,16 @@
     
     <script language="javascript" type="text/javascript" src="js/zepto.js"></script>
     <script language="javascript" type="text/javascript" src="js/coffee-script.js"></script>
-    <script language="javascript" type="text/coffeescript" src="coffee/wc.coffee"></script>
+    <!-- script language="javascript" type="text/coffeescript" src="coffee/wc.coffee"></script -->
+    <script language="javascript" type="text/javascript" src="js/main.js"></script>
 
 </head>
+
 <body>
 <div class="imgContainer">
   <img id="imgStream"></img>
 </div>
+
 <div class="control">
   <h1>WebCar Control-Center</h1>
   <label for"token">Token</label>
@@ -26,7 +29,69 @@
   <label for"token">Passphrase</label>
   <input type="password" id="passphrase" placeholder="Passphrase"></input>
   <button class="kill">Kill!</button>
+  <h1 id="Speed"></h1>
+  <h1 id="Direction"></h1>
+  <h1 id="Key"></h1>
+  <h1 id="Signal"></h1>
 </div>
-<div class="menu"></div>
+<!--
+<div class='main'>
+  <div class=".gyroValues">
+    <div id="contentWrapper">
+      <h3 class="noPadding">Values of Gyroscope:</h3>
+      <div id="slider-vertical"></div>
+
+      <h4>Orientation:</h4>
+      <p id="orient"></p>
+
+      <h4>Beta (left/right):</h4>
+        <p id="gBeta"></p>
+        <p id="wBeta"></p>
+
+      <h4>Gamma (forwards/backwards):</h4>
+        <p id="gGamma"></p>
+        <p id="wGamma"></p>
+    </div>
+
+    <div id="speedWrapper">
+-->
+      <!-- Display speed -->
+<!--
+      <span id="forwardLabel">forward</span>
+      <div id="forward">
+        <div id="boxForward">
+          <div id="thumbForward"></div>
+          <div id="middleForward"></div>
+        </div>
+      </div>
+      <span id="backLabel">back</span>
+    </div>
+
+    <div id="directionWrapper">
+-->
+      <!-- Display Direction -->
+<!--
+      <span id="leftLabel">left</span>
+      <span id="rightLabel">right</span>
+
+      <div id="direction">
+        <div id="boxDirection">
+          <div id="thumbDirection"></div>
+          <div id="middleDirection"></div>
+        </div>
+      </div>
+    </div>
+-->
+    <!--<button class="calibrate">Calibrate</button>-->
+<!--
+  </div>
+
+  <div id="notify">
+    <div id="dialog" title="Wrong Orientation">
+      <p>Wrong Device Orientation!<br/>Please go back to Landscape mode</p>
+    </div>
+  </div>
+-->
+</div>
 </body>
 </html>

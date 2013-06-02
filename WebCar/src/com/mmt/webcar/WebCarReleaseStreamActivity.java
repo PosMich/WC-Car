@@ -25,6 +25,8 @@ import com.mmt.utils.WCServer;
 import com.mmt.utils.WCSocket;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +44,9 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class WebCarReleaseStreamActivity extends Activity implements
@@ -55,6 +60,8 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	
 	private TextView mTextIP;
 	private TextView mTextToken;
+	private AlertDialog mWifiAlertDialog;
+	private AlertDialog mConnectorAlertDialog;
 	
 	boolean inProcessing;
 	
@@ -69,6 +76,9 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	
 	private WifiManager mWifi;
 	private Timer mTimer;
+	
+	private Button mHomeButton;
+	private Button mCreditScreenButton;
 	
 	final Context context = this;
 	
@@ -98,6 +108,20 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		connected = false;
 		mTextIP = (TextView) findViewById(R.id.textReleaseStreamingIP);
 		mTextToken = (TextView) findViewById(R.id.textReleaseStreamingToken);
+		
+		AlertDialog.Builder connectorAlertBuilder = new AlertDialog.Builder(context);
+		connectorAlertBuilder.setMessage( "Phone connector has been unplugged!\nPlease plug the connector in again." );
+		mConnectorAlertDialog = connectorAlertBuilder.create();
+		
+		AlertDialog.Builder wifiAlertBuilder = new AlertDialog.Builder(context);
+		wifiAlertBuilder.setMessage( "Wifi Signal has been lost!\nPlease go back in the Wifi-range" );
+		mWifiAlertDialog = wifiAlertBuilder.create();
+		
+		mHomeButton = (Button) findViewById(R.id.btnHome);
+		mHomeButton.setOnClickListener(onHomeButton);
+		
+		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
+        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
 		
 		try {
 			
@@ -158,6 +182,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			  public void run() {
 				  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
 				  Log.d( TAG + " :: Speed", "Current Speed: " + linkSpeed);
+				  mSocket.send("{\"type\": \"signal_strength\", \"value\": \"" + linkSpeed + "\"}");
 			  }
 			}, 1000, 1000);
 	}
@@ -257,8 +282,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 						byte[] imageBytes = out.toByteArray();
 						
 						String byteString = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-						
-						mSocket.send( byteString );
+						mSocket.send("{\"type\": \"image_data\", \"value\": \"" + byteString + "\"}");
 					} else {
 						Log.d( TAG + " :: Image", "Failed to compress frame to jpeg." );
 					}
@@ -331,7 +355,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mSocket = new WCSocket(port) {
 			@Override
 			public void onMessage( WebSocket conn, String message ) {
-				Log.d( TAG + " :: Message", message );
 				try {
 					JSONObject json = new JSONObject(message);
 					
@@ -347,6 +370,8 @@ public class WebCarReleaseStreamActivity extends Activity implements
 						}
 					} else if (json.getInt("type") == Type.DRIVE.val() && connected ) {
 						try {
+							Log.d( TAG + " :: Message", "L2R: " + json.getDouble("l2r") 
+									+ ", B2F: " + json.getDouble("b2f") );
 							Driver.drive(json.getDouble("l2r"), json.getDouble("b2f"));
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -413,8 +438,10 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			  NetworkInfo info = (NetworkInfo)intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 			  if (info.getState().equals(NetworkInfo.State.CONNECTED)) {
 				  Log.d( TAG, "Wifi - Network has changed to CONNECTED");
+				  mWifiAlertDialog.dismiss();
 			  } else if (info.getState().equals(NetworkInfo.State.DISCONNECTED)) {
 				  Log.d( TAG, "Wifi - Network has changed to DISCONNECTED");
+				  mWifiAlertDialog.show();
 			  }
 			}
 
@@ -430,18 +457,60 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					case 0:
 						// unplugged
 						Log.d( TAG, "Phone connector has been unplugged." );
+						mConnectorAlertDialog.show();
 						break;
 					case 1:
 						// plugged in
 						Log.d( TAG, "Phone connector has been plugged in." );
+						mConnectorAlertDialog.dismiss();
 						break;
 					default:
 						// unknown
 						Log.d( TAG, "Phone connector status is unknown." );
+						
+						mConnectorAlertDialog.show();
 						break;
 				}
 			}
 		}
 	}
+	
+	
+	OnClickListener onHomeButton = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// Call new Activity
+			Intent releaseIntent = new Intent(WebCarReleaseStreamActivity.this, WebCarActivity.class);
+			WebCarReleaseStreamActivity.this.startActivity(releaseIntent);
+		}
+	};
+	
+    OnClickListener onBtnCreditScreen = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// custom dialog
+			final Dialog dialog = new Dialog(context);
+			dialog.setContentView(R.layout.custom);
+			dialog.setTitle("Credits");
 
+			// set the custom dialog components - text, image and button
+			TextView textCreditsDialog = (TextView) dialog
+					.findViewById(R.id.textCreditsDialog);
+			textCreditsDialog.setText(R.string.contentCredits);
+
+			Button buttonCancelCreditsDialog = (Button) dialog
+					.findViewById(R.id.dialogButtonOK);
+			// if button is clicked, close the custom dialog
+			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+				}
+			});
+
+			dialog.show();
+		}
+	};
 }

@@ -2,10 +2,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#0099cc"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".WebCarReleaseAudioActivity" >
     
+    <RelativeLayout
+        android:background="#333333"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="0dp"
+	        android:layout_centerInParent="true"
+	        android:orientation="horizontal"
+	        android:padding="10dp" >
+	
+	        <Button
+	            android:id="@+id/btnHome"
+	            android:layout_width="101dp"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:background="#111111"
+	            android:padding="10dp"
+	            android:text="@string/home"
+	            android:textColor="#DDDDDD"
+	            android:textSize="18sp" />
+	
+	        <ImageView
+	            android:id="@+id/logo"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:contentDescription="@string/logoContentDescription"
+	            android:src="@drawable/ic_launcher" />
+	
+	        <Button
+	            android:id="@+id/btnCreditScreen"
+	            android:layout_width="101dp"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:background="#111111"
+	            android:padding="10dp"
+	            android:text="@string/credit"
+	            android:textColor="#DDDDDD"
+	            android:textSize="18sp" />
+	    </LinearLayout>
+	    
+	</RelativeLayout>
+	
     <TextView
         android:id="@+id/textReleaseAudioHeading"
         android:layout_width="match_parent"
@@ -14,8 +60,8 @@
         android:gravity="center_horizontal"
         android:keepScreenOn="true"
         android:text="@string/release_heading"
-        android:textColor="#ffffff"
-        android:textSize="45sp"
+        android:textColor="#333333"
+        android:textSize="40sp"
         android:textStyle="bold" 
         android:layout_weight="0"/>
     
@@ -26,7 +72,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
         android:text="@string/release_audio_content" 
-        android:textColor="#CEEDF9"
+        android:textColor="#666666"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_weight="0"
@@ -52,6 +98,7 @@
         android:text="@string/audio_info"
         android:textAlignment="center"
         android:textSize="16sp"
+        android:textColor="#888888"
         android:layout_marginBottom="20dp"/>
 
     

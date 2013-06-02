@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">WebCar</string>
-    <string name="dummy_button">Dummy Button</string>
     <string name="content">Web\nCar</string>
     <string name="release">Release</string>
     <string name="control">Control</string>
@@ -14,7 +13,6 @@
     <string name="passphrase_info">The passphrase is important for sharing the control of your WebCar. With the passphrase you may allways panic shut-down the connection, so you have the control every time.</string>
     <string name="release_step_passphrase_reenter_heading">re-enter</string>
     <string name="title_activity_web_car_release_audio">WebCarReleaseAudioActivity</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="content_descr_image_status">Status Image (Success/Error)</string>
     <string name="release_audio_content">Plug in the phone connector from your WebCar</string>
     <string name="audio_info">To plug in your phone connector is important for control your car. The audio signals will be translated to the speed/directions/etc. The app will turn on your system volume when the phone connector is plugged in.</string>
@@ -26,5 +24,21 @@
     <string name="streaming_info">Do NOT disconnect one of the devices during driving. The WebCar will stop immediately.</string>
     <string name="release_streaming_content_note">Important Note: Both devices have to be in the same Wifi-Network.</string>
     <string name="release_streaming_token">Token: </string>
+    <string name="contentCredits">
+        Das Projekt WC-Car wurde von\n
+        &#8226; Lederer Maria Lisa\n
+        &#8226; Poschacher Michael\n
+		&#8226; Slamanig Sebastian\n
+		im Rahmen des Studiums an der Fachhochschule Puch Urstein (Salzburg) 
+		im Bereichs "Multimedia Technology - Web and Communities" erstellt.\n\n
+		BetreuerInnen:\n
+		&#8226; DI Brigitte Jellinek (Fachsbereichsleiterin \tMMT - Web and Communities)\n
+		&#8226; Michael Cramer (Mobile Applications)\n
+		&#8226; Achim Stremplat (Mobile Applications)\n
+    </string>
+    <string name="credit">About</string>
+    <string name="logoContentDescription">The Logo of WebCar</string>
+    <string name="home">Home</string>
+    <string name="carDescription">RC Car</string>
 
 </resources>

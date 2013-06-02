@@ -1,49 +1,95 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    android:paddingBottom="30dp"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".WebCarActivity" >
 
-    <!--
-         The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc.
-    -->
-	
-	    <TextView
-	        android:id="@+id/fullscreen_content"
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:gravity="center"
-	        android:keepScreenOn="true"
-	        android:text="@string/content"
-	        android:textColor="#33b5e5"
-	        android:textSize="50sp"
-	        android:textStyle="bold" />
-	
-	    <!--
-	         This FrameLayout insets its children based on system windows using
-	         android:fitsSystemWindows.
-	    -->
-
-	    <Button
-	        android:id="@+id/btnControl"
-	        android:layout_width="101dp"
+    <RelativeLayout
+        android:background="#333333"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+	    <LinearLayout
+	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentBottom="true"
-	        android:layout_marginLeft="38dp"
-	        android:text="@string/control" />
+	        android:layout_marginTop="0dp"
+	        android:layout_centerInParent="true"
+	        android:orientation="horizontal"
+	        android:padding="10dp" >
+	
+	        <Button
+	            android:id="@+id/btnHome"
+	            android:layout_width="101dp"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:background="#111111"
+	            android:padding="10dp"
+	            android:text="@string/home"
+	            android:textColor="#DDDDDD"
+	            android:textSize="18sp" />
+	
+	        <ImageView
+	            android:id="@+id/logo"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:contentDescription="@string/logoContentDescription"
+	            android:src="@drawable/ic_launcher" />
+	
+	        <Button
+	            android:id="@+id/btnCreditScreen"
+	            android:layout_width="101dp"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:background="#111111"
+	            android:padding="10dp"
+	            android:text="@string/credit"
+	            android:textColor="#DDDDDD"
+	            android:textSize="18sp" />
+	    </LinearLayout>
+	    
+	</RelativeLayout>
 
-	    <Button
-	        android:id="@+id/btnRelease"
-	        android:layout_width="101dp"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentBottom="true"
-	        android:layout_marginRight="38dp"
-	        android:text="@string/release" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/repeat_stripes"
+        android:orientation="horizontal" >
+    </LinearLayout>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/car"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="20"
+        android:src="@drawable/car_big"
+        android:contentDescription="@string/carDescription" />
+    
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_weight="0"
+        android:background="#333333"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/btnRelease"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="#111111"
+            android:padding="10dp"
+            android:text="@string/release"
+            android:textColor="#DDDDDD"
+            android:textSize="18sp" />
+        
+    </RelativeLayout>
+
+    
+
+</LinearLayout>

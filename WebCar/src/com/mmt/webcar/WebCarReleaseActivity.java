@@ -1,6 +1,8 @@
 package com.mmt.webcar;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -17,6 +20,9 @@ public class WebCarReleaseActivity extends Activity {
 	private EditText mPassphraseReentered;
 	private ImageView mStatusPassphrase;
 	private ImageView mStatusPassphraseReentered;
+	private Button mHomeButton;
+	private Button mCreditScreenButton;
+	final Context context = this;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,12 @@ public class WebCarReleaseActivity extends Activity {
 		mStatusPassphrase = (ImageView) findViewById(R.id.imageStatusPassphrase);
 		mStatusPassphraseReentered = (ImageView) findViewById(R.id.imageStatusPassphraseReentered);
 		
+		mHomeButton = (Button) findViewById(R.id.btnHome);
+		mHomeButton.setOnClickListener(onHomeButton);
+		
+		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
+        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
+		
 		btnConfirm.setOnClickListener(btnConfirmAction);
 		
 		if( !((WebCarApplication)getApplication()).getPassphrase().equals("") ) {
@@ -43,6 +55,16 @@ public class WebCarReleaseActivity extends Activity {
 		}
 				
 	}
+	
+	OnClickListener onHomeButton = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// Call new Activity
+			Intent releaseIntent = new Intent(WebCarReleaseActivity.this, WebCarActivity.class);
+			WebCarReleaseActivity.this.startActivity(releaseIntent);
+		}
+	};
 	
 	OnClickListener btnConfirmAction = new OnClickListener() {
 		
@@ -115,6 +137,34 @@ public class WebCarReleaseActivity extends Activity {
 				mStatusPassphraseReentered.setVisibility(1);
 			else
 				mStatusPassphraseReentered.setImageDrawable(getResources().getDrawable(R.drawable.okay));
+		}
+	};
+	
+    OnClickListener onBtnCreditScreen = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// custom dialog
+			final Dialog dialog = new Dialog(context);
+			dialog.setContentView(R.layout.custom);
+			dialog.setTitle("Credits");
+
+			// set the custom dialog components - text, image and button
+			TextView textCreditsDialog = (TextView) dialog
+					.findViewById(R.id.textCreditsDialog);
+			textCreditsDialog.setText(R.string.contentCredits);
+
+			Button buttonCancelCreditsDialog = (Button) dialog
+					.findViewById(R.id.dialogButtonOK);
+			// if button is clicked, close the custom dialog
+			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+				}
+			});
+
+			dialog.show();
 		}
 	};
 }

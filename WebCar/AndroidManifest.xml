@@ -56,7 +56,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_web_car_release_stream"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
         <activity
             android:name="com.mmt.webcar.WebCarReleaseWLANActivity"
@@ -69,3 +69,7 @@
     </application>
 
 </manifest>
+
+<!-- 
+android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+ -->
