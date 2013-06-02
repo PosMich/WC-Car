@@ -1,3 +1,80 @@
+@import url('//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700');
+
+html, body {
+    margin: 0px;
+    height: 99%;
+    font-family: 'Open Sans', Calibri, Arial;
+    overflow: hidden;
+    background-image: url(pattern.png);
+    background-repeat: repeat;
+    background-color: #FFF;
+    color: #666;
+
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: normal;
+}
+
+span {
+  font-size: 14px;
+}
+
+#notification {
+  background-color: #FFF;
+  border: 1px solid #000;
+  width: 80%;
+  position: absolute;
+  margin-left: 10%;
+  margin-top: 10%;
+  z-index: 999;
+  display: inline;
+  height: auto;
+}
+
+#notificationHeader {
+  background-color: #000;
+  color: #FFF;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+#notificationBody {
+  font-size: 18px;
+  padding: 30px 20px;
+}
+
+#blackening {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  z-index: 998;
+  display: none;
+}
+
+#contentWrapper {
+  width: 95%;
+  height: 80%;
+  float: left;
+}
+
+#speedWrapper {
+  width: 5%;
+  height: 80%;
+  float: left;
+}
+
+#directionWrapper {
+  width: 93%;
+  height: 15%;
+  float: left;
+  margin-top: 40px;
+  padding: 0px;
+  bottom: 0;
+}
+
 .buttonsKeypress {
     width: 60px;
     height: 60px;
@@ -9,7 +86,7 @@
 }
 
 #forwardButton {
-    background-image: url('images/forward.png');
+    background-image: url('forward.png');
     left: 46%;
     margin-left: -30px;
     position: absolute;
@@ -17,7 +94,7 @@
 }
 
 #backButton {
-    background-image: url('images/back.png');
+    background-image: url('back.png');
     left: 46%;
     margin-left: -30px;
     position: absolute;
@@ -25,7 +102,7 @@
 }
 
 #leftButton {
-    background-image: url('images/left.png');
+    background-image: url('left.png');
     top: 43%;
     margin-top: -30px;
     position: absolute;
@@ -33,9 +110,210 @@
 }
 
 #rightButton {
-    background-image: url('images/right.png');
+    background-image: url('right.png');
     right: 10%;
     top: 43%;
     margin-top: -30px;
     position: absolute;
+}
+
+#direction {
+    width:100%;
+    height: 20px;
+    padding-top: 2%;
+
+}
+
+#thumbDirection {
+    height: 28px;
+    width: 5px;
+    background-color: #333;
+    left: 50%;
+    position:relative;
+    top: -24px;
+}
+
+#boxDirection {
+    width: 100%;
+    height: 20px;
+    background-color: #d0d0d0;
+    border: none;
+}
+
+#middleDirection {
+    height: 40px;
+    width: 2px;
+    background-color: #cf000a;
+    left: 50%;
+    margin-left: 1px;
+    position:relative;
+    top: -57.5px;
+    border: 0px solid black;
+}
+
+#leftLabel {
+    float:left;
+    font-style: italic;
+    margin-top: -4px;
+}
+
+#rightLabel {
+    float: right;
+    font-style: italic;
+    margin-top: -4px;
+}
+
+#forwardLabel {
+    font-style: italic;
+    text-align: center;
+    display: block;
+    padding: 30px 10px 4px 0px;
+}
+
+#backLabel {
+    font-style: italic;
+    text-align: center;
+    display: block;
+    margin-top: 4px;
+    padding-right: 10px;
+}
+
+#forward {
+    height:90%;
+    width: 20px;
+    position: relative;
+    padding-left: 25%;
+}
+
+#thumbForward {
+    height: 5px;
+    width: 28px;
+    background-color: #333;
+    top: 50%;
+    position:relative;
+    left: -4px;
+}
+
+#boxForward {
+    height: 100%;
+    width: 20px;
+    background-color: #d0d0d0;
+    border: none;
+}
+
+#middleForward {
+    width: 40px;
+    height: 2px;
+    top: 50%;
+    position:relative;
+    left: -10px;
+    border: 0px solid black;
+    margin-top: -3px;
+    background-color: #cf000a;
+}
+
+
+#out {
+  width: 100px;
+  height: 20px;
+}
+
+.main p {
+  padding-bottom: 5px;
+}
+
+.main h4 {
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.main h5 {
+  padding-top: 5px;
+  margin-top: 10px;
+
+}
+
+.main {
+  padding: 0px 40px 0px 20px;
+  height: 100%;
+  margin: 0px;
+}
+
+#notify {  
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background:rgba(0,0,0,0.6);
+    z-index:0;
+}
+
+#dialog {
+  width: 70%;
+  height: 70%;
+}
+
+#notify p {
+  margin: 0px auto;
+  color: white;
+  font-size: 30px;
+}
+
+
+#orient {
+  margin: 0px;
+  padding: 0px;
+}
+
+p {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+@media (max-width: 767px) {
+    body {
+      font-size: 11px;
+    }
+
+    h1 {
+      font-size: 16px;
+    }
+
+    #directionWrapper {
+      margin-top: 10px;
+    }
+
+    #forwardLabel {
+      padding: 5px 10px 4px 0px;
+    }
+
+    #forwardLabel, #backLabel, #rightLabel, #leftLabel {
+      font-size: 11px;
+    }
+
+    #rightLabel, #leftLabel {
+      margin-top: -10px;
+    }
+
+    #speedWrapper {
+      height: 70%;
+    }
+
+    #forwardButton, #backButton,  #rightButton, #leftButton {
+      height: 30px;
+      width: 30px;
+      background-size: 30px 30px;
+    }
+
+    #rightButton, #leftButton {
+      top: 43%;
+      margin-top: -10px;
+      position: absolute;
+    }
+
+    #rightButton {
+      margin-right: 10%;
+    }
 }

@@ -26,6 +26,14 @@ a:hover {
     color: #ac0202;
 }
 
+.height {
+    height: 0px;
+}
+
+.heightAuto {
+    height: auto;
+}
+
 #impressum {
     margin-bottom: 20px;
 }
