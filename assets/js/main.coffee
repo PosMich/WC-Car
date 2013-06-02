@@ -4,3 +4,6 @@ $(document).ready ->
     $.scrollTo @hash or 0, 400,
       offset:
         top: -60
+
+  $("#main-menu-left li a").on "click", ->
+    $("#main-menu").toggleClass "height"

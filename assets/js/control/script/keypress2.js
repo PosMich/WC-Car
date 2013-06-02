@@ -2,40 +2,25 @@ $(function(){
 
     var direction = 0;
     var speed = 0;
-
     var keys = {};
 
 
-
     $(document).keydown(function(e) {
-
         keys[e.which] = true;
-
-
 
         for (var i in keys) {
 
             if(i == 37) {
                 if(direction >= -1) {
 
-                    if(direction > 0) {
-                        direction = 0;
-                    }
-
                     direction -= 0.025;
 
                     $('#leftButton').addClass('buttonsKeypressActive');
                     updateDirection(direction);
-
-                    
                 }
             }
             else if(i == 39) {
                 if(direction <= 1) {
-                    
-                    if(direction < 0) {
-                        direction = 0;
-                    }
 
                     direction += 0.025;
                     
@@ -71,7 +56,6 @@ $(function(){
             }
         }
 
-
         $(document).keyup(function(e) {
             switch (e.keyCode) {
                 case 37:
@@ -91,34 +75,30 @@ $(function(){
 
         });
 
-
-
-            
-
     });
 
     function updateDirection(direction) {
         console.log(direction);
-        $("#directionKeypress").html(direction);
+        $("#directionKeypress").html(Math.round(direction*1000)/1000);
 
         //Animating thumb to display the direction
-        $("#thumbDirection").css({left:(((Math.round(direction*100)/100)+1)*($('#direction').width()/2))});
+        $("#thumbDirection").css({left:(((Math.round(direction*1000)/1000)+1)*($('#direction').width()/2))});
     }
 
     function updateSpeed(speed) {
         console.log(speed);
         
-        $("#speedKeypress").html(speed);
+        $("#speedKeypress").html(Math.round(speed*1000)/1000);
         $("#thumbForward").css({top:(((Math.round(-speed*100)/100)+1)*($('#forward').height()/2))});
     }
 
     setInterval(function() {
                   
-        if (speed > 0.025) {
+        if (speed >= 0.025) {
             speed -= 0.025;
             updateSpeed(speed);
         }
-        else if (speed <= 0) {
+        else if (speed < 0) {
             speed += 0.025;
             updateSpeed(speed);
         }   
