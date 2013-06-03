@@ -3,8 +3,12 @@ $(function(){
     var direction = 0;
     var speed = 0;
 
-    $(document).keypress(function(e) {
-        if(e.keyCode == 37) {
+    kd.run(function () {
+        kd.tick();
+    });
+
+    
+        kd.LEFT.down(function () {
             if(direction >= -1) {
                 direction -= 0.025;
                 $("#directionKeypress").html(direction);
@@ -13,32 +17,34 @@ $(function(){
                 $("#thumbDirection").css({left:(((Math.round(direction*100)/100)+1)*($('#direction').width()/2))});
                 $('#leftButton').addClass('buttonsKeypressActive');
             }
-        }
-        else if(e.keyCode == 39) {
+        });
+
+        kd.RIGHT.down(function () {
             if(direction <= 1) {
                 direction += 0.025;
                 $("#directionKeypress").html(direction);
                 $("#thumbDirection").css({left:(((Math.round(direction*100)/100)+1)*($('#direction').width()/2))});
                 $('#rightButton').addClass('buttonsKeypressActive');
             }
-        }
+        });
 
-        if(e.keyCode == 40) {
+        kd.DOWN.down(function () {
             if(speed >= -1) {
                 speed -= 0.025;
                 $("#speedKeypress").html(speed);
                 $("#thumbForward").css({top:(((Math.round(-speed*100)/100)+1)*($('#forward').height()/2))});
                 $('#backButton').addClass('buttonsKeypressActive');
             }
-        }
-        else if(e.keyCode == 38) {
+        });
+
+        kd.UP.down(function () {
             if(speed <= 1) {
                 speed += 0.025;
                 $("#speedKeypress").html(speed);
                 $("#thumbForward").css({top:(((Math.round(-speed*100)/100)+1)*($('#forward').height()/2))});
                 $('#forwardButton').addClass('buttonsKeypressActive');
             }
-        }
+        });
 
         $(document).keyup(function(e) {
             switch (e.keyCode) {
@@ -59,6 +65,3 @@ $(function(){
 
     });
 
-
-
-});

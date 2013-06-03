@@ -32,10 +32,6 @@ $(function(){
             if(i == 40) {
                 if(speed >= -1) {
 
-                    if(speed > 0) {
-                        speed = 0;
-                    }
-
                     speed -= 0.025;
 
                     $('#backButton').addClass('buttonsKeypressActive');
@@ -44,10 +40,6 @@ $(function(){
             }
             else if(i == 38) {
                 if(speed <= 1) {
-
-                    if(speed < 0) {
-                        speed = 0;
-                    }
 
                     speed += 0.025;
                     $('#forwardButton').addClass('buttonsKeypressActive');
