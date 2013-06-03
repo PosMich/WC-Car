@@ -37,29 +37,19 @@ $(function(){
     kd.DOWN.down(function () {
         if(speed >= -1) {
 
-            if(speed > 0) {
-                speed = 0;
-            }
-
             speed -= 0.025;
 
             $('#backButton').addClass('buttonsKeypressActive');
             updateSpeed(speed);
         }
     });
-    kd.UP.up(function () {
-        $('#forwardButton').removeClass('buttonsKeypressActive');
-    });
+
     kd.DOWN.up(function () {
         $('#backButton').removeClass('buttonsKeypressActive');
     });
 
     kd.UP.down(function () {
         if(speed <= 1) {
-
-            if(speed < 0) {
-                speed = 0;
-            }
 
             speed += 0.025;
             $('#forwardButton').addClass('buttonsKeypressActive');

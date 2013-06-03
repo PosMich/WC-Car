@@ -32,20 +32,15 @@ $ ->
 
   kd.DOWN.down ->
     if speed >= -1
-      speed = 0  if speed > 0
       speed -= 0.025
       $("#backButton").addClass "buttonsKeypressActive"
       updateSpeed speed
-
-  kd.UP.up ->
-    $("#forwardButton").removeClass "buttonsKeypressActive"
 
   kd.DOWN.up ->
     $("#backButton").removeClass "buttonsKeypressActive"
 
   kd.UP.down ->
     if speed <= 1
-      speed = 0  if speed < 0
       speed += 0.025
       $("#forwardButton").addClass "buttonsKeypressActive"
       updateSpeed speed
