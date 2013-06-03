@@ -86,11 +86,11 @@ $(function(){
 
     setInterval(function() {
                   
-        if (speed >= 0.025) {
+        if ((Math.round(speed*1000)/1000) >= 0.025) {
             speed -= 0.025;
             updateSpeed(speed);
         }
-        else if (speed < 0) {
+        else if ((Math.round(speed*1000)/1000) < 0) {
             speed += 0.025;
             updateSpeed(speed);
         }   
