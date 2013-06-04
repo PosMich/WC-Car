@@ -32,10 +32,6 @@ $(function(){
             if(i == 40) {
                 if(speed >= -1) {
 
-                    if(speed > 0) {
-                        speed = 0;
-                    }
-
                     speed -= 0.025;
 
                     $('#backButton').addClass('buttonsKeypressActive');
@@ -44,10 +40,6 @@ $(function(){
             }
             else if(i == 38) {
                 if(speed <= 1) {
-
-                    if(speed < 0) {
-                        speed = 0;
-                    }
 
                     speed += 0.025;
                     $('#forwardButton').addClass('buttonsKeypressActive');
@@ -78,7 +70,6 @@ $(function(){
     });
 
     function updateDirection(direction) {
-        console.log(direction);
         $("#directionKeypress").html(Math.round(direction*1000)/1000);
 
         //Animating thumb to display the direction
@@ -86,7 +77,6 @@ $(function(){
     }
 
     function updateSpeed(speed) {
-        console.log(speed);
         
         $("#speedKeypress").html(Math.round(speed*1000)/1000);
         $("#thumbForward").css({top:(((Math.round(-speed*100)/100)+1)*($('#forward').height()/2))});
