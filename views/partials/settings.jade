@@ -1,44 +1,43 @@
-
 #container_settings
-  form(name="settings", class="well form-horizontal")
-    section#settings
-      .page-header
-        h1 Einstellungen
-      .row
-        .span8
-          fieldset
-            legend Persönliches
-            .control-group
-              label(for="acronym", class="control-label") Name:
-              .controls
-                input(type="text", name="acronym", class="input-xlarge", 
-                  id="acronym", ng-model="user.name", readonly)
-            .control-group
-              label(for="email", class="control-label") Email:
-              .controls
-                input(type="email", name="email", 
-                  class="input-xlarge", id="email", ng-model="user.email", required)
-                span(ng-show="settings.email.$error.required", class="help-inline") Email is required.
-                span(ng-show="settings.email.$error.email", class="help-inline") Email is invalid.
-        .span8
+  .page-header
+    h1 Einstellungen
+  .row
+    .span10.offset1
+      form(name="settings", class="well form-horizontal")
+        fieldset
+          legend Persönliches
+          .control-group
+            label(for="acronym", class="control-label") Name:
+            .controls
+              input(type="text", name="acronym", class="input-xlarge",
+                id="acronym", ng-model="user.name", readonly)
+          .control-group
+            label(for="email", class="control-label") Email:
+            .controls
+              input(type="email", name="email",
+                class="input-xlarge", id="email", ng-model="user.email", required)
+              span(ng-show="settings.email.$error.required", class="help-inline") Email is required.
+              span(ng-show="settings.email.$error.email", class="help-inline") Email is invalid.
           fieldset
             legend Avatar
-              .control-group
-                div.img_container(ng-model="user")
+            .control-group
+              label(for="img", class="control-label") &nbsp;
+              .controls
+                div.img_container(ng-model="user", style="margin:0")
                   img.img_dummy(src="{{user.avatar}}")
-                label(for="user_img", class="control-label") Datei:
-                .controls
-                  input(type="url", name="avatar",
-                    class="input-xlarge", id="avatar", ng-model="user.avatar")
-                  span(ng-show="settings.avatar.$error.url", class="help-inline") Not a correct URL.
-      .row
-        .span8
+            .control-group
+              label(for="user_img", class="control-label") Datei:
+              .controls
+                input(type="url", name="avatar",
+                  class="input-xlarge", id="avatar", ng-model="user.avatar")
+                span(ng-show="settings.avatar.$error.url", class="help-inline") Not a correct URL.
+
           fieldset
             legend Passwort
             .control-group
               label(for="old_password", class="control-label") Altes Passwort:
               .controls
-                input(type="password", name="old_password", 
+                input(type="password", name="old_password",
                   class="input-xlarge", id="old_password", ng-model="user.old_password")
 
             .control-group
@@ -53,14 +52,11 @@
               label(for="new_password_repeat", class="control-label") Neues Passwort wiederholen:
               .controls
                 input(type="password", name="new_password_repeat", ng-minlength="5", pattern=".{5,}"
-                  class="input-xlarge", id="new_password_repeat", ng-model="user.new_password_repeat", 
+                  class="input-xlarge", id="new_password_repeat", ng-model="user.new_password_repeat",
                   ng-required="user.old_password", same-as="user.password")
                 span(ng-show="settings.new_password_repeat.$error.required", class="help-inline") New password confirmation is required.
                 span(ng-show="settings.new_password_repeat.$error.minlength", class="help-inline") New password confirmation is too short.
                 span(ng-show="settings.new_password_repeat.$error.sameAs", class="help-inline") New password confirmation is not correct.
-
-      .row
-        .span12
           .pull-center
               button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid") Übernehmen
               a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen

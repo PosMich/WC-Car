@@ -12,44 +12,41 @@ html(ng-app="WebCar", lang="de")
 
         != css("lib/bootstrap.min.css")
         != css("lib/bootstrap-responsive.min.css")
-        != css("simplex.css")
-        != css("bootstrap_adaptions.css")
+        != css("lib/font-awesome-min.css")
+        != css("lib/bootswatch.css")
+        != css("bootstrap-adaptions.css")
 
 
     body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
-      .nav-container
-        .nav-black
-        .nav-bg
-          .navbar.navbar-fixed-top
-              .navbar-inner
-                .container
-                  a.brand(href='../') Web Car
-                  a.menuIcon(href='../')
-                  a.btn.btn-navbar.collapsed(data-target=".nav-collapse", data-toggle="collapse")
-                    span.icon-bar
-                    span.icon-bar
-                    span.icon-bar 
-                  #main-menu.nav-collapse.collapse
-                    ul#main-menu-left.nav
-                      li
-                        a(href='/#about') Das Projekt
-                      li
-                        a(href='/#member') Das Team
-                      li
-                        a(href='/#impressum') Impressum
-                      //- li(ng-controller="DialogCtrl")
-                      //-   a(href='#', ng-click="openDialog('settings', 'SettingsCtrl', 'modal-settings')") Einstellungen
-                      if user !== null
-                        li
-                          a(href="settings") Einstellungen
-                      li
-                        if user === null
-                          a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
-                        else
-                          a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
-      .container_context
-        .container
-          div#wrapper(ng-view)
+      .navbar.navbar-fixed-top
+          .navbar-inner
+            .container
+              a.brand(href='../') Web Car
+              a.menuIcon(href='../')
+              a.btn.btn-navbar.collapsed(data-target=".nav-collapse", data-toggle="collapse")
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar 
+              #main-menu.nav-collapse.collapse
+                ul#main-menu-left.nav(ng-controller="AnchorCtrl")
+                  if user !== null && user !== undefined
+                    li
+                      a(href="choose") Drive/Release
+                  li
+                    a(href='/#about') Das Projekt
+                  li
+                    a(href='/#member') Das Team
+                  li
+                    a(href='/#impressum') Impressum
+                  if user !== null && user !== undefined
+                    li
+                      a(href="settings") Einstellungen
+                  li
+                    if user === null || user === undefined
+                      a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
+                    else
+                      a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
+      .container(ng-view)
 
 
 // Include our Scripts. See /assets/js.

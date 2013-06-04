@@ -229,25 +229,32 @@ Type of Messages:
 
 # std path
 app.get "/", (req, res) ->
+    console.log "asdfasdfUser: '"+req.user+"'"
+    console.log "auth: "+req.isAuthenticated()
     if req.isAuthenticated()
         req.flash("info", "Logged in!")
+        res.redirect "/choose"
+        ###
         res.render "layout",
             user: req.user
             message: req.flash("info")
+        ###
     else
         req.flash("info", "You have to login!")
+        console.log "HERE INDEX!!!Gggggggggggasdf"
         res.render "layout",
             user: null
             message: req.flash("info")
 
 # login -> post, perform authentication
 app.post "/login", passport.authenticate("local",
-    successRedirect: "/"
+    successRedirect: "/choose"
     failureRedirect: "/login"
 )
 
 # signup --> post check if user exist
 app.post "/signup", userExist, (req, res, next) ->
+    console.log "User: '"+req.user+"'"
     user = new Users()
     hash req.body.password, (err, salt, hash) ->
         throw err  if err
@@ -269,6 +276,7 @@ app.post "/signup", userExist, (req, res, next) ->
 app.get "/auth/facebook", passport.authenticate("facebook",
     scope: "email"
 ), (req, res) ->
+    console.log "User: '"+req.user+"'"
     req.flas("info", "asdfasdf")
     res.render "layout",
         user: null
@@ -278,50 +286,79 @@ app.get "/auth/facebook", passport.authenticate("facebook",
 app.get "/auth/facebook/callback", passport.authenticate("facebook",
     failureRedirect: "/login"
 ), (req, res) ->
-    res.render "layout",
-        user: req.user
+    console.log "FB CB"
+    console.log "User: '"+req.user+"'"
+    res.redirect "/"
 
 # settings path
 app.get "/settings", authenticatedOrNot, (req, res) ->
+    console.log "User: '"+req.user+"'"
     res.format
         "application/json": ->
-            console.log "json"
-            res.send req.user
-        "*/*": ->
-            console.log "AAAA"
+            res.jsonp req.user
+        "text/html": ->
+            res.render "layout",
+                user: req.user
 
 # logout
 app.get "/logout", (req, res) ->
+    console.log "User: '"+req.user+"'"
     req.logout()
     res.redirect "/"
 
 app.post "/logout", (req, res) ->
+    console.log "User: '"+req.user+"'"
     req.logout()
     res.redirect "/"
 
 # All partials. This is used by Angular.
 app.get "/partials/:name", (req, res) ->
+    console.log "User: '"+req.user+"'"
     name = req.params.name
-    res.render "partials/" + name
+    console.log "choose: "+name
+    if name is "choose"
+        console.log "CHOOSE"
+        if req.isAuthenticated()
+            res.render "partials/choose",
+                user: req.user
+        else
+            res.render "partials/index",
+    else
+        console.log "CHOOSE OTHERWISE"
+        res.render "partials/" + name
 
 
 # controls
 app.get "/control/key", (req, res) ->
+    console.log "User: '"+req.user+"'"
     res.render "controls/key",
         control: "keyboard"
+        user: req.user
 
 app.get "/control/key2", (req, res) ->
+    console.log "User: '"+req.user+"'"
     res.render "controls/key2",
         control: "keyboard2"
+        user: req.user
 
 app.get "/control/gyro", (req, res) ->
+    console.log "User: '"+req.user+"'"
     res.render "controls/gyro",
         control: "gyro"
+        user: req.user
 
+app.get "/choose", (req, res) ->
+    res.render "layout",
+        user: req.user
 
 app.get "*", (req, res) ->
-    res.render "layout",
-        user: res.user
+    console.log "ASDUser: '"+req.user+"'"
+    if req.isAuthenticated()
+        console.log "akdfjoaösdifj"
+        res.redirect "/choose"
+    else
+        res.render "layout",
+            user:  res.user
 
 ###
     Startup and log.

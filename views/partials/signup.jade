@@ -1,48 +1,47 @@
-#container_signup
+header#container_signup
+  .page-header
+    h1 Sign Up
   form(name="signup", class="well form-horizontal")
-    section#signup
-      .page-header
-        h1 Sign Up
-      .row
-        .span12
-          fieldset
-            legend WebCar Daten
-              .control-group
-                label(for="email", class="control-label") Email:
-                .controls
-                  input(type="email", name="mail", class="input-xlarge", id="mail", ng-model="user.email", required)
-                  span(ng-show="signup.mail.$error.required", class="help-inline") Email is required
-                  span(ng-show="signup.mail.$error.email", class="help-inline") Email is invalid
-              .control-group
-                label(for="username", class="control-label") Username:
-                .controls
-                  input(type="text", ng-minlength="5", pattern=".{5,}", name="name", 
-                    class="input-xlarge", id="name", ng-model="user.name", required)
-                  span(ng-show="signup.name.$error.required", class="help-inline") Username is required
-                  span(ng-show="signup.name.$error.minlength", class="help-inline") Username is too short
-              .control-group
-                label(for="password", class="control-label") Passwort:
-                .controls
-                  input(type="password", ng-minlength="5", pattern=".{5,}", name="password", 
-                    class="input-xlarge", id="password", ng-model="user.password", required)
-                  span(ng-show="signup.password.$error.required", class="help-inline") Password is required
-                  span(ng-show="signup.password.$error.minlength", class="help-inline") Password is too short
-              .control-group
-                label(for="repeat-password", class="control-label") Repeat Password:
-                .controls
-                  input(type="password", ng-minlength="5", pattern=".{5,}", name="password_repeat",
-                    class="input-xlarge", id="password_repeat", ng-model="user.password_repeat", 
-                    required, same-as="user.password")
-                  span(ng-show="signup.password_repeat.$error.required", class="help-inline") Password confirmation is required
-                  span(ng-show="signup.password_repeat.$error.minlength", class="help-inline") Password confirmation is too short
-                  span(ng-show="signup.password_repeat.$error.sameAs", class="help-inline") Password confirmation is not correct
-              .control-group
-                label(for="avatar", class="control-label") Avatar-URL (optional):
-                .controls
-                  input(type="url", name="avatar",
-                    class="input-xlarge", id="avatar", ng-model="user.avatar")
-                  span(ng-show="signup.avatar.$error.url", class="help-inline") Not a correct URL.
+    .row
+      .span12
+        fieldset
+          legend WebCar Daten
+            .control-group
+              label(for="email", class="control-label") Email:
+              .controls
+                input(type="email", name="mail", class="input-xlarge", id="mail", ng-model="user.email", required)
+                span(ng-show="signup.mail.$error.required", class="help-inline") Email is required
+                span(ng-show="signup.mail.$error.email", class="help-inline") Email is invalid
+            .control-group
+              label(for="username", class="control-label") Username:
+              .controls
+                input(type="text", ng-minlength="5", pattern=".{5,}", name="name", 
+                  class="input-xlarge", id="name", ng-model="user.name", required)
+                span(ng-show="signup.name.$error.required", class="help-inline") Username is required
+                span(ng-show="signup.name.$error.minlength", class="help-inline") Username is too short
+            .control-group
+              label(for="password", class="control-label") Passwort:
+              .controls
+                input(type="password", ng-minlength="5", pattern=".{5,}", name="password", 
+                  class="input-xlarge", id="password", ng-model="user.password", required)
+                span(ng-show="signup.password.$error.required", class="help-inline") Password is required
+                span(ng-show="signup.password.$error.minlength", class="help-inline") Password is too short
+            .control-group
+              label(for="repeat-password", class="control-label") Repeat Password:
+              .controls
+                input(type="password", ng-minlength="5", pattern=".{5,}", name="password_repeat",
+                  class="input-xlarge", id="password_repeat", ng-model="user.password_repeat", 
+                  required, same-as="user.password")
+                span(ng-show="signup.password_repeat.$error.required", class="help-inline") Password confirmation is required
+                span(ng-show="signup.password_repeat.$error.minlength", class="help-inline") Password confirmation is too short
+                span(ng-show="signup.password_repeat.$error.sameAs", class="help-inline") Password confirmation is not correct
+            .control-group
+              label(for="avatar", class="control-label") Avatar-URL (optional):
+              .controls
+                input(type="url", name="avatar",
+                  class="input-xlarge", id="avatar", ng-model="user.avatar")
+                span(ng-show="signup.avatar.$error.url", class="help-inline") Not a correct URL.
 
-              .form-actions
-                a(href="", class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="signup.$invalid") Sign Up
-                a(href="", class="btn btn-large", ng-click="close()") Cancel
+            .form-actions
+              a(href="", class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="signup.$invalid") Sign Up
+              a(href="", class="btn btn-large", ng-click="close()") Cancel

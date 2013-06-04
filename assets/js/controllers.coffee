@@ -15,6 +15,16 @@
     $scope.name = "Error!"
 ###
 
+@AnchorCtrl = ($scope, $window, $location, $anchorScroll) ->
+  #console.log $location.url().substring(1)
+  $scope.scrollTo = (id) ->
+    if $location.url() is "/" or $location.url().charAt(1) is "#"
+      $location.hash(id)
+      $.smoothScroll
+        scrollTarget: "#"+id
+    else
+      $window.location.href = "/#"+id
+
 @DialogCtrl = ($scope, $dialog) ->
 
     $scope.openDialog = (pathToView, controller, additionalclass = "") ->

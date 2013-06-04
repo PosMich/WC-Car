@@ -1,39 +1,30 @@
-#container_about
-  section#choose
-    .page-header
-      h1 Was möchten Sie tun?
-    .row
-      .span12
-        p
-          a(class="btn-large btn btn-inverse", id="release", href="release") Release!
-          a(class="btn-large btn btn-success", id="control", href="control") Navigate!
-  section#about
-    .page-header
-      h1 Das Projekt
-    .row
-      .span8
-        h4 Die Idee
-        p.
-            Die Idee ist es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den
-            Browser steuern zu können.
-        p.
-            In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden.
-            Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in
-            Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt dies dann in Steuersignale
-            für das ferngesteuerte Auto um.
-        p.
-            Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen
-            dem Arduino-Board) umgesetzt.
-      .span4
-        h4 Die Technik
-        b WebCar
-        p.
-            Carrera-RC Jeep Wrangler Rubicon<br>
-            Arduino Pro Mini<br>
-        b WebApp
-        p.
-            node.js (express.js)<br>
-            angular.js
+header#about
+  .page-header
+    h1 Das Projekt
+  .row
+    .span8
+      h4 Die Idee
+      p.
+          Die Idee ist es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den
+          Browser steuern zu können.
+      p.
+          In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden.
+          Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in
+          Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt dies dann in Steuersignale
+          für das ferngesteuerte Auto um.
+      p.
+          Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen
+          dem Arduino-Board) umgesetzt.
+    .span4
+      h4 Die Technik
+      b WebCar
+      p.
+          Carrera-RC Jeep Wrangler Rubicon<br>
+          Arduino Pro Mini<br>
+      b WebApp
+      p.
+          node.js (express.js)<br>
+          angular.js
 
 #container_member
   section#member

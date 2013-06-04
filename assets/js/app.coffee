@@ -1,8 +1,12 @@
 "use strict"
 @app = angular.module("WebCar", ["WebCar.filters", "WebCar.services", "WebCar.directives", "ui.bootstrap.dialog"]).config(["$routeProvider", "$locationProvider", "$dialogProvider", ($routeProvider, $locationProvider, $dialogProvider) ->
-  $locationProvider.html5Mode true
+  $locationProvider.html5Mode(true).hashPrefix "#"
   $routeProvider.when "/",
     templateUrl: "partials/index"
+    controller: AppCtrl
+
+  $routeProvider.when "/choose",
+    templateUrl: "partials/choose"
     controller: AppCtrl
 
   $routeProvider.when "release",
