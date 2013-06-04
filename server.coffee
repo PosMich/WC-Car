@@ -26,19 +26,40 @@ hash             = require("./pass").hash
 ###
     DB Stuff
 ###
-console.log "Connect to: "+config.mongo.url+" database "+config.mongo.database+" with user "+config.mongo.user+" and pw "+config.mongo.user
+console.log "Connect to: " + config.mongo.url + " database " + config.mongo.database + " with user " + config.mongo.user + " and pw " + config.mongo.user
 mongoose.connect config.mongo.url, config.mongo.database,
     user: config.mongo.user
     pass: config.mongo.pwd
 
 
+# Validators
+
+validateLength = ( val ) ->
+    return true
+    # return (val.length > 5)
+
+validateEmail = ( val ) ->
+    return /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test val
+
+validateUrl = ( val ) ->
+    return 1 if val.length is 0
+    return /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i.test val
+
+
 # Local Users Schema
 LocalUserSchema = new mongoose.Schema
-    name:           String
+    name:
+        type:       String
+        validate:   [validateLength, 'Username is too short']
+        required:   true
     email:
         type:       String
         lowercase:  true
-    avatar:         String
+        validate:   [validateEmail, "Email is invalid."]
+        required:   true
+    avatar:
+        type:       String
+        validate:   [validateUrl, "Not a valid URL."]
     salt:           String
     hash:           String
 
@@ -50,10 +71,16 @@ FacebookUserSchema = new mongoose.Schema
     email:
         type:       String
         lowercase:  true
-    name:           String
-    avatar:         String
+    name:
+        type:       String
+        required:   true
+        validate:   [validateLength, 'Username is too short']
+    avatar:
+        type:       String
+        validate:   [validateUrl, "Not a valid URL."]
 
 FbUsers = mongoose.model "fbauths", FacebookUserSchema
+
 
 ###
     passport stuff
@@ -94,7 +121,7 @@ passport.use new FacebookStrategy(
                 name: profile.displayName
                 avatar: profile.photos[0].value
             ).save((err, newUser) ->
-                throw err  if err
+                done err if err
                 done null, newUser
             )
 )
@@ -232,7 +259,7 @@ app.post "/signup", userExist, (req, res, next) ->
             hash: hash
             _id: new ObjectID
         ).save((err, newUser) ->
-            throw err  if err
+            throw err if err
             req.login newUser, (err) ->
                 return next(err)  if err
                 res.redirect "/"
