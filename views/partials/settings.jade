@@ -44,19 +44,21 @@
               label(for="password", class="control-label") Neues Passwort:
               .controls
                 input(type="password", name="password", ng-minlength="5", pattern=".{5,}"
-                  class="input-xlarge", id="password", ng-model="user.password", ng-required="user.old_password")
+                  class="input-xlarge", id="password", ng-model="user.password", ng-required="user.old_password",
+                  ng-disabled="!user.old_password.length")
                 span(ng-show="settings.password.$error.required", class="help-inline") New password is required.
                 span(ng-show="settings.password.$error.minlength", class="help-inline") New password is too short.
 
             .control-group
               label(for="new_password_repeat", class="control-label") Neues Passwort wiederholen:
               .controls
-                input(type="password", name="new_password_repeat", ng-minlength="5", pattern=".{5,}"
-                  class="input-xlarge", id="new_password_repeat", ng-model="user.new_password_repeat",
-                  ng-required="user.old_password", same-as="user.password")
-                span(ng-show="settings.new_password_repeat.$error.required", class="help-inline") New password confirmation is required.
-                span(ng-show="settings.new_password_repeat.$error.minlength", class="help-inline") New password confirmation is too short.
-                span(ng-show="settings.new_password_repeat.$error.sameAs", class="help-inline") New password confirmation is not correct.
+                input(type="password", name="password_repeat", ng-minlength="5", pattern=".{5,}"
+                  class="input-xlarge", id="password_repeat", ng-model="user.password_repeat",
+                  ng-required="user.old_password", same-as="user.password", 
+                  ng-disabled="!user.old_password.length || !user.password.length"))
+                span(ng-show="settings.password_repeat.$error.required", class="help-inline") New password confirmation is required.
+                span(ng-show="settings.password_repeat.$error.minlength", class="help-inline") New password confirmation is too short.
+                span(ng-show="settings.password_repeat.$error.sameAs", class="help-inline") New password confirmation is not correct.
           .pull-center
-              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid") Übernehmen
-              a(href="#", class="btn btn-large", ng-click="reset()") Zurücksetzen
+              button(class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="settings.$invalid || isUnchanged()") Übernehmen
+              a(href="#", class="btn btn-large", ng-click="reset()", ng-disabled="isUnchanged()") Zurücksetzen

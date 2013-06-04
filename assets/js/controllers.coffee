@@ -100,43 +100,73 @@
   $scope.close = () ->
     $window.location.href = "/"
 
-@SettingsCtrl = ($rootScope, $scope, $http) ->
+@SettingsCtrl = ($rootScope, $scope, $http, $window) ->
 
-  console.log "call controller"
-
+  $scope.master = []
   $scope.user = []
 
-  $scope.init = ->
-    $http(
-      method: "GET"
-      url: "/settings"
-    ).success (response) ->
-      console.log response.name
-      $scope.user.name = response.name
-      $scope.user.email = response.email
-      $scope.user.avatar = response.avatar
+  $http(
+    method: "GET"
+    url: "/settings"
+  ).success (response) ->
+    $scope.user.name = response.name
+    $scope.user.email = response.email
+    $scope.user.avatar = response.avatar
+    $scope.master.name = response.name
+    $scope.master.email = response.email
+    $scope.master.avatar = response.avatar
+    $scope.old_password = response.password
 
-    $scope.master = $scope.user
 
   $scope.update = (user) ->
-    if $scope.settings.valid && !$scope.isUnchanged user
-      password_string = ($scope.user.old_password) ? '"password": ' + user.new_password
-      console.log password_string
-      $scope.master = user
-      $scope.conn.send {
-        "type": "settings_data",
-        "username": user.name,
-        "email": user.email
-      }
+
+    if $scope.settings.$valid && !$scope.isUnchanged()
+
+      console.log "asdf"
+
+      userdata = $.param(
+        name: $scope.user.name
+        email: $scope.user.email
+        avatar: $scope.user.avatar
+        old_password: $scope.old_password
+        password: $scope.user.password
+      )
+
+      console.log userdata
+
+      $http(
+        method: "POST"
+        url: "/settings"
+        data: userdata
+        headers:
+          "Content-Type": "application/x-www-form-urlencoded"
+      ).success (response) ->
+        console.log "success."
+        $window.location.href = "/settings"
+
+      # $scope.master = user
 
   $scope.reset = ->
-    console.log "reset"
+    $scope.user.name = $scope.master.name
+    $scope.user.email = $scope.master.email
+    $scope.user.avatar = $scope.master.avatar
+    $scope.user.old_password = ""
+    $scope.user.password = ""
+    $scope.user.password_repeat = ""
 
-  $scope.isUnchanged = (user) ->
-    console.log angular.equals user, $scope.master
-    return angular.equals user, $scope.master
+  $scope.isUnchanged = () ->
 
-  $scope.init()
+    unchanged = true
+
+    unchanged = false if $scope.user.name != $scope.master.name
+    unchanged = false if $scope.user.email != $scope.master.email
+    unchanged = false if $scope.user.avatar != $scope.master.avatar
+
+    unchanged = false if $scope.user.old_password != undefined and $scope.user.old_password != ""
+    unchanged = false if $scope.user.password != undefined and $scope.user.password != ""
+    unchanged = false if $scope.user.password_repeat != undefined and $scope.user.password_repeat != ""
+    
+    return unchanged
 
 
 # WebRTC stuff here.

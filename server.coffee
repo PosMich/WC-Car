@@ -85,22 +85,40 @@ FbUsers = mongoose.model "fbauths", FacebookUserSchema
 ###
     passport stuff
 ###
+
+validatePassword = (username, password, done) ->
+    Users.findOne
+        name: username
+    , (err, user) ->
+        return done(err) if err
+        unless user
+            return done(null, false,
+                message: "Incorrect username."
+            )
+        hash password, user.salt, (err, hash) ->
+            return done(err) if err
+            return done(null, user) if hash is user.hash
+            done null, false,
+                message: "Incorrect password."
+
+
 passport.use new LocalStrategy(
     usernameField: "name"
-    (username, password, done) ->
-        Users.findOne
-            name: username
-        , (err, user) ->
-            return done(err) if err
-            unless user
-                return done(null, false,
-                    message: "Incorrect username."
-                )
-            hash password, user.salt, (err, hash) ->
-                return done(err) if err
-                return done(null, user) if hash is user.hash
-                done null, false,
-                    message: "Incorrect password."
+    validatePassword
+    # (username, password, done) ->
+    #     Users.findOne
+    #         name: username
+    #     , (err, user) ->
+    #         return done(err) if err
+    #         unless user
+    #             return done(null, false,
+    #                 message: "Incorrect username."
+    #             )
+    #         hash password, user.salt, (err, hash) ->
+    #             return done(err) if err
+    #             return done(null, user) if hash is user.hash
+    #             done null, false,
+    #                 message: "Incorrect password."
 )
 
 passport.use new FacebookStrategy(
@@ -252,25 +270,71 @@ app.post "/login", passport.authenticate("local",
     failureRedirect: "/login"
 )
 
+app.get "/login", (req, res, next) ->
+    res.render "layout",
+        user: null
+
 # signup --> post check if user exist
 app.post "/signup", userExist, (req, res, next) ->
     console.log "User: '"+req.user+"'"
     user = new Users()
-    hash req.body.password, (err, salt, hash) ->
-        throw err  if err
-        user = new Users(
-            name: req.body.name
-            email: req.body.email
-            avatar: req.body.avatar
-            salt: salt
-            hash: hash
-            _id: new ObjectID
-        ).save((err, newUser) ->
-            throw err if err
-            req.login newUser, (err) ->
-                return next(err)  if err
-                res.redirect "/"
+
+    if req.body.password.length > 5
+
+        hash req.body.password, (err, salt, hash) ->
+            throw err  if err
+            user = new Users(
+                name: req.body.name
+                email: req.body.email
+                avatar: req.body.avatar
+                salt: salt
+                hash: hash
+                _id: new ObjectID
+            ).save((err, newUser) ->
+                throw err if err
+                req.login newUser, (err) ->
+                    return next(err)  if err
+                    res.redirect "/"
+            )
+    else
+        # error handling
+        console.log "Password too short."
+
+# settings -> post update
+app.post "/settings", (req, res) ->
+    console.log "### "+req.user
+    console.log req.body
+    if req.body.old_password != "" and req.body.password != ""
+        validatePassword( req.body.name, req.body.old_password, ( err, user ) ->
+            if req.body.password.length > 5
+                hash req.body.password, (err, salt, hash) ->
+                    user.name   = req.body.name
+                    user.email  = req.body.email
+                    user.avatar = req.body.avatar
+                    user.salt   = salt
+                    user.hash   = hash
+                user.save (err) ->
+                    # Error handling
+                    console.log "Whoops: "+err
+
+            else
+                # Error handling
+                console.log "New password too short."
         )
+    else
+        console.log "Hmmm"
+        Users.findOne
+            name: req.body.name
+        , (err, user) ->
+            throw err if err
+            user.name = req.body.name
+            user.email = req.body.email
+            user.avatar = req.body.avatar
+            user.save (err) ->
+                console.log "Whoops2: "+err
+    res.redirect "/"
+
+
 
 # facebook auth paths
 app.get "/auth/facebook", passport.authenticate("facebook",
