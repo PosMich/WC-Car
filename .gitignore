@@ -24,3 +24,22 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+.app.js.swo
+.DS_Store
+pids
+logs
+results
+
+node_modules
+npm-debug.log
+config.coffee
