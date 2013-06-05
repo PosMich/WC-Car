@@ -52,7 +52,7 @@ import android.widget.TextView;
 public class WebCarReleaseStreamActivity extends Activity implements
 	CameraView.CameraReadyCallback {
 	
-	private static final String TAG = "WebCar :: Stream"; 
+	private static final String TAG = "Stream"; 
 	private String mToken;
 	private SecureRandom mPrng;
 	private boolean connected;
@@ -142,7 +142,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		
 		try {
 			Driver = new Motion2Sound(
-					1000,	// min left frequency
+					2000,	// min left frequency
 					9000,	// max left frequency
 					11000,	// min right frequency
 					20000,	// max right frequency
@@ -154,7 +154,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					500		//stopFreq
 					);
 
-			Driver.drive(0.5, 0.5);
+			Driver.drive(0, 0);
 		} catch (InvalidFrequencyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,7 +172,10 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		} catch (NoSuchAlgorithmException e) {
 			Log.e( TAG, e.getMessage() );
 		}
-		mToken = Integer.valueOf(mPrng.nextInt()).toString();
+		int token = mPrng.nextInt();
+		if (token < 0)
+			token*=-1;
+		mToken = Integer.valueOf(token).toString();
 	}
 	
 	private void startTimer() {
@@ -181,7 +184,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			  @Override
 			  public void run() {
 				  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
-				  Log.d( TAG + " :: Speed", "Current Speed: " + linkSpeed);
+				  Log.d( TAG + ".Speed", "Current Speed: " + linkSpeed);
 				  mSocket.send("{\"type\": \"signal_strength\", \"value\": \"" + linkSpeed + "\"}");
 			  }
 			}, 1000, 1000);
@@ -359,10 +362,10 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					JSONObject json = new JSONObject(message);
 					
 					if (json.getInt("type") == Type.CONNECT.val()) {
-						Log.d( TAG + " :: Message", "Type is correct." );
+						Log.d( TAG + ".Message", "Type is correct." );
 						if( !connected ) {							
 							if( json.getString("token").equals(mToken) ) {
-								Log.d( TAG + " :: Message", "Token is correct." );
+								Log.d( TAG + ".Message", "Token is correct." );
 								connected = true;
 							} else {
 								conn.close();
@@ -370,7 +373,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 						}
 					} else if (json.getInt("type") == Type.DRIVE.val() && connected ) {
 						try {
-							Log.d( TAG + " :: Message", "L2R: " + json.getDouble("l2r") 
+							Log.d( TAG + ".Message", "L2R: " + json.getDouble("l2r") 
 									+ ", B2F: " + json.getDouble("b2f") );
 							Driver.drive(json.getDouble("l2r"), json.getDouble("b2f"));
 						} catch (Exception e) {

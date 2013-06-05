@@ -1,13 +1,14 @@
 package com.mmt.utils;
 
-
+import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.os.Handler;
 import android.util.Log;
 
 
-public class PlaySound {
+public class PlaySound extends Activity {
 	
 	private static PlaySound playSound = null;
 	
@@ -16,83 +17,106 @@ public class PlaySound {
 		}
 		public InvalidFrequencyException(String s) {
 			super(s);
-		}	
+		}
+
 	}
 	
 	private final String TAG = "PlaySound";
-	// send this to show valid controll cmds
-	private final int Freqwatchdog = 4321;
+	
+	private final double duration = 0.5;
+	private final int sampleRate = 44100;
+	private final int numSamples = (int) (duration*sampleRate);
+	private final double sample[] = new double[numSamples];
+	private double freqOfTone = 10500;
+	private AudioTrack Track;
+	
+	private final byte generatedSnd[] = new byte[2*numSamples];
+	/*
 	
 	private int maxFreq;
     private int sampleRate;
+    private int numSamples;
 
     private AudioTrack track = null;
 
     private int currFreq;
-
-    private double samples[];
+    
     private double sample[];
-    private double samplesRight[];
-    private double samplesLeft[];
     private byte generatedSnd[];
     
-    
+    Handler handler = new Handler();
+    */
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	/*
+    	final Thread thread = new Thread(new Runnable() {
+    		public void run() {
+    			genTone();
+    			handler.post(new Runnable() {
+    				public void run() {
+    					playSound();
+    				}
+    			});
+    		}
+    	});
+    	*/
+    }
 	/*
 	 * constructor
 	 * 	
 	 */
 	private PlaySound() {
-		sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
+		/*sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
 		maxFreq = sampleRate/2;
+		numSamples = (int) (duration*sampleRate);
+		sample = new double[numSamples];
+		generatedSnd = new byte[2*numSamples];*/
 		Log.d(TAG, "constructor called");
-		Log.d(TAG, "sampleRate: "+sampleRate);
-		Log.d(TAG, "maxFreq: "+maxFreq);
+		/*Log.d(TAG, "sampleRate: "+sampleRate);
+		Log.d(TAG, "maxFreq: "+maxFreq);*/
+
 	}
 	
-	public static PlaySound getInstance(){
+	public static PlaySound getInstance() {
 		// Singleton :)
-		if (playSound == null)
+		if (playSound == null) {
 			playSound = new PlaySound();
+		}
 		return playSound;
 	}
-	
-	public void setFreq(int Freq) throws InvalidFrequencyException {
-		
+
+	public void setFreq(int Freq) throws Exception {
+		Log.d(TAG, "changing freq to: "+Freq);
+		freqOfTone = Freq;
+		genTone();
+		playSound();
+		/*
 		if (Freq > maxFreq)
 			throw new InvalidFrequencyException("Frequency out of range!\nMax: "+maxFreq+"\ninput: "+Freq);
-		
+
 		if (Freq == currFreq)
 			return;
 
 		Log.d(TAG, "changing Freq to "+Freq);
-		
-		currFreq = Freq;
-		currFreq = 3333;
 
-		int numSamples = (int) (((double)1/currFreq)* sampleRate);
-        
-        sample = new double[numSamples];
-        generatedSnd = new byte[2 * numSamples];
-    	
+		currFreq = Freq;
+		*/
+/*
         // fill out the array
         for (int i = 0; i < numSamples; ++i) {
             sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/currFreq));
         }
-        for (int i = 0; i < numSamples; ++i) {
-            samples[i] = Math.sin(2 * Math.PI * i / (sampleRate/Freqwatchdog));
-        }
 
-        short val, val2;
+        short val;
         for (int i = 0; i<sample.length; ) {
             // max 
             val = (short) ((sample[i] * 32767));
-            val2 = (short) ((sample[i] * 32767));
             
             // in 16 bit wav PCM, first byte is the low order byte
             generatedSnd[i++] = (byte) (val & 0x00ff);
-            //generatedSnd[i++] = (byte) ((val & 0xff00) >>> 8);
-            //generatedSnd[i++] = (byte) (val2 & 0x00ff);
             generatedSnd[i++] = (byte) ((val & 0xff00) >>> 8);
+
         }
         
         if (track != null) {
@@ -106,24 +130,55 @@ public class PlaySound {
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
                 AudioTrack.MODE_STATIC);
 
+        track.setStereoVolume(1, 1);
         track.write(generatedSnd, 0, generatedSnd.length);
 
         track.setLoopPoints(0, generatedSnd.length/2, -1);
         
         track.play();
+        */
 	}
 	
+	void genTone() {
+		for ( int i=0; i<numSamples; ++i)
+			sample[i] = Math.sin( 2*Math.PI*i/( sampleRate/freqOfTone ) );
+		
+		int idx = 0;
+		for ( final double dVal : sample ) {
+			final short val = (short) ((dVal*32767));
+			
+			generatedSnd[idx++] = (byte) (val & 0x00ff);
+			generatedSnd[idx++] = (byte) (val & 0xff00);
+		}
+	}
+	
+	void playSound() {
+		stop();
+		
+		Track = new AudioTrack(AudioManager.STREAM_MUSIC,
+					sampleRate, AudioFormat.CHANNEL_OUT_MONO,
+					AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
+					AudioTrack.MODE_STATIC);
+		
+		Track.write(generatedSnd, 0, generatedSnd.length);
+		Track.setStereoVolume(1, 1);
+		Track.setLoopPoints(0, generatedSnd.length/2, -1);
+        
+		Track.play();
+	}
+
 	public void start(int Freq) throws Exception {
 		setFreq(Freq);
 	}
-	
+
 	public void stop() {
-		Log.d(TAG, "stopping");
-		if (track == null)
+		if (Track == null)
 			return;
-		track.pause();
-		track.stop();
-		track.release();
-		track = null;
+		Track.pause();
+		Track.stop();
+		Track.release();
+		Track = null;
 	}
+	
+	
 }

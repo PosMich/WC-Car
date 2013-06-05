@@ -15,6 +15,9 @@ public class Motion2Sound {
 	}
 	
 	/*********************** variables ***********************/
+	
+	private static final String TAG = "Motion2Sound"; 
+	
 	/* boundaries --> drive left */
 	private int minFreqLeft;
 	private int maxFreqLeft;
@@ -74,7 +77,12 @@ public class Motion2Sound {
 	
 	public void drive(double left2right, double bwd2fwd) throws Exception {
 		Log.d("Motion2Sound","l2r: "+left2right+" |b2f: "+bwd2fwd);
-		myPlaySound.setFreq(getFreqbwd2fwd(bwd2fwd) + getFreqlft2rght(left2right));
+		int b2f = getFreqbwd2fwd(bwd2fwd);
+		int l2r = getFreqlft2rght(left2right);
+		Log.d(TAG, "bwd2fwd: "+b2f);
+		Log.d(TAG, "left2right: "+l2r);
+		
+		myPlaySound.setFreq( l2r+b2f );
 	}
 	
 
@@ -86,7 +94,7 @@ public class Motion2Sound {
 				l2r = 1;
 			
 			/* drive right */
-			return (int) (minFreqRight+l2r*(maxFreqRight-minFreqRight));
+			return (int) (minFreqRight+l2r*(maxFreqRight-minFreqRight))/1000*1000;
 			
 		} else if (l2r < 0) {
 			/* keep in boundaries */
@@ -94,7 +102,7 @@ public class Motion2Sound {
 				l2r = -1;
 			
 			/* drive left */
-			return (int) (maxFreqLeft+l2r*(maxFreqLeft-minFreqLeft));
+			return (int) (maxFreqLeft+l2r*(maxFreqLeft-minFreqLeft))/1000*1000;
 		} else {
 			/* drive straight */
 			return straightFreq;
