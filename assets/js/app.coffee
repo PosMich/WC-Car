@@ -24,6 +24,10 @@
   $routeProvider.when "partials/login",
     templateUrl: "partials/login"
 
+  $routeProvider.when "/login",
+    templateUrl: "partials/index"
+    controller: LoginCtrl
+
   $routeProvider.when "/signup",
     templateUrl: "partials/signup"
     controller: SignUpCtrl

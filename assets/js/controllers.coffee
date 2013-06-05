@@ -46,6 +46,24 @@
 
       d.open()
 
+@LoginCtrl = ($scope, $dialog) ->
+  if $scope.dialog
+      $scope.dialog.close()
+  $scope.opts =
+  backdrop: true,
+  keyboard: true,
+  backdropClick: true,
+  dialogFade: true,
+  scroll: true,
+  dialogClass: "modal ",
+  templateUrl: "partials/login",
+  controller: "LogInCtrl"
+
+  d = $dialog.dialog $scope.opts
+
+  d.open()
+
+
 @LogInCtrl = ($scope, $window, dialog, $http) ->
   $scope.facebook = ->
     $window.location.href = "/auth/facebook"
@@ -66,7 +84,7 @@
         dialog.close()
         $window.location.href = "/"
 
-      
+
   $scope.close = (user) ->
     dialog.close()
 
@@ -165,7 +183,7 @@
     unchanged = false if $scope.user.old_password != undefined and $scope.user.old_password != ""
     unchanged = false if $scope.user.password != undefined and $scope.user.password != ""
     unchanged = false if $scope.user.password_repeat != undefined and $scope.user.password_repeat != ""
-    
+
     return unchanged
 
 
