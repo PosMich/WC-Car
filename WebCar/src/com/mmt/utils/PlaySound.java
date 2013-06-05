@@ -23,59 +23,20 @@ public class PlaySound extends Activity {
 	
 	private final String TAG = "PlaySound";
 	
-	private final double duration = 0.5;
+	private final int duration = 1;
 	private final int sampleRate = 44100;
-	private final int numSamples = (int) (duration*sampleRate);
+	private final int numSamples = (duration*sampleRate);
 	private final double sample[] = new double[numSamples];
 	private double freqOfTone = 10500;
-	private AudioTrack Track;
+	private AudioTrack track;
 	
-	private final byte generatedSnd[] = new byte[2*numSamples];
-	/*
-	
-	private int maxFreq;
-    private int sampleRate;
-    private int numSamples;
-
-    private AudioTrack track = null;
-
-    private int currFreq;
-    
-    private double sample[];
-    private byte generatedSnd[];
-    
-    Handler handler = new Handler();
-    */
-    @Override
-    protected void onResume() {
-    	super.onResume();
-    	/*
-    	final Thread thread = new Thread(new Runnable() {
-    		public void run() {
-    			genTone();
-    			handler.post(new Runnable() {
-    				public void run() {
-    					playSound();
-    				}
-    			});
-    		}
-    	});
-    	*/
-    }
+	private byte generatedSnd[] = new byte[2*numSamples];
 	/*
 	 * constructor
 	 * 	
 	 */
 	private PlaySound() {
-		/*sampleRate = AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
-		maxFreq = sampleRate/2;
-		numSamples = (int) (duration*sampleRate);
-		sample = new double[numSamples];
-		generatedSnd = new byte[2*numSamples];*/
 		Log.d(TAG, "constructor called");
-		/*Log.d(TAG, "sampleRate: "+sampleRate);
-		Log.d(TAG, "maxFreq: "+maxFreq);*/
-
 	}
 	
 	public static PlaySound getInstance() {
@@ -91,52 +52,6 @@ public class PlaySound extends Activity {
 		freqOfTone = Freq;
 		genTone();
 		playSound();
-		/*
-		if (Freq > maxFreq)
-			throw new InvalidFrequencyException("Frequency out of range!\nMax: "+maxFreq+"\ninput: "+Freq);
-
-		if (Freq == currFreq)
-			return;
-
-		Log.d(TAG, "changing Freq to "+Freq);
-
-		currFreq = Freq;
-		*/
-/*
-        // fill out the array
-        for (int i = 0; i < numSamples; ++i) {
-            sample[i] = Math.sin(2 * Math.PI * i / (sampleRate/currFreq));
-        }
-
-        short val;
-        for (int i = 0; i<sample.length; ) {
-            // max 
-            val = (short) ((sample[i] * 32767));
-            
-            // in 16 bit wav PCM, first byte is the low order byte
-            generatedSnd[i++] = (byte) (val & 0x00ff);
-            generatedSnd[i++] = (byte) ((val & 0xff00) >>> 8);
-
-        }
-        
-        if (track != null) {
-    		track.pause();
-    		track.stop();
-        	track.release();
-    	}
-    	
-        track = new AudioTrack(AudioManager.STREAM_MUSIC,
-                sampleRate, AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
-                AudioTrack.MODE_STATIC);
-
-        track.setStereoVolume(1, 1);
-        track.write(generatedSnd, 0, generatedSnd.length);
-
-        track.setLoopPoints(0, generatedSnd.length/2, -1);
-        
-        track.play();
-        */
 	}
 	
 	void genTone() {
@@ -155,16 +70,16 @@ public class PlaySound extends Activity {
 	void playSound() {
 		stop();
 		
-		Track = new AudioTrack(AudioManager.STREAM_MUSIC,
+		track = new AudioTrack(AudioManager.STREAM_MUSIC,
 					sampleRate, AudioFormat.CHANNEL_OUT_MONO,
 					AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
 					AudioTrack.MODE_STATIC);
 		
-		Track.write(generatedSnd, 0, generatedSnd.length);
-		Track.setStereoVolume(1, 1);
-		Track.setLoopPoints(0, generatedSnd.length/2, -1);
+		track.write(generatedSnd, 0, generatedSnd.length);
+		track.setStereoVolume(1, 1);
+		track.setLoopPoints(0, generatedSnd.length/2, -1);
         
-		Track.play();
+		track.play();
 	}
 
 	public void start(int Freq) throws Exception {
@@ -172,12 +87,12 @@ public class PlaySound extends Activity {
 	}
 
 	public void stop() {
-		if (Track == null)
+		if (track == null)
 			return;
-		Track.pause();
-		Track.stop();
-		Track.release();
-		Track = null;
+		track.pause();
+		track.stop();
+		track.release();
+		track = null;
 	}
 	
 	
