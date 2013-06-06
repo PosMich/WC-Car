@@ -315,7 +315,7 @@ app.post "/settings", (req, res) ->
     if req.body.old_password != "" and req.body.password != ""
         debug.info "passwords are not empty"
         validatePassword( req.body.name, req.body.old_password, ( err, user ) ->
-            if req.body.password.length > 5
+            if req.body.password.length > config.mongo.validate.pwlength
                 hash req.body.password, (err, salt, hash) ->
                     user.name   = req.body.name
                     user.email  = req.body.email
