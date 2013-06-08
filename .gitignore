@@ -13,6 +13,8 @@ local.properties
 .settings/
 .loadpath
 
+WebCar/bin/**
+
 # External tool builders
 .externalToolBuilders/
 
