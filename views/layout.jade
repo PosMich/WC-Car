@@ -39,8 +39,9 @@ html(ng-app="WebCar", lang="de")
                   li
                     a(href='/#impressum') Impressum
                   if user !== null && user !== undefined
-                    li
-                      a(href="settings") Einstellungen
+                    if user.fbId === null || user.fbId === undefined
+                      li
+                        a(href="settings") Einstellungen
                   li
                     if user === null || user === undefined
                       a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup

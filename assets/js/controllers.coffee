@@ -14,6 +14,8 @@
   ).error (data, status, headers, config) ->
     $scope.name = "Error!"
 ###
+@ReleaseCtrl = ($scope, $window) ->
+  $window.location.href = "/release"
 
 @AnchorCtrl = ($scope, $window, $location, $anchorScroll) ->
   #console.log $location.url().substring(1)
@@ -188,7 +190,7 @@
 
 
 # WebRTC stuff here.
-
+###
 @ReleaseCtrl = ($scope) ->
   console.log "release here."
 
@@ -250,7 +252,7 @@
 
   $scope.release = ->
     start( true )
-
+###
 ###
   startVideo()
 

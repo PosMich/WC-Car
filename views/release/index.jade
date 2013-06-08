@@ -1,0 +1,103 @@
+extends ./layout
+
+block content
+    header#release
+        .page-header
+            h1 WebCar freigeben
+            //- .row
+                .span8
+                    h4 Wer darf das WebCar kontrollieren?
+                    p Du kannst dich nun entscheiden, wer dein WebCar kontrollieren darf.
+                        a(href="#", class="btn btn-success btn-large") Private
+                        a(href="#", class="btn btn-fb btn-large") Public
+                        //- a(href="#", class="btn btn-fb btn-large") Public
+            .row
+                .span4.offset1
+                    h4 Instructions
+                    p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
+                .span6
+                    .img_placeholder
+            .row
+                .span4.offset1
+                    a(href="#connector", class="btn btn-large btn-inverse") Plug In!
+
+    section#connector
+        .page-header
+            h1 Phone Connector
+        .row
+            .span6.offset1
+                .img_placeholder
+            .span4
+                h4 Plug In!
+                p.
+                    Das WebCar empfängt die Steuersignale über einen Audio-Eingang. 
+                    Dein Smartphone nimmt Steuersignale steuernden Users entgegen und gibt dementsprechend Töne aus.<br/><br/>
+                    Damit das WebCar nun diese Töne auch empfängt musst du nun bitte sicherstellen, dass der dafür
+                    vorgesehene Phone Connector auch am Smartphone angeschlossen ist.
+        .row
+            .span6.offset1
+            .span4
+                a(href="#volume", class="btn btn-large btn-inverse") Volume!
+                    
+
+    section#volume
+        .page-header
+            h1 Volume
+        .row
+            .span4.offset1
+                h4 Turn up!
+                p.
+                    Damit die Töne bei dem WebCar die richtige Wirkung erzeugen muss der Ton des Smartphones ganz aufgedreht sein.
+                    Bitte stelle deine Lautstärke auf die höchste Stufe.
+            .span6
+                .img_placeholder
+        .row
+            .span4.offset1
+                a(href="#passphrase", class="btn btn-large btn-inverse") Passphrase!
+
+    section#passphrase
+        .page-header
+            h1 Passphrase
+        .row
+            .span6.offset1
+                form(class="form-horizontal well img_placeholder")
+                    fieldset
+                        legend Für deine Kontrolle
+                        div.control-group
+                            label(class="control-label", for="passphrase") Passphrase
+                            div.controls
+                                input(type="password", id="passphrase", class="input-small")                                    
+            .span4
+                h4 Make it save!
+                p.
+                    Du kannst das WebCar der ganzen Welt zur Verfügung stellen. <br/><br/>
+                    Falls du jedoch kontrollieren willst, wer sich ans Steuer deines WebCars setzt, musst du nun eine Passphrase eintragen.<br/><br/>
+        .row
+            .span6.offset1
+            .span4
+                a(href="#ready", class="btn btn-large btn-inverse") Save passphrase and get ready!
+
+    section#ready
+        .page-header
+            h1 Get ready!
+        .row
+            .span4.offset1
+                h4 Last but not least.
+                p.
+                    Alle notwendigen Schritte sind nun getan. Nun muss das Smartphone noch in die dafür vorgesehene Halterung
+                    am WebCar angebracht werden und dann kann es los gehen.<br/><br/>
+                    Unter folgendem Link ist das WebCar zu erreichen:
+                span(class="label label-info") http://localhost:8000/control/6Posx23
+                p.
+                    Mit diesem Link und der von dir gewählten Passphrase kann nun das WebCar gesteuert werden.
+            .span6
+                .img_placeholder
+
+    section#fun
+        .page-header
+            h1 Have fun!
+        .row
+            .span8.offset2
+                .img_placeholder
+                center
+                    a(href="#release", class="btn btn-large btn-inverse") Back to top!
