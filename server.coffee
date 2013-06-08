@@ -27,7 +27,7 @@ hash             = require("./pass").hash
 ###
     DB Stuff
 ###
-debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+"user: "+config.mongo.user+" and pw "+config.mongo.user
+debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+"user: "+config.mongo.user+" and pw "+config.mongo.pwd
 
 mongoose.connect config.mongo.url, config.mongo.port, config.mongo.database,
     user: config.mongo.user
@@ -366,14 +366,17 @@ app.get "/auth/facebook/callback", passport.authenticate("facebook",
 # settings path
 app.get "/settings", authenticatedOrNot, (req, res) ->
     debug.info ".get #{sty.magenta '/settings'} from "+req.user
-    res.format
-        "application/json": ->
-            debug.info "send jsonp"
-            res.jsonp req.user
-        "text/html": ->
-            debug.info "render layout"
-            res.render "layout",
-                user: req.user
+    if req.user.fbId is null or req.user.fbId is undefined
+        res.format
+            "application/json": ->
+                debug.info "send jsonp"
+                res.jsonp req.user
+            "text/html": ->
+                debug.info "render layout"
+                res.render "layout",
+                    user: req.user
+    else
+        res.redirect "/"
 
 # logout
 app.get "/logout", (req, res) ->
@@ -426,6 +429,12 @@ app.get "/control/gyro", (req, res) ->
     debug.info "render controls/gyro"
     res.render "controls/gyro",
         control: "gyro"
+        user: req.user
+
+app.get "/release", (req, res) ->
+    debug.info ".get #{sty.magenta '/release'} from "+req.user
+    debug.info "render release/index"
+    res.render "release/index",
         user: req.user
 
 app.get "/choose", (req, res) ->
