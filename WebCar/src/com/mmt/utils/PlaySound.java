@@ -55,16 +55,25 @@ public class PlaySound extends Activity {
 	}
 	
 	void genTone() {
-		for ( int i=0; i<numSamples; ++i)
+		Log.d(TAG, "generate tone");
+		Log.d(TAG, "numSamples: "+numSamples);
+		Log.d(TAG, "sampleRate: "+sampleRate);
+/*		Log.d(TAG, "freqOfTone: "+freqOfTone);
+		Log.d(TAG, "sample.length: "+sample.length);
+		Log.d(TAG, "generatedSnd.length: "+generatedSnd.length);
+*/		for ( int i=0; i<numSamples; ++i) {
 			sample[i] = Math.sin( 2*Math.PI*i/( sampleRate/freqOfTone ) );
-		
+			//Log.d(TAG, "sample: "+sample[i]);
+		}
+		//Log.d(TAG, " "+sample);
 		int idx = 0;
 		for ( final double dVal : sample ) {
 			final short val = (short) ((dVal*32767));
 			
 			generatedSnd[idx++] = (byte) (val & 0x00ff);
-			generatedSnd[idx++] = (byte) (val & 0xff00);
+			generatedSnd[idx++] = (byte) ((val & 0xff00) >>> 8);
 		}
+		//Log.d(TAG, " "+generatedSnd);
 	}
 	
 	void playSound() {

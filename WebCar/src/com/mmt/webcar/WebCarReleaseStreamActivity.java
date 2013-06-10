@@ -153,8 +153,8 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					10000, 	// straightFreq
 					500		//stopFreq
 					);
-
-			Driver.drive(0, 0);
+			Log.d("PlaySound", "drive(0,0)");
+			Driver.drive(0.0, 0.0);
 		} catch (InvalidFrequencyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +162,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	
 	}
 	
 	private void setToken() {
@@ -176,29 +176,36 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		if (token < 0)
 			token*=-1;
 		mToken = Integer.valueOf(token).toString();
+		
 	}
 	
 	private void startTimer() {
-		mTimer = new Timer();
-		mTimer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-				  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
-				  Log.d( TAG + ".Speed", "Current Speed: " + linkSpeed);
-				  mSocket.send("{\"type\": \"signal_strength\", \"value\": \"" + linkSpeed + "\"}");
-			  }
-			}, 1000, 1000);
-	}
+		try {
+			mTimer = new Timer();
+			mTimer.scheduleAtFixedRate(new TimerTask() {
+				  @Override
+				  public void run() {
+					  int linkSpeed = mWifi.getConnectionInfo().getLinkSpeed();
+					  Log.d( TAG + ".Speed", "Current Speed: " + linkSpeed);
+					  mSocket.send("{\"type\": \"signal_strength\", \"value\": \"" + linkSpeed + "\"}");
+				  }
+				}, 1000, 1000);
+		} catch (Exception e) {
+			Log.e( TAG, e.getMessage() );
+		}
+	}	
 	
 	private void stopTimer() {
+		
 		mTimer.cancel();
 		mTimer.purge();
+		
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-
+		
 		inProcessing = true;
 		if (mServer != null)
 			mServer.stop();
@@ -208,13 +215,11 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		
 		// unregister receivers
 		unregisterReceiver(mMusicReceiver);
-		unregisterReceiver(mWifiReceiver);
-		
+		unregisterReceiver(mWifiReceiver);	
 	}
 	
 	@Override
 	public void onResume() {
-		
 		startTimer();
 		inProcessing = false;
 		
@@ -268,7 +273,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 				inProcessing = true;
 
 				try {
-				
 					int picWidth = mCameraView.Width();
 					int picHeight = mCameraView.Height();
 					
@@ -289,6 +293,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					} else {
 						Log.d( TAG + " :: Image", "Failed to compress frame to jpeg." );
 					}
+					
 				} catch (Exception e) {
 					Log.e( TAG, e.getMessage() );
 				}
@@ -301,6 +306,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	
 	
 	private boolean initWebServer() {
+		
 		String ipAddr = IP.getIPAddress(true);
 		if (ipAddr != null) {
 			try {
@@ -353,7 +359,6 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	
 
 	public void setupSocket(int port) throws UnknownHostException {
-		
 		WebSocketImpl.DEBUG = true;
 		mSocket = new WCSocket(port) {
 			@Override
@@ -419,11 +424,12 @@ public class WebCarReleaseStreamActivity extends Activity implements
 
 		mSocket.start();
 		Log.d(TAG, "WebCar Socket started on port: " + mSocket.getPort());
-
+		
 	}
 	
 	@Override
 	public void onStop() {
+		
 		try {
 			mSocket.stop();
 		} catch(Exception e) {
@@ -487,6 +493,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 			Intent releaseIntent = new Intent(WebCarReleaseStreamActivity.this, WebCarActivity.class);
 			WebCarReleaseStreamActivity.this.startActivity(releaseIntent);
 		}
+		
 	};
 	
     OnClickListener onBtnCreditScreen = new OnClickListener() {
