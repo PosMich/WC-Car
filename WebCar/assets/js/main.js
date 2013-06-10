@@ -1,25 +1,31 @@
 $(document).ready(function() {
   
-  PORT_SERVER = "8080"
-  PORT_SOCKET = "8081"
-  OFFSET_LEFT = 60
-  OFFSET_BWD = 60
-  START_BWD = -40
+  PORT_SERVER = "8080";
+  PORT_SOCKET = "8081";
+  OFFSET_LEFT = 60;
+  OFFSET_BWD = 60;
+  START_BWD = -40;
 
-  direction = 0
+  direction = 0;
   motion_direction = 0;
-  speed = 0
+  speed = 0;
   motion_speed = 0;
-  keys = {}
+  keys = {};
+  first_img = false;
 
-  connected = false
-  connection = null
+  connected = false;
+  connection = null;
+
+  timeout = 0;
+  max_timeout = 5;
 
   IP = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/i.exec(document.URL);
 
   $(".connect").click( function( e ) {
     e.preventDefault();
-    $(".connect").after("<img />");
+    $("#dialog").animate({opacity: 0}, 750);
+    $("#speedWrapper").animate({opacity: 1}, 750);
+    $("#directionWrapper").animate({opacity: 1}, 750);
 
     $img = $("#imgStream");
     height = $(".imgContainer").height();
@@ -34,15 +40,22 @@ $(document).ready(function() {
     }
 
     connection.onmessage = function(e) {
+
+      timeout = 0;
+
       message = JSON.parse( e.data );
 
       if( message.type == "signal_strength" ) {
         if( message.value <= 9 )
-          $("#Signal").html( "You're going to loose the Wifi-Signal. Please drive back!" );
+          $("#signal").html( "You're going to loose the Wifi-Signal. Please drive back!" );
         else
           $("#Signal").html( "" );
-      } else if( message.type == "image_data" ) {
+      } else if( message.type == "image_data" ) {          
         $("#imgStream").attr( "src", "data:image/jpg;base64," + message.value )
+        if( !first_img ) {
+          first_img = true;
+          $(window).resize();
+        }
       }
 
     }
@@ -93,6 +106,7 @@ $(document).ready(function() {
       gamma = Math.round(event.gamma);
 
       if( window.orientation == -90 ) {
+        $( "#hint" ).html( "" );
         if( connected ) {
           l2r = Math.round( ( ( 2 / OFFSET_LEFT ) * beta ) * -100) / 100;
 
@@ -114,6 +128,7 @@ $(document).ready(function() {
           updateSpeed( b2f );
         }
       } else if( window.orientation == 90 )
+      $( "#hint" ).html( "" );
         if( connected ) {
           l2r = Math.round( ( ( 2 / OFFSET_LEFT ) * beta ) * 100) / 100;
           if( l2r > 1 )
@@ -134,7 +149,7 @@ $(document).ready(function() {
           updateDirection( l2r );
           updateSpeed( b2f );
         } else if( window.orientation == 0 || window.orientation == 180 )
-          console.log( "turn your phone in langscape mode" );
+          $( "#hint" ).html( "turn your phone in langscape mode" );
     }
 
     alpha = undefined;
@@ -176,6 +191,7 @@ $(document).ready(function() {
   }
 
   updateDirection = function( direction ) {
+    $("#thumbDirection").css({left:(((Math.round(direction*1000)/1000)+1)*($('#direction').width()/2))});
     if( direction <= (motion_direction - 0.1) || direction >= (motion_direction + 0.1) ) {
       motion_direction = direction;
 
@@ -189,6 +205,7 @@ $(document).ready(function() {
   }
 
   updateSpeed = function( speed ) {
+    $("#thumbForward").css({top:(((Math.round(-speed*1000)/1000)+1)*($('#forward').height()/2))});
       if( speed <= (motion_speed - 0.1) || speed >= (motion_speed + 0.1) ) {
           motion_speed = speed;
     
@@ -215,7 +232,7 @@ $(document).ready(function() {
     });
   });
   
-    setInterval(function() {
+  setInterval(function() {
     if (connected) {
       if (speed > 0.025) {
         speed -= 0.025;
@@ -227,5 +244,15 @@ $(document).ready(function() {
     }
   }, 200);
 
-
+  // Timeout
+  setInterval(function() {
+    if (connected) {
+      timeout++;
+      if( timeout > max_timeout ) {
+        $("#dialog").html("<h1>Something went wrong.. Please check the passphrase and app-status and reload this page.</h1>");
+        $("#dialog").animate({opacity: 1}, 750);
+        connected = false;
+      }
+    }
+  }, 1000);
 });

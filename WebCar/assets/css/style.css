@@ -3,15 +3,11 @@ body {
 	padding:0;
 	overflow:hidden;
 	font-family: "Arial";
-}
-
-.menu {
-	position:fixed;
-	bottom:0;
-	right:0;
-	width:75px;
-	height:75px;
-	background: url(../img/settings_small.png) no-repeat;
+	background-image: url("../img/icon_big.png");
+	background-repeat: no-repeat;
+	background-size: 40%;
+	background-position: 50%;
+	color: #666;
 }
 
 
@@ -20,17 +16,37 @@ body {
 	height:100%;
 	position:absolute;
 	z-index:-2;
-	background-color:#444;
 }
 
 
 .imgContainer > img {
 	position:absolute;
 	z-index:-2;
+	border: none;
+}
+
+#dialog {
+	width: 40%;
+	background-color: rgba(155,155,155,0.85);
+	border: 1px solid #666;
+	padding: 2%;
+	position: fixed;
+	left: 28%;
+	top: 32%;
+	-moz-box-shadow: 0 0 15px 5px #333;
+	-webkit-box-shadow: 0 0 5px 15px#333;
+	box-shadow: 0 0 15px 5px #333;
+}
+
+#tokenContainer {
+	margin: 10% auto;
+	width: 65%;
 }
 
 h1 {
-	
+	text-align: center;
+	margin-bottom: 50px;
+	color: #000;
 }
 
 .control {
@@ -46,11 +62,12 @@ label {
 	width: 120px;
 	position: relative;
 	float: left;
-	color: #fff;
 	font-size: 1.2em;
 	height: 40px;
 	line-height: 40px;
 	font-size: 1.2em;
+	color: #000;
+	font-weight: bold;
 }
 
 button {
@@ -62,101 +79,301 @@ button {
 	clear:both;
 }
 
+span {
+  font-size: 14px;
+}
 
+#notification {
+  background-color: #FFF;
+  border: 1px solid #000;
+  width: 80%;
+  position: absolute;
+  margin-left: 10%;
+  margin-top: 10%;
+  z-index: 999;
+  display: none;
+  height: auto;
+}
 
-/* slider 
+#notificationHeader {
+  background-color: #000;
+  color: #FFF;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+#notificationBody {
+  font-size: 18px;
+  padding: 30px 20px;
+}
+
+#blackening {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  z-index: 998;
+  display: none;
+}
+
+#contentWrapper {
+  width: 95%;
+  height: 80%;
+  float: left;
+}
+
+#speedWrapper {
+	position: fixed;
+	top: 2%; right: 2%;
+  	width: 5%;
+  	height: 65%;
+  	opacity: 0;
+}
+
+#directionWrapper {
+  width: 93%;
+  height: 15%;
+  bottom: 10px;
+  left: 2%;
+  bottom: 0%;
+  position: fixed;
+  opacity: 0;
+}
+
+.buttonsKeypress {
+    width: 60px;
+    height: 60px;
+    background-color: #d4d4d4;
+}
+
+.buttonsKeypressActive {
+    background-color: #959595;
+}
+
+#forwardButton {
+    background-image: url('/img/forward.png');
+    left: 46%;
+    margin-left: -30px;
+    position: absolute;
+    top: 30px;
+}
+
+#backButton {
+    background-image: url('/img/back.png');
+    left: 46%;
+    margin-left: -30px;
+    position: absolute;
+    bottom: 20%;
+}
+
+#leftButton {
+    background-image: url('/img/left.png');
+    top: 43%;
+    margin-top: -30px;
+    position: absolute;
+    left: 30px;
+}
+
+#rightButton {
+    background-image: url('/img/right.png');
+    right: 10%;
+    top: 43%;
+    margin-top: -30px;
+    position: absolute;
+}
 
 #direction {
-	width:100%;
-	height: 30px;
-	padding-top: 2%;
+    width:100%;
+    height: 20px;
+    padding-top: 2%;
 
 }
 
 #thumbDirection {
-	height: 38px;
-	width: 5px;
-	background-color: #333;
-	left: 50%;
-	position:relative;
-	top: -4px;
+    height: 28px;
+    width: 5px;
+    background-color: #333;
+    left: 50%;
+    position:relative;
+    top: -24px;
 }
 
 #boxDirection {
-	width: 100%;
-	height: 30px;
-	background-color: #d0d0d0;
-	border: none;
+    width: 100%;
+    height: 20px;
+    background-color: #d0d0d0;
+    border: none;
 }
 
 #middleDirection {
-	height: 50px;
-	width: 2px;
-	background-color: red;
-	left: 50%;
-	margin-left: 1px;
-	position:relative;
-	top: -47.5px;
-	border: 0px solid black;
+    height: 40px;
+    width: 2px;
+    background-color: #cf000a;
+    left: 50%;
+    margin-left: 1px;
+    position:relative;
+    top: -57.5px;
+    border: 0px solid black;
 }
 
 #leftLabel {
-	float:left;
-	font-style: italic;
-	margin-top: -4px;
+    float:left;
+    font-style: italic;
+    margin-top: -4px;
 }
 
 #rightLabel {
-	float: right;
-	font-style: italic;
-	margin-top: -4px;
+    float: right;
+    font-style: italic;
+    margin-top: -4px;
 }
 
 #forwardLabel {
-	font-style: italic;
-	text-align: center;
-	display: block;
-	padding-bottom: 4px;
+    font-style: italic;
+    text-align: center;
+    display: block;
+    padding: 30px 10px 4px 0px;
 }
 
 #backLabel {
-	font-style: italic;
-	text-align: center;
-	display: block;
-	margin-top: 4px;
+    font-style: italic;
+    text-align: center;
+    display: block;
+    margin-top: 4px;
+    padding-right: 10px;
 }
 
 #forward {
-	height:90%;
-	width: 30px;
-	position: relative;
-	padding-left: 25%;
+    height:90%;
+    width: 20px;
+    position: relative;
+    padding-left: 25%;
 }
 
 #thumbForward {
-	height: 5px;
-	width: 38px;
-	background-color: #333;
-	top: 50%;
-	position:relative;
-	left: -4px;
+    height: 5px;
+    width: 28px;
+    background-color: #333;
+    top: 50%;
+    position:relative;
+    left: -4px;
 }
 
 #boxForward {
-	height: 100%;
-	width: 30px;
-	background-color: #d0d0d0;
-	border: none;
+    height: 100%;
+    width: 20px;
+    background-color: #d0d0d0;
+    border: none;
 }
 
 #middleForward {
-	width: 50px;
-	height: 2px;
-	background-color: red;
-	top: 50%;
-	position:relative;
-	left: -10px;
-	border: 0px solid black;
-	margin-top: -3px;
+    width: 40px;
+    height: 2px;
+    top: 50%;
+    position:relative;
+    left: -10px;
+    border: 0px solid black;
+    margin-top: -3px;
+    background-color: #cf000a;
 }
-*/
+
+
+#out {
+  width: 100px;
+  height: 20px;
+}
+
+.main p {
+  padding-bottom: 5px;
+}
+
+.main h4 {
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.main h5 {
+  padding-top: 5px;
+  margin-top: 10px;
+
+}
+
+.main {
+  padding: 0px 40px 0px 20px;
+  height: 100%;
+  margin: 0px;
+}
+
+#notify {  
+    display:none;
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    background:rgba(0,0,0,0.6);
+    z-index:0;
+}
+
+#notify p {
+  margin: 0px auto;
+  color: white;
+  font-size: 30px;
+}
+
+
+#orient {
+  margin: 0px;
+  padding: 0px;
+}
+
+p {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+@media (max-width: 767px) {
+    body {
+      font-size: 11px;
+    }
+
+    h1 {
+      font-size: 16px;
+    }
+
+    #directionWrapper {
+      margin-top: 10px;
+    }
+
+    #forwardLabel {
+      padding: 5px 10px 4px 0px;
+    }
+
+    #forwardLabel, #backLabel, #rightLabel, #leftLabel {
+      font-size: 11px;
+    }
+
+    #rightLabel, #leftLabel {
+      margin-top: -10px;
+    }
+
+    #speedWrapper {
+      height: 70%;
+    }
+
+    #forwardButton, #backButton,  #rightButton, #leftButton {
+      height: 30px;
+      width: 30px;
+      background-size: 30px 30px;
+    }
+
+    #rightButton, #leftButton {
+      top: 43%;
+      margin-top: -10px;
+      position: absolute;
+    }
+
+    #rightButton {
+      margin-right: 10%;
+    }
+}
