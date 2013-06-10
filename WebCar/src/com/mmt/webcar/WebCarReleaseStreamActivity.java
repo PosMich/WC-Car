@@ -199,9 +199,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 	}
 	
 	@Override
-	public void onPause() {
-		super.onPause();
-		
+	public void onPause() {		
 		inProcessing = true;
 		if (mServer != null)
 			mServer.stop();
@@ -211,7 +209,11 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		
 		// unregister receivers
 		unregisterReceiver(mMusicReceiver);
-		unregisterReceiver(mWifiReceiver);	
+		unregisterReceiver(mWifiReceiver);
+		
+		Driver.stop();
+		
+		super.onPause();
 	}
 	
 	@Override
@@ -324,6 +326,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 										c.close();
 									}
 								}
+								Driver.stop();
 								setToken();
 								
 								mHandler.post(new Runnable() {

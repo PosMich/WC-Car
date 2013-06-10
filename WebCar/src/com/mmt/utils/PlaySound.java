@@ -104,5 +104,10 @@ public class PlaySound extends Activity {
 		track = null;
 	}
 	
+	@Override
+	public void onPause() {
+		this.stop();
+		super.onPause();
+	}
 	
 }

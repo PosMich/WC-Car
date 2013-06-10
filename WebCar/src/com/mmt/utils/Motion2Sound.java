@@ -214,4 +214,8 @@ public class Motion2Sound {
 	public void setStraightFreq(int straightFreq) {
 		this.straightFreq = straightFreq;
 	}
+	
+	public void stop() {
+		myPlaySound.stop();
+	}
 }

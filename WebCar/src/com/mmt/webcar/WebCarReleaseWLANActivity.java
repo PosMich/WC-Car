@@ -39,7 +39,7 @@ public class WebCarReleaseWLANActivity extends Activity {
 		mCreditScreenButton.setOnClickListener(new OnBtnCreditScreenClickListener());
 		
 		mStatusWifi = (ImageView) findViewById(R.id.imageStatusWLAN);		
-		//mWifiReceiver = new WifiIntentReceiver();
+		mWifiReceiver = new WifiIntentReceiver();
 		
 		Intent releaseIntent = new Intent(WebCarReleaseWLANActivity.this, WebCarReleaseActivity.class);
 		WebCarReleaseWLANActivity.this.startActivity(releaseIntent);
