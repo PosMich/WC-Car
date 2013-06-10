@@ -1,7 +1,9 @@
 package com.mmt.webcar;
 
+import com.mmt.utils.OnBtnCreditScreenClickListener;
+import com.mmt.utils.OnHomeBtnClickListener;
+
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +11,8 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class WebCarReleaseAudioActivity extends Activity {
 	
@@ -33,10 +32,10 @@ public class WebCarReleaseAudioActivity extends Activity {
 		setContentView(R.layout.activity_web_car_release_audio);
 
 		mHomeButton = (Button) findViewById(R.id.btnHome);
-		mHomeButton.setOnClickListener(onHomeButton);
+		mHomeButton.setOnClickListener(new OnHomeBtnClickListener());
 		
 		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
-        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
+		mCreditScreenButton.setOnClickListener(new OnBtnCreditScreenClickListener());
 		
 		// status image for phone connector
 		mStatusAudio = (ImageView) findViewById(R.id.imageStatusAudio);
@@ -113,42 +112,4 @@ public class WebCarReleaseAudioActivity extends Activity {
 				AudioManager.FLAG_SHOW_UI);
 		}
 	}
-	
-	OnClickListener onHomeButton = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// Call new Activity
-			Intent releaseIntent = new Intent(WebCarReleaseAudioActivity.this, WebCarActivity.class);
-			WebCarReleaseAudioActivity.this.startActivity(releaseIntent);
-		}
-	};
-	
-    OnClickListener onBtnCreditScreen = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// custom dialog
-			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.custom);
-			dialog.setTitle("Credits");
-
-			// set the custom dialog components - text, image and button
-			TextView textCreditsDialog = (TextView) dialog
-					.findViewById(R.id.textCreditsDialog);
-			textCreditsDialog.setText(R.string.contentCredits);
-
-			Button buttonCancelCreditsDialog = (Button) dialog
-					.findViewById(R.id.dialogButtonOK);
-			// if button is clicked, close the custom dialog
-			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dialog.dismiss();
-				}
-			});
-
-			dialog.show();
-		}
-	};
 }

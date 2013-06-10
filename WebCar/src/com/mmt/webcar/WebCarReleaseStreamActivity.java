@@ -12,21 +12,20 @@ import java.util.TimerTask;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
-import org.java_websocket.handshake.Handshakedata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mmt.utils.CameraView;
 import com.mmt.utils.IP;
 import com.mmt.utils.Motion2Sound;
+import com.mmt.utils.OnBtnCreditScreenClickListener;
+import com.mmt.utils.OnHomeBtnClickListener;
 import com.mmt.utils.Motion2Sound.InvalidFrequencyException;
-import com.mmt.utils.NanoHTTPD.Response;
 import com.mmt.utils.WCServer;
 import com.mmt.utils.WCSocket;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +35,6 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
-import android.media.AudioManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -44,8 +42,6 @@ import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -118,10 +114,10 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		mWifiAlertDialog = wifiAlertBuilder.create();
 		
 		mHomeButton = (Button) findViewById(R.id.btnHome);
-		mHomeButton.setOnClickListener(onHomeButton);
+		mHomeButton.setOnClickListener(new OnHomeBtnClickListener());
 		
 		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
-        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
+		mCreditScreenButton.setOnClickListener(new OnBtnCreditScreenClickListener());
 		
 		try {
 			
@@ -142,7 +138,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		
 		try {
 			Driver = new Motion2Sound(
-					2000,	// min left frequency
+					1000,	// min left frequency
 					9000,	// max left frequency
 					11000,	// min right frequency
 					20000,	// max right frequency
@@ -484,43 +480,4 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		}
 	}
 	
-	
-	OnClickListener onHomeButton = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// Call new Activity
-			Intent releaseIntent = new Intent(WebCarReleaseStreamActivity.this, WebCarActivity.class);
-			WebCarReleaseStreamActivity.this.startActivity(releaseIntent);
-		}
-		
-	};
-	
-    OnClickListener onBtnCreditScreen = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// custom dialog
-			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.custom);
-			dialog.setTitle("Credits");
-
-			// set the custom dialog components - text, image and button
-			TextView textCreditsDialog = (TextView) dialog
-					.findViewById(R.id.textCreditsDialog);
-			textCreditsDialog.setText(R.string.contentCredits);
-
-			Button buttonCancelCreditsDialog = (Button) dialog
-					.findViewById(R.id.dialogButtonOK);
-			// if button is clicked, close the custom dialog
-			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dialog.dismiss();
-				}
-			});
-
-			dialog.show();
-		}
-	};
 }

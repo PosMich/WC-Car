@@ -1,7 +1,9 @@
 package com.mmt.webcar;
 
+import com.mmt.utils.OnBtnCreditScreenClickListener;
+import com.mmt.utils.OnHomeBtnClickListener;
+
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +12,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -42,10 +43,10 @@ public class WebCarReleaseActivity extends Activity {
 		mStatusPassphraseReentered = (ImageView) findViewById(R.id.imageStatusPassphraseReentered);
 		
 		mHomeButton = (Button) findViewById(R.id.btnHome);
-		mHomeButton.setOnClickListener(onHomeButton);
+		mHomeButton.setOnClickListener(new OnHomeBtnClickListener());
 		
 		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
-        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
+		mCreditScreenButton.setOnClickListener(new OnBtnCreditScreenClickListener());
 		
 		btnConfirm.setOnClickListener(btnConfirmAction);
 		
@@ -56,16 +57,6 @@ public class WebCarReleaseActivity extends Activity {
 				
 	}
 	
-	OnClickListener onHomeButton = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// Call new Activity
-			Intent releaseIntent = new Intent(WebCarReleaseActivity.this, WebCarActivity.class);
-			WebCarReleaseActivity.this.startActivity(releaseIntent);
-		}
-	};
-	
 	OnClickListener btnConfirmAction = new OnClickListener() {
 		
 		@Override
@@ -74,17 +65,11 @@ public class WebCarReleaseActivity extends Activity {
 			String phrase = mPassphrase.getText().toString();
 			String phraseReenterd = mPassphraseReentered.getText().toString();
 			
-			if ( phrase.isEmpty() ) {
-//				mPassphrase.setError("can't be empty");
-			} else if ( phrase.length() < 5 ) {
-//				mPassphrase.setError("Minimal Length: 5");
-			} else if ( phraseReenterd.isEmpty() ) {
-//				mPassphraseReentered.setError("can't be empty");
-			} else if ( phraseReenterd.length() < 5 ) {
-//				mPassphraseReentered.setError("Minimal Length: 5");
-			} else if( ! phrase.equals(phraseReenterd ) ) {
-//				mPassphraseReentered.setError("passphrases have to match.");
-			} else {
+			if ( !phrase.isEmpty() 
+					&& !( phrase.length() < 5 )
+					&& !( phraseReenterd.isEmpty() )
+					&& !( phraseReenterd.length() < 5 )
+					&& phrase.equals( phraseReenterd ) ) {
 				((WebCarApplication)getApplication()).setPassphrase( phrase );
 				Intent releaseIntent = new Intent(WebCarReleaseActivity.this, WebCarReleaseAudioActivity.class);
 				WebCarReleaseActivity.this.startActivity(releaseIntent);
@@ -140,31 +125,4 @@ public class WebCarReleaseActivity extends Activity {
 		}
 	};
 	
-    OnClickListener onBtnCreditScreen = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// custom dialog
-			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.custom);
-			dialog.setTitle("Credits");
-
-			// set the custom dialog components - text, image and button
-			TextView textCreditsDialog = (TextView) dialog
-					.findViewById(R.id.textCreditsDialog);
-			textCreditsDialog.setText(R.string.contentCredits);
-
-			Button buttonCancelCreditsDialog = (Button) dialog
-					.findViewById(R.id.dialogButtonOK);
-			// if button is clicked, close the custom dialog
-			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dialog.dismiss();
-				}
-			});
-
-			dialog.show();
-		}
-	};
 }

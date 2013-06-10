@@ -1,7 +1,9 @@
 package com.mmt.webcar;
 
+import com.mmt.utils.OnBtnCreditScreenClickListener;
+import com.mmt.utils.OnHomeBtnClickListener;
+
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,11 +12,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class WebCarReleaseWLANActivity extends Activity {
 	
@@ -34,10 +33,10 @@ public class WebCarReleaseWLANActivity extends Activity {
 		setContentView(R.layout.activity_web_car_release_wlan);
 		
 		mHomeButton = (Button) findViewById(R.id.btnHome);
-		mHomeButton.setOnClickListener(onHomeButton);
+		mHomeButton.setOnClickListener(new OnHomeBtnClickListener());
 		
 		mCreditScreenButton = (Button) findViewById(R.id.btnCreditScreen);
-        mCreditScreenButton.setOnClickListener(onBtnCreditScreen);
+		mCreditScreenButton.setOnClickListener(new OnBtnCreditScreenClickListener());
 		
 		mStatusWifi = (ImageView) findViewById(R.id.imageStatusWLAN);		
 		//mWifiReceiver = new WifiIntentReceiver();
@@ -47,24 +46,11 @@ public class WebCarReleaseWLANActivity extends Activity {
 	
 	}
 	
-	
-	OnClickListener onHomeButton = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// Call new Activity
-			Intent releaseIntent = new Intent(WebCarReleaseWLANActivity.this, WebCarActivity.class);
-			WebCarReleaseWLANActivity.this.startActivity(releaseIntent);
-		}
-	};
-	
 	private class WifiIntentReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			
 			final String action = intent.getAction();
-			
-			Log.d( TAG, "Here's the receiver - the action is: " + action );
 			
 			if ( action.equals( WifiManager.NETWORK_STATE_CHANGED_ACTION ) )
 			{
@@ -104,31 +90,4 @@ public class WebCarReleaseWLANActivity extends Activity {
 		super.onResume();
 	}
 	
-    OnClickListener onBtnCreditScreen = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// custom dialog
-			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.custom);
-			dialog.setTitle("Credits");
-
-			// set the custom dialog components - text, image and button
-			TextView textCreditsDialog = (TextView) dialog
-					.findViewById(R.id.textCreditsDialog);
-			textCreditsDialog.setText(R.string.contentCredits);
-
-			Button buttonCancelCreditsDialog = (Button) dialog
-					.findViewById(R.id.dialogButtonOK);
-			// if button is clicked, close the custom dialog
-			buttonCancelCreditsDialog.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dialog.dismiss();
-				}
-			});
-
-			dialog.show();
-		}
-	};
 }
