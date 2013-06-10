@@ -33,7 +33,7 @@ void setup();
 #define BWD_FREQVAL 100
 #define FWD_FREQVAL 900
 #define R_FREQVAL 19
-#define L_FREQVAL 2
+#define L_FREQVAL 1
 
 
 /* Boundaries Arduino PWM*/

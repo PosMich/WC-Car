@@ -1,4 +1,9 @@
-//#include "HardwareSerial.h"
+#define nDEBUG
+
+#ifdef DEBUG
+#include "HardwareSerial.h"
+#endif
+
 #include "WebCar.h"
 #include "FreqCount/FreqCount.h"
 
@@ -34,6 +39,7 @@ bool FB_OFF = true;
 
 void setup()
 {
+#ifndef DEBUG
 	/* set Pins to OUTPUT */
 	pinMode(PIN_EN_RIGHT, OUTPUT);
 	pinMode(PIN_EN_LEFT, OUTPUT);
@@ -48,15 +54,19 @@ void setup()
 	steer( 0 );
 	move( 0 );
 
-//	Serial.begin(115200);
-//	Serial.println("Hallo!");
-
 	/* enable Frequency Counter */
 	initPWM();
 	uint8_t status = SREG;
 	cli();
 	startPWM();
 	SREG = status;
+
+#endif
+
+#ifdef DEBUG
+	Serial.begin(115200);
+	Serial.println("Hallo!");
+#endif
 
 
 	FreqCount.begin(countGate);
@@ -65,6 +75,7 @@ void setup()
 
 void loop()
 {
+
 	if ( FreqCount.available()) {
 		risingEdges = FreqCount.read();
 
@@ -76,24 +87,46 @@ void loop()
 			return;
 		}
 
-		//Serial.print("Freq: ");
-		//Serial.println(frequency);
-
+#ifdef DEBUG
+		Serial.print("Freq: ");
+		Serial.println(frequency);
+		Serial.println(risingEdges);
+		Serial.println(countGate);
+#endif
 		// frequency = xxyyy Hz
-		rightleft = (frequency / 1000); // get first 2 digits xx
+		rightleft = frequency / 1000; // get first 2 digits xx
 		fwdbwd    = frequency % 1000; // get last 3 digits  yyy
 
+#ifdef DEBUG
+		Serial.print("r2l: ");
+		Serial.print(rightleft);
+		Serial.print(" f2b: ");
+		Serial.println(fwdbwd);
+#endif
+
 		// keep everything in boundaries
-		if ( rightleft > R_FREQVAL )
-			rightleft = (rightleft > R_FREQVAL+50) ? 0 : R_FREQVAL;
-		else if ( rightleft < L_FREQVAL)
-			rightleft = (rightleft < L_FREQVAL-50) ? 0 : L_FREQVAL;
+		if ( rightleft > R_FREQVAL || rightleft < L_FREQVAL )
+			rightleft = 10;
 
-		if ( fwdbwd > FWD_FREQVAL || fwdbwd < FWD_FREQVAL)
-			fwdbwd = 0;
+		if ( fwdbwd > FWD_FREQVAL+50 || fwdbwd < BWD_FREQVAL-50 )
+			fwdbwd = 500;
 
-		steer(-1+ (double)( (fwdbwd-BWD_FREQVAL)/(fb_divisor) ));
-		move(-1+ (double)( (rightleft-L_FREQVAL)/(rl_divisor) ));
+		if ( fwdbwd > FWD_FREQVAL )
+			fwdbwd = FWD_FREQVAL;
+		else if ( fwdbwd < BWD_FREQVAL )
+			fwdbwd = BWD_FREQVAL;
+
+
+#ifdef DEBUG
+		Serial.print("After: r2l: ");
+		Serial.print(rightleft);
+		Serial.print(" f2b: ");
+		Serial.println(fwdbwd);
+#endif
+
+		move(-1+ (double)( (fwdbwd-BWD_FREQVAL)/(fb_divisor) ));
+		steer(-1+ (double)( (rightleft-L_FREQVAL)/(rl_divisor) ));
+
 	}
 
   	/*
@@ -109,25 +142,51 @@ void loop()
 
 
 void steer( float val ) {
-	if ( val==0 )
+#ifdef DEBUG
+	Serial.print("steerVal: ");
+	Serial.println(val);
+#endif
+	if ( val==0 ){
 		middle();
-
-	else if ( val<0 )
+	}else if ( val<0 ) {
+#ifdef DEBUG
+	Serial.print("steer: ");
+	Serial.println(FB_BOUNDARY(-1*val));
+#endif
 		steerRL(false, RL_BOUNDARY(-1*val));
-	else
+	} else {
+#ifdef DEBUG
+	Serial.print("steer: ");
+	Serial.println(FB_BOUNDARY(val));
+#endif
 		steerRL(true, RL_BOUNDARY(val));
+	}
 }
 
 void move( float val ) {
-	if ( val==0 )
+#ifdef DEBUG
+	Serial.print("moveVal: ");
+	Serial.println(val);
+#endif
+	if ( val==0 ) {
 		stop();
-	else if ( val<0 )
+	} else if ( val<0 ) {
+#ifdef DEBUG
+	Serial.print("move: ");
+	Serial.println(FB_BOUNDARY(-1*val));
+#endif
 		moveFB(false, FB_BOUNDARY(-1*val));
-	else
+	} else {
+#ifdef DEBUG
+	Serial.print("move: ");
+	Serial.println(FB_BOUNDARY(val));
+#endif
 		moveFB(true, FB_BOUNDARY(val));
+	}
 }
 
 void steerRL( bool right, int val ) {
+
 	if ( val > RL_MAX )
 		val = RL_MAX;
 	else if ( val < RL_MIN )
@@ -138,7 +197,14 @@ void steerRL( bool right, int val ) {
 	else
 		enableLeft();
 
+#ifdef DEBUG
+	Serial.print("r2l Val: ");
+	Serial.println(val);
+#endif
+
+#ifndef DEBUG
 	setPWM( true, val );
+#endif
 }
 
 void moveFB( bool forward, int val ) {
@@ -152,7 +218,13 @@ void moveFB( bool forward, int val ) {
 	else
 		enableBwd();
 
+#ifdef DEBUG
+	Serial.print("f2b Val: ");
+	Serial.println(val);
+#endif
+#ifndef DEBUG
 	setPWM( false, val );
+#endif
 }
 
 void enableRight() {
@@ -229,6 +301,7 @@ void setPWM( bool r2l, float val ) {
 	TCNT0 = 0;
 }
 
+#ifndef DEBUG
 ISR(TIMER0_COMPA_vect) {
 	if (!RL_OFF)
 		digitalWrite( PIN_PWM_RL, LOW);
@@ -247,3 +320,4 @@ ISR(TIMER0_OVF_vect) {
 		digitalWrite( PIN_PWM_FB, HIGH);
 
 }
+#endif

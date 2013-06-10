@@ -617,6 +617,7 @@ static inline void timer_shutdown(void)
 static inline void timer_isr_latency_delay(void)
 {
 #ifdef TIMER_LATENCY_CYCLES
+//	uint8_t cycles_times_3 = TIMER_LATENCY_CYCLES / 3;
 	uint8_t cycles_times_3 = TIMER_LATENCY_CYCLES / 3;
 	asm volatile(
 		"L_%=_loop:"
