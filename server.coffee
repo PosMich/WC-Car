@@ -27,9 +27,9 @@ hash             = require("./pass").hash
 ###
     DB Stuff
 ###
-debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+"user: "+config.mongo.user+" and pw "+config.mongo.pwd
+debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+" user: "+config.mongo.user+" and pw "+config.mongo.pwd
 
-mongoose.connect config.mongo.url, config.mongo.port, config.mongo.database,
+mongoose.connect "mongodb://"+config.mongo.url+":"+config.mongo.port+"/"+config.mongo.database,
     user: config.mongo.user
     pass: config.mongo.pwd
 , (err) ->
