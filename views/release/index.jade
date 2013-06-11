@@ -16,7 +16,7 @@ block content
                     h4 Instructions
                     p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
                 .span6
-                    .img_placeholder
+                    .img_placeholder(id="instructions")
             .row
                 .span4.offset1
                     a(href="#connector", class="btn btn-large btn-inverse") Plug In!
@@ -26,7 +26,7 @@ block content
             h1 Phone Connector
         .row
             .span6.offset1
-                .img_placeholder
+                .img_placeholder(id="phone_connector")
             .span4
                 h4 Plug In!
                 p.
@@ -50,21 +50,21 @@ block content
                     Damit die Töne bei dem WebCar die richtige Wirkung erzeugen muss der Ton des Smartphones ganz aufgedreht sein.
                     Bitte stelle deine Lautstärke auf die höchste Stufe.
             .span6
-                .img_placeholder
+                .img_placeholder(id="volume_img")
         .row
             .span4.offset1
                 a(href="#passphrase", class="btn btn-large btn-inverse") Passphrase!
 
     section#passphrase
         .page-header
-            h1 Passphrase
+            h1 Passwort
         .row
             .span6.offset1
                 form(class="form-horizontal well img_placeholder")
                     fieldset
                         legend Für deine Kontrolle
                         div.control-group
-                            label(class="control-label", for="passphrase") Passphrase
+                            label(class="control-label", for="passphrase") Passwort
                             div.controls
                                 input(type="password", id="passphrase", class="input-small")                                    
             .span4
@@ -81,23 +81,17 @@ block content
         .page-header
             h1 Get ready!
         .row
-            .span4.offset1
+            .span8.offset2
                 h4 Last but not least.
                 p.
                     Alle notwendigen Schritte sind nun getan. Nun muss das Smartphone noch in die dafür vorgesehene Halterung
                     am WebCar angebracht werden und dann kann es los gehen.<br/><br/>
                     Unter folgendem Link ist das WebCar zu erreichen:
-                span(class="label label-info") http://localhost:8000/control/6Posx23
                 p.
                     Mit diesem Link und der von dir gewählten Passphrase kann nun das WebCar gesteuert werden.
-            .span6
-                .img_placeholder
-
-    section#fun
-        .page-header
-            h1 Have fun!
+                center
+                    span(class="label label-info label-big") http://localhost:8000/control/6Posx23
         .row
             .span8.offset2
-                .img_placeholder
                 center
                     a(href="#release", class="btn btn-large btn-inverse") Back to top!

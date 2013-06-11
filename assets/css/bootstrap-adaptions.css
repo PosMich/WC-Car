@@ -318,3 +318,9 @@ legend {
 .navbar .nav > li > a {
     padding: 10px 15px 6px;
 }
+
+.label-big {
+    font-size: 1.4em;
+    padding: 15px;
+    margin-top: 10px;
+}
