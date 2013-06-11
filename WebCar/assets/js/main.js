@@ -66,11 +66,15 @@ $(document).ready(function() {
       for (var i in keys) {
         if(i == 37) {
           if(direction >= -1) {
+            if(direction > 0)
+              direction = 0
             direction -= 0.025;
             updateDirection(direction);
           }
         } else if(i == 39) {
           if(direction <= 1) {
+            if(direction < 0)
+              direction = 0
             direction += 0.025;
             updateDirection(direction);
           }
