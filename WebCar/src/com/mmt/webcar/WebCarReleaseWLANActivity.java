@@ -40,9 +40,6 @@ public class WebCarReleaseWLANActivity extends Activity {
 		
 		mStatusWifi = (ImageView) findViewById(R.id.imageStatusWLAN);		
 		mWifiReceiver = new WifiIntentReceiver();
-		
-		Intent releaseIntent = new Intent(WebCarReleaseWLANActivity.this, WebCarReleaseActivity.class);
-		WebCarReleaseWLANActivity.this.startActivity(releaseIntent);
 	
 	}
 	
