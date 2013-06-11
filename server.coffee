@@ -30,7 +30,7 @@ hash             = require("./pass").hash
 debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+" user: "+config.mongo.user+" and pw "+config.mongo.pwd
 
 # mongoose.connect "mongodb://"+config.mongo.url+":"+config.mongo.port+"/"+config.mongo.database,
-mongoose.connect config.mongo.url, config.mongo.port, config.mongo.database,
+mongoose.connect config.mongo.url+"/"+config.mongo.database, config.mongo.port, config.mongo.database,
     user: config.mongo.user
     pass: config.mongo.pwd
 , (err) ->
