@@ -26,7 +26,7 @@ html(ng-app="WebCar", lang="de")
               a.btn.btn-navbar.collapsed(data-target=".nav-collapse", data-toggle="collapse")
                 span.icon-bar
                 span.icon-bar
-                span.icon-bar 
+                span.icon-bar
               #main-menu.nav-collapse.collapse
                 ul#main-menu-left.nav(ng-controller="AnchorCtrl")
                   if user !== null && user !== undefined
@@ -47,6 +47,18 @@ html(ng-app="WebCar", lang="de")
                       a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
                     else
                       a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
+      .asdf
+        h1 layout
+          if is_desktop
+            h2 desktop
+          if is_phone
+            h2 phone
+          if is_tablet
+            h2 tablet
+          if is_tv
+            h2 tv
+          if is_bot
+            h2 bot
       .container(ng-view)
 
 

@@ -201,8 +201,7 @@ app.configure ->
 
     app.use express.methodOverride()
     app.use device.capture()
-    app enableDeviceHelpers()
-    app enableViewRouting()
+    app.enableDeviceHelpers()
     app.use app.router
 
 
