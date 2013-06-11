@@ -19,13 +19,11 @@ html(ng-app="WebCar", lang="de")
 // Load jQuery
 != js("lib/jquery-2.0.0.min")
 != js("lib/keydrown")
-//if control == "gyro"
-//    if is_desktop
-//        != js("control/sensors_tablet.js")
-//    else
-//        != js("control/sensors")
 if control == "gyro"
-    != js("control/sensors")
+   if is_tablet
+       != js("control/sensors_tablet.js")
+    else
+       != js("control/sensors")
 else if control == "keyboard"
     != js("control/keypress2")
 else if control == "keyboard2"

@@ -4,7 +4,7 @@ $(function(){
     var beta;
     var gamma;
 
-    $("#info").html("In Tablet mode now");
+    
 
     //Get Device Orientation values
     window.addEventListener("deviceorientation",  lagebestimmung, false);
@@ -14,9 +14,14 @@ $(function(){
         var beta = Math.round(event.beta);
         var gamma = Math.round(event.gamma);
 
+        var alpha = Math.round(event.alpha);
+        $("#info").html("Alpha-Wert: " + alpha);
+        $("#info2").html("Beta-Wert: " + beta);
+        $("#info3").html("Gamma-Wert: " + gamma);
 
 
-        if(orientation == -90){
+
+        if(orientation == 0){
             $("#notification").hide();
             $("#blackening").hide();
 
@@ -26,7 +31,7 @@ $(function(){
             $("#orient").html(orientation);
 
             //Animating thumb to display the direction
-            $("#thumbDirection").css({left:(((Math.round(-((1/75)*beta)*100)/100)+1)*($('#direction').width()/2))});
+            $("#thumbDirection").css({left:((Math.round(((1/90)*gamma)*100)/100)*($('#direction').width()/2))});
 
             //Animating thumb to display speed
             $("#thumbForward").css({top:((Math.round(((1/90)*gamma)*100)/100)*($('#forward').height()/2))});
@@ -34,7 +39,7 @@ $(function(){
 
         }
 
-        else if(orientation == 90){
+        else if(orientation == 180){
             $("#notification").hide();
             $("#blackening").hide();
 
@@ -58,7 +63,7 @@ $(function(){
         }
 
         //Portrait Mode 
-        else if (orientation == 0 || orientation == 180) {
+        else if (orientation == 90 || orientation == -90) {
             $("#orient").html(orientation);
 
             $("#notification").show();

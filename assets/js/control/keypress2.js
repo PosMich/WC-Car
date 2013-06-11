@@ -11,6 +11,10 @@ $(function(){
     kd.LEFT.down(function () {
         if(direction >= -1) {
 
+            if(direction > 0) {
+                direction = 0;
+            }
+
             direction -= 0.0125;
 
             $('#leftButton').addClass('buttonsKeypressActive');
@@ -23,6 +27,10 @@ $(function(){
 
     kd.RIGHT.down(function () {
         if(direction <= 1) {
+
+            if(direction < 0) {
+                direction = 0;
+            }
 
             direction += 0.0125;
             
@@ -37,6 +45,10 @@ $(function(){
     kd.DOWN.down(function () {
         if(speed >= -1) {
 
+            if(speed > 0) {
+                speed = 0;
+            }
+
             speed -= 0.0125;
 
             $('#backButton').addClass('buttonsKeypressActive');
@@ -50,6 +62,10 @@ $(function(){
 
     kd.UP.down(function () {
         if(speed <= 1) {
+
+            if(speed < 0) {
+                speed = 0;
+            }
 
             speed += 0.0125;
             $('#forwardButton').addClass('buttonsKeypressActive');
@@ -80,7 +96,8 @@ $(function(){
         $("#thumbForward").css({top:(((Math.round(-speed*1000)/1000)+1)*($('#forward').height()/2))});
     }
 
-    setInterval(function() {
+    //Automatically reduces speed 
+    /*setInterval(function() {
                   
         if ((Math.round(speed*1000)/1000) >= 0.0125) {
             speed -= 0.0125;
@@ -90,6 +107,6 @@ $(function(){
             speed += 0.0125;
             updateSpeed(speed);
         }   
-    }, 150);
+    }, 150);*/
 
 });

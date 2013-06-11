@@ -4,7 +4,7 @@ $(function(){
     var beta;
     var gamma;
 
-    console.log("Is Desktop? " + emptyUserAgentDeviceType);
+
 
     //Get Device Orientation values
     window.addEventListener("deviceorientation",  lagebestimmung, false);
@@ -14,7 +14,7 @@ $(function(){
         var beta = Math.round(event.beta);
         var gamma = Math.round(event.gamma);
 
-
+        var alpha = Math.round(event.alpha);
 
         if(orientation == -90){
             $("#notification").hide();
