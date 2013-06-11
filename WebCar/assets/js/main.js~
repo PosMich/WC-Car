@@ -249,7 +249,7 @@ $(document).ready(function() {
     if (connected) {
       timeout++;
       if( timeout > max_timeout ) {
-        $("#dialog").html("<h1>Something went wrong...<br> Please check the app-status and reload this page.</h1>");
+        $("#dialog").html("<h1>Something went wrong.. Please check the passphrase and app-status and reload this page.</h1>");
         $("#dialog").animate({opacity: 1}, 750);
         connected = false;
       }

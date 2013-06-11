@@ -143,8 +143,8 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					11000,	// min right frequency
 					20000,	// max right frequency
 					100,	// min backward frequency
-					500,	// max backward frequency
-					500,	// min forward frequency
+					480,	// max backward frequency
+					520,	// min forward frequency
 					900,	// max forward frequency
 					10000, 	// straightFreq
 					500		//stopFreq
@@ -371,6 +371,7 @@ public class WebCarReleaseStreamActivity extends Activity implements
 							if( json.getString("token").equals(mToken) ) {
 								Log.d( TAG + ".Message", "Token is correct." );
 								connected = true;
+								
 							} else {
 								conn.close();
 							}
@@ -434,6 +435,8 @@ public class WebCarReleaseStreamActivity extends Activity implements
 		} catch(Exception e) {
 			Log.e( TAG, e.getMessage() );
 		}
+		
+		
 		
 		super.onStop();
 	}

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+
 public class WebCarActivity extends Activity {
 	
 	private Button mReleaseButton;
@@ -22,7 +23,9 @@ public class WebCarActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);   
+        
+    	
 
         setContentView(R.layout.activity_web_car);
 
@@ -34,7 +37,7 @@ public class WebCarActivity extends Activity {
         
         mHomeButton = (Button) findViewById(R.id.btnHome);
         mHomeButton.setOnClickListener(new OnHomeBtnClickListener());
-        
+
     }
 
     OnClickListener onBtnRelease = new OnClickListener() {

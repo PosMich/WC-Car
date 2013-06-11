@@ -25,6 +25,7 @@ public class WebCarReleaseAudioActivity extends Activity {
 	private Button mHomeButton;
 	private Button mCreditScreenButton;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class WebCarReleaseAudioActivity extends Activity {
 							getDrawable(R.drawable.okay));
 					mStatusAudio.setVisibility(1);
 					setSystemVolume(true);
+					
 					try {
 						Thread.sleep(750);
 						Intent releaseIntent = new Intent(WebCarReleaseAudioActivity.this, WebCarReleaseStreamActivity.class);
@@ -92,6 +94,11 @@ public class WebCarReleaseAudioActivity extends Activity {
 		super.onPause();
 		unregisterReceiver(mMusicReceiver);
 		finish();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();	
 	}
 	
 	@Override
