@@ -4,7 +4,7 @@ $(function(){
     var beta;
     var gamma;
 
-    console.log("Is Desktop? " + emptyUserAgentDeviceType);
+    $("#info").html("In Tablet mode now");
 
     //Get Device Orientation values
     window.addEventListener("deviceorientation",  lagebestimmung, false);

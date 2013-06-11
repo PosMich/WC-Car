@@ -15,6 +15,7 @@ WebSocketServer = require("ws").Server
 express   = require "express"
 assets    = require "connect-assets"
 flash     = require "connect-flash"
+device    = require "express-device"
 
 mongoose = require "mongoose"
 ObjectID = require("mongodb").ObjectID
@@ -195,8 +196,14 @@ app.configure ->
     app.use flash()
     app.use passport.initialize()
     app.use passport.session()
-    app.use app.router
     app.use express.static(path.join(__dirname, "public"))
+
+
+    app.use express.methodOverride()
+    app.use device.capture()
+    app enableDeviceHelpers()
+    app enableViewRouting()
+    app.use app.router
 
 
 ###
