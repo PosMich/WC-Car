@@ -6,7 +6,7 @@
     <string name="release">Freigeben</string>
     <string name="control">Control</string>
     <string name="title_activity_web_car_release">WebCarReleaseActivity</string>
-    <string name="release_heading">Gebe dein \nWebCar frei</string>
+    <string name="release_heading">Gib dein \nWebCar frei</string>
     <!-- <string name="release_content_plug_in">Step 1: Plug in the\nphone connector</string> -->
     <string name="release_step_passphrase_heading">Passphrase</string>
     <string name="confirm_passphrase">Bestätige</string>
