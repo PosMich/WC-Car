@@ -3,3 +3,7 @@
 	height: 300px;
 	border: 2px dashed #333;
 }
+
+video#car {
+	height: 0; width: 0; display: none;
+}
