@@ -22,14 +22,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int black_overlay=0x7f040000;
     }
     public static final class drawable {
-        public static final int car=0x7f020000;
-        public static final int car_big=0x7f020001;
-        public static final int error=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int okay=0x7f020004;
-        public static final int repeat_stripes=0x7f020005;
-        public static final int stripes=0x7f020006;
-        public static final int stripes_new=0x7f020007;
+        public static final int auto2=0x7f020000;
+        public static final int car=0x7f020001;
+        public static final int car_big=0x7f020002;
+        public static final int error=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int okay=0x7f020005;
+        public static final int repeat_stripes=0x7f020006;
+        public static final int stripes=0x7f020007;
+        public static final int stripes_new=0x7f020008;
     }
     public static final class id {
         public static final int btnConfirmPassphrase=0x7f07000c;

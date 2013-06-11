@@ -142,10 +142,10 @@ public class WebCarReleaseStreamActivity extends Activity implements
 					9000,	// max left frequency
 					11000,	// min right frequency
 					20000,	// max right frequency
-					100,	// min backward frequency
-					480,	// max backward frequency
-					520,	// min forward frequency
-					900,	// max forward frequency
+					90,	// min backward frequency
+					490,	// max backward frequency
+					510,	// min forward frequency
+					910,	// max forward frequency
 					10000, 	// straightFreq
 					500		//stopFreq
 					);

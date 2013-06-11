@@ -65,8 +65,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="20"
-        android:src="@drawable/car_big"
-        android:contentDescription="@string/carDescription" />
+        android:contentDescription="@string/carDescription"
+        android:src="@drawable/auto2" />
     
     <RelativeLayout 
         android:layout_width="fill_parent"
