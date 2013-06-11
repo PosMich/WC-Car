@@ -1,4 +1,4 @@
-#define nDEBUG
+#define DEBUG
 
 #ifdef DEBUG
 #include "HardwareSerial.h"
@@ -28,6 +28,7 @@ int fwdbwd = 0;
 int rightleft = 0;
 double fb_divisor = (double)( (FWD_FREQVAL-BWD_FREQVAL)/2 );
 double rl_divisor = (double)( (R_FREQVAL-L_FREQVAL)/2 );
+int stopVal = (BWD_FREQVAL+(FWD_FREQVAL-BWD_FREQVAL)/2);
 static int countGate = 20; //ms
 
 
@@ -90,8 +91,8 @@ void loop()
 #ifdef DEBUG
 		Serial.print("Freq: ");
 		Serial.println(frequency);
-		Serial.println(risingEdges);
-		Serial.println(countGate);
+		//Serial.println(risingEdges);
+		//Serial.println(countGate);
 #endif
 		// frequency = xxyyy Hz
 		rightleft = frequency / 1000; // get first 2 digits xx
@@ -116,6 +117,9 @@ void loop()
 		else if ( fwdbwd < BWD_FREQVAL )
 			fwdbwd = BWD_FREQVAL;
 
+		if ( stopVal+50 > fwdbwd && fwdbwd > stopVal-50 )
+			fwdbwd = stopVal;
+
 
 #ifdef DEBUG
 		Serial.print("After: r2l: ");
@@ -124,8 +128,15 @@ void loop()
 		Serial.println(fwdbwd);
 #endif
 
-		move(-1+ (double)( (fwdbwd-BWD_FREQVAL)/(fb_divisor) ));
-		steer(-1+ (double)( (rightleft-L_FREQVAL)/(rl_divisor) ));
+		if (fwdbwd == 10)
+			move(0);
+		else
+			move(-1+ (double)( (fwdbwd-BWD_FREQVAL)/(fb_divisor) ));
+
+		if (rightleft == 500)
+			steer(0);
+		else
+			steer(-1+ (double)( (rightleft-L_FREQVAL)/(rl_divisor) ));
 
 	}
 
@@ -147,17 +158,17 @@ void steer( float val ) {
 	Serial.println(val);
 #endif
 	if ( val==0 ){
-		middle();
+		steerRL(true,0);
 	}else if ( val<0 ) {
 #ifdef DEBUG
 	Serial.print("steer: ");
-	Serial.println(FB_BOUNDARY(-1*val));
+	Serial.println(RL_BOUNDARY(-1*val));
 #endif
 		steerRL(false, RL_BOUNDARY(-1*val));
 	} else {
 #ifdef DEBUG
 	Serial.print("steer: ");
-	Serial.println(FB_BOUNDARY(val));
+	Serial.println(RL_BOUNDARY(val));
 #endif
 		steerRL(true, RL_BOUNDARY(val));
 	}
@@ -169,7 +180,7 @@ void move( float val ) {
 	Serial.println(val);
 #endif
 	if ( val==0 ) {
-		stop();
+		moveFB(true,0);
 	} else if ( val<0 ) {
 #ifdef DEBUG
 	Serial.print("move: ");
@@ -189,8 +200,11 @@ void steerRL( bool right, int val ) {
 
 	if ( val > RL_MAX )
 		val = RL_MAX;
-	else if ( val < RL_MIN )
-		val = RL_MIN;
+	else if ( val < RL_MIN ) {
+		val = 0;
+		middle();
+		return;
+	}
 
 	if (right)
 		enableRight();
@@ -210,8 +224,11 @@ void steerRL( bool right, int val ) {
 void moveFB( bool forward, int val ) {
 	if ( val > FB_MAX )
 		val = FB_MAX;
-	else if ( val < (FB_MIN/2) )
+	else if ( val < (FB_MIN/2) ){
 		val = 0;
+		stop();
+		return;
+	}
 
 	if (forward)
 		enableFwd();

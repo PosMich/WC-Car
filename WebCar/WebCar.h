@@ -32,14 +32,14 @@ void setup();
 /* Boundaries Input Frequency */
 #define BWD_FREQVAL 100
 #define FWD_FREQVAL 900
-#define R_FREQVAL 19
+#define R_FREQVAL 20
 #define L_FREQVAL 1
 
 
 /* Boundaries Arduino PWM*/
-#define FB_MIN 0
-#define FB_MAX 50	//120
-#define RL_MIN 0
+#define FB_MIN 25
+#define FB_MAX 70	//120
+#define RL_MIN 100
 #define RL_MAX 255 //255
 
 #define RL_BOUNDARY(val) (double)(RL_MIN+val*(RL_MAX-RL_MIN))
