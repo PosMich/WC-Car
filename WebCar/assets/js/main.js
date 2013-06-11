@@ -15,11 +15,17 @@ $(document).ready(function() {
 
   connected = false;
   connection = null;
+  tablet = 1;
 
   timeout = 0;
   max_timeout = 5;
 
+  exponential = false;
+
   IP = /[0-9]+.[0-9]+.[0-9]+.[0-9]+/i.exec(document.URL);
+
+  if( navigator.userAgent.indexOf("obile") === -1 )
+    tablet = -1;
 
   $(".connect").click( function( e ) {
     e.preventDefault();
@@ -105,6 +111,9 @@ $(document).ready(function() {
     });
 
     lagebestimmung = function( event ) {
+
+      exponential = true;
+
       alpha = Math.round(event.alpha);
       beta = Math.round(event.beta);
       gamma = Math.round(event.gamma);
@@ -128,8 +137,8 @@ $(document).ready(function() {
           else if ( b2f < -1 )
             b2f = -1;
 
-          updateDirection( l2r );
-          updateSpeed( b2f );
+          updateDirection( l2r*tablet );
+          updateSpeed( b2f*tablet );
         }
       } else if( window.orientation == 90 )
       $( "#hint" ).html( "" );
@@ -150,8 +159,8 @@ $(document).ready(function() {
           else if( b2f < -1 )
             b2f = -1;
 
-          updateDirection( l2r );
-          updateSpeed( b2f );
+          updateDirection( l2r*tablet );
+          updateSpeed( b2f*tablet );
         } else if( window.orientation == 0 || window.orientation == 180 )
           $( "#hint" ).html( "turn your phone in langscape mode" );
     }
@@ -223,9 +232,12 @@ $(document).ready(function() {
     }
     
     sendMotion = function() {
+      if( exponential ) {
+        motion_direction = (Math.exp(motion_direction)-1)/(Math.exp(1)-1)
+        motion_speed = (Math.exp(motion_speed)-1)/(Math.exp(1)-1)
+      }
       connection.send( JSON.stringify ( {"type": 1, "l2r": motion_direction.toFixed(2), "b2f": motion_speed.toFixed(2)} ) );
-    }
-    
+    }  
     
   $(window).resize(function() {
     height = $(".imgContainer").height();
@@ -236,6 +248,10 @@ $(document).ready(function() {
     });
   });
   
+  window.addEventListener("pagehide", function() {
+    connection.close();
+  }, false);
+
   setInterval(function() {
     if (connected) {
       if (speed > 0.025) {
