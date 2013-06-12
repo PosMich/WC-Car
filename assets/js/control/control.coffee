@@ -5,6 +5,7 @@ $(document).ready ->
     controlChannel = null
     peerConnection = null
     signalingDone = false
+    displayStream = false
 
     pcConfig = iceServers: [url: "stun:stun.l.google.com:19302"]
     connection = optional: [
@@ -20,7 +21,7 @@ $(document).ready ->
         OfferToReceiveVideo: true
 
     socket = null
-    serverUri = "10.0.0.8:8000"
+    serverUri = "10.0.0.10:8000"
 
     $("#passphrase_input").bind "input", ->
         pw = $(this).val()
@@ -83,6 +84,9 @@ $(document).ready ->
                             videoTracks = remoteStream.getVideoTracks()
                             if videoTracks.length is 0 or remoteVideo.currentTime > 0
                                 console.log "got remote video"
+                                if !displayStream
+                                    display()
+                                    displayStream = true
                             else
                                 setTimeout waitForRemoteVideo, 100
 
@@ -156,3 +160,24 @@ $(document).ready ->
                 msgString = JSON.stringify(message)
                 console.log "C->S: " + msgString
                 socket.send msgString
+
+            display = ->
+                console.log "display stream"
+                $("#password").css display: "none"
+                $("body").css "background-image", "none"
+                $("#remote").css display: "block"
+                width = $("#videoContainer").width()
+                height = $("#videoContainer").height()
+                $("#remote").css
+                    width: width
+                    height: height
+                    display: "block"
+
+            $(window).onresize = (e) ->
+                width = $("#videoContainer").width() 
+                height = $("#videoContainer").height()
+                $("#remote").css
+                    width: width
+                    height: height
+
+
