@@ -492,33 +492,38 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                     else
                         debug.info "tryin to create new car"
                         urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
-                        car = new Cars(
-                            user: req.user._id
-                            salt: salt
-                            hash: hash
-                            urlHash: urlHash
-                            isDriven: false
-                            _id: new ObjectID
-                        ).save( (err, newCar) ->
-                            if err
-                                debug.error "wasn't able to save car!"
-                                debug.error err
-                                res.format
-                                    "application/json": ->
-                                        res.jsonp {tinyUrl: false, "wasn't able to save car"}
-                            debug.info "try to get tinyUrl"
-                            try
-                                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
-                                    debug.error err if err
-                                    debug.info "tinyUrl: "+url
-                                    res.format
-                                        "application/json": ->
-                                            debug.info "send jsonp"
-                                            res.jsonp { tinyUrl: url , carId: newCar.urlHash }
-                            catch err
-                                debug.error "while getting tinyUrl: "+err
+                        debug.info "try to get tinyUrl"
+                        try
+                            tinyUrl config.siteUrl+":"+config.port+"/drive/"+urlHash, (err, url)->
+                                debug.error err if err
+                                debug.info "tinyUrl: "+url
 
-                        )
+                                debug.info "tryin to create new car"
+                                car = new Cars(
+                                    user: req.user._id
+                                    salt: salt
+                                    hash: hash
+                                    urlHash: urlHash
+                                    isDriven: false
+                                    _id: new ObjectID
+                                ).save( (err, newCar) ->
+                                    if err
+                                        debug.error "wasn't able to save car!"
+                                        debug.error err
+                                        res.format
+                                            "application/json": ->
+                                                res.jsonp {tinyUrl: false, "wasn't able to save car"}
+                                    else
+                                        res.format
+                                            "application/json": ->
+                                                debug.info "send jsonp"
+                                                res.jsonp { tinyUrl: url , carId: newCar.urlHash }
+                                )
+
+
+                        catch err
+                            debug.error "while getting tinyUrl: "+err
+
             else
                 debug.info "car found "+car
                 res.jsonp {tinyUrl: false, msg: "car exists"}
@@ -648,7 +653,7 @@ wss.on "connection", (ws) ->
                                         debug.info "identified as car"
                                         ws.type = "car"
                                         ws.other = ""
-                                        ws.carId = msg.id
+                                        ws.carId = msg.carId
                                         ws.isDriven = false
                                         ws.send JSON.stringify(
                                             type: "success"
@@ -706,13 +711,25 @@ wss.on "connection", (ws) ->
     ws.on "close", ->
         debug.info "ws connection closed"
         if ws.type is undefined
-
+            debug.info "unknown ws closed"
         else if ws.type is "car"
-            ws.type = undefined
-            ws.other = undefined
-            ws.carId = undefined
-            ws.isDriven = false
-        else if ws.type is ""
+            debug.info "trying to find car by id: "+ws.carId
+            Cars.findOne
+                urlHash: ws.carId
+            , (err, car) ->
+                debug.error "Error occured while searching for car: "+err if err
+                unless car
+                    debug.error "car not in list!!!"
+                else
+                    debug.info "car found - removing it"
+                    car.remove()
+                    if ws.other is not "" and ws.other is not undefined
+                        ws.other.close()
+                    ws.type = undefined
+                    ws.other = undefined
+                    ws.carId = undefined
+                    ws.isDriven = false
+        else if ws.type is "driver"
             ws.type = undefined
             ws.other = undefined
 

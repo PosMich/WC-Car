@@ -36,7 +36,7 @@ $(document).ready ->
             $.post("/registerCar",
                 password: pw
             , (data) ->
-                if data != null
+                if data.tinyUrl != false
                     url = data.tinyUrl
                     carId = data.carId
 
@@ -60,19 +60,20 @@ $(document).ready ->
 
                         console.log "socket connection established"
 
-                    socket.onmessage = (data) ->
-                        console.log "S->C: " + data
-                        msg = JSON.parse(data)
+                    socket.onmessage = (msg) ->
+                        console.log "S->C: "
+                        console.log msg
+                        msg = JSON.parse(msg.data)
 
                         if !authDone
                             if msg.type is "success"
 
-                                ### 
+                                ###
                                 STEP 3: obtaining local media
                                 ###
                                 try
-                                    getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
                                     console.log "Requested access to local media with mediaConstraints:\n\\" + JSON.stringify(mediaConstraints) + "'"
+                                    getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
                                 catch e
                                     alert "getUserMedia() failed. Is this a WebRTC capable browser?"
                                     console.log "getUserMedia failed with exception: " + e.message
@@ -192,7 +193,7 @@ $(document).ready ->
                     , 600
 
                 else
-                    console.log "no url received"
+                    console.log "no url/error received"+data.msg
 
             ).fail ->
                 console.log "register failed."
