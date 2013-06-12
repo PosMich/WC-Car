@@ -52,7 +52,11 @@ $(document).ready ->
                     socket.onopen = ->
 
                         # send first message
-                        sendMessage JSON.stringify( {type: "login", user: "car", carId: carId, pw: pw} )
+                        sendMessage
+                            type: "login"
+                            user: "car"
+                            carId: carId
+                            pw: pw
 
                         console.log "socket connection established"
 
@@ -98,7 +102,7 @@ $(document).ready ->
                                     try
                                         peerConnection = new RTCPeerConnection(pcConfig, connection)
                                         peerConnection.onicecandidate = onIceCandidate
-                                        peerConnection.onclose = 
+                                        peerConnection.onclose =
                                         console.log "Created RTCPeerConnnection with:\n  config: '" + JSON.stringify(pcConfig)
                                     catch e
                                         console.log "Failed to create PeerConnection, exception: " + e.message
@@ -134,7 +138,7 @@ $(document).ready ->
                                     sendMessage
                                         type: "answer"
                                         sdp: sessionDescription
-                                    
+
                                 doAnswer = ->
                                         pc.createAnswer setLocalAndSendMessage, null, sdpConstraints
                             else if msg.type is "error"

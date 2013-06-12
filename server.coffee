@@ -507,13 +507,17 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                                     "application/json": ->
                                         res.jsonp {tinyUrl: false, "wasn't able to save car"}
                             debug.info "try to get tinyUrl"
-                            tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
-                                debug.error err if err
-                                debug.info "tinyUrl: "+url
-                                res.format
-                                    "application/json": ->
-                                        debug.info "send jsonp"
-                                        res.jsonp { tinyUrl: url , carId: newCar.urlHash }
+                            try
+                                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
+                                    debug.error err if err
+                                    debug.info "tinyUrl: "+url
+                                    res.format
+                                        "application/json": ->
+                                            debug.info "send jsonp"
+                                            res.jsonp { tinyUrl: url , carId: newCar.urlHash }
+                            catch err
+                                debug.error "while getting tinyUrl: "+err
+
                         )
             else
                 debug.info "car found "+car
@@ -614,7 +618,8 @@ wss.on "connection", (ws) ->
     debug.info "new ws connection"
 
     ws.on "message", (msg) ->
-        debug.info 'ws received: '+msg
+        debug.info 'ws received: '
+        console.log msg
 
         try
             msg = JSON.parse msg
@@ -623,12 +628,15 @@ wss.on "connection", (ws) ->
                 when "login"
                     throw "msg.user not defined!!!" if msg.user isnt "car" and msg.user isnt "driver"
                     Cars.findOne
-                        urlHash: msg.id
+                        urlHash: msg.carId
                     , (err, car) ->
                         debug.error "Error occured while searching for car: "+err if err
                         unless car
                             debug.error "car not in list!!!"
-                            ws.send JSON.stringify({type: "error", msg: "car is not in the list"})
+                            ws.send JSON.stringify(
+                                type: "error"
+                                msg: "car is not in the list"
+                            )
                         else
                             #validate pw
                             hash msg.pw, car.salt, (err, hash) ->
@@ -642,6 +650,9 @@ wss.on "connection", (ws) ->
                                         ws.other = ""
                                         ws.carId = msg.id
                                         ws.isDriven = false
+                                        ws.send JSON.stringify(
+                                            type: "success"
+                                        )
                                     else
                                         debug.info "identified as driver"
                                         #driver
@@ -653,17 +664,25 @@ wss.on "connection", (ws) ->
                                                 debug.info "found car"
                                                 if client.isDriven
                                                     debug.error "car is occupied"
-                                                    ws.send JSON.stringify({type: "error", msg: "car is occupied"})
+                                                    ws.send JSON.stringify(
+                                                        type: "error"
+                                                        msg: "car is occupied"
+                                                    )
                                                 else
                                                     debug.info "add driver to car"
                                                     client.isDriven = true
                                                     ws.other = client
                                                     ws.type = "driver"
                                                     client.other = ws
-                                                    ws.send JSON.stringify({type: "success"})
+                                                    ws.send JSON.stringify(
+                                                        type: "success"
+                                                    )
                                         if ws.other is undefined
                                             debug.error "something went horribly wrong, car not found in socket clients"
-                                            ws.send JSON.stringify({type: "error", msg: "something went horribly wrong, car not found in socket clients"})
+                                            ws.send JSON.stringify(
+                                                type: "error"
+                                                msg: "something went horribly wrong, car not found in socket clients"
+                                            )
                                 else
                                     ws.send JSON.stringify({type: "error", msg: "wrong password"})
                 when "offer"
