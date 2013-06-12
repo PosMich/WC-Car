@@ -324,3 +324,7 @@ legend {
     padding: 15px;
     margin-top: 10px;
 }
+
+.label-hidden {
+    opacity: 0;
+}
