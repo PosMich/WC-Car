@@ -17,6 +17,8 @@ assets    = require "connect-assets"
 flash     = require "connect-flash"
 device    = require "express-device"
 
+tinyUrl = require("nj-tinyurl").shorten
+
 mongoose = require "mongoose"
 ObjectID = require("mongodb").ObjectID
 
@@ -88,6 +90,18 @@ FacebookUserSchema = new mongoose.Schema
         validate:   [validateUrl, "Not a valid URL."]
 
 FbUsers = mongoose.model "fbauths", FacebookUserSchema
+
+CarSchema = new mongoose.Schema
+    isFbUser:
+        type:       Boolean
+        required:   true
+    fbId:           String
+    name:           String
+    pwHash:         String
+    pwSalt:         String
+    urlHash:        String
+
+Cars = mongoose.model "cars", CarSchema
 
 
 ###
@@ -287,8 +301,8 @@ app.post "/signup", userExist, (req, res, next) ->
     console.log req.body
     user = new Users()
 
-    if req.body.password.length > 5
-        debug.info "password length > 5"
+    if req.body.password.length > config.mongo.validate.pwlength
+        debug.info "password length > "+config.mongo.validate.pwlength
         hash req.body.password, (err, salt, hash) ->
             throw err  if err
             user = new Users(
@@ -456,6 +470,47 @@ app.get "/choose", (req, res) ->
     debug.info "render layout"
     res.render "layout",
         user: req.user
+
+# register Car, create Url ....
+app.post "/registerCar", authenticatedOrNot, (req, res) ->
+    debug.info ".post #{sty.magenta '/registerCar'} from "+req.user    # register Car to availabel Cars
+    if req.body.password.length > config.mongo.validate.pwlength
+        debug.info "password length > "+config.mongo.validate.pwlength
+        hash req.body.password, (err, salt, hash) ->
+            throw err  if err
+            car = new Cars(
+                user: req.user._id
+                salt: salt
+                hash: hash
+                urlHash: crypto.createHash sha1
+                _id: new ObjectID
+            ).save( (err, newUser) ->
+                if err
+                    debug.error "wasn't able to save car!"
+                    res.format
+                        "application/json": ->
+                            res.jsonp null
+                res.format
+                    "application/json": ->
+                        debug.info "send jsonp"
+                        res.jsonp { tinyUrl: tinyUrl(config.siteUrl+":"+config.port+"/drive/"+car.urlHash) }
+            )
+
+###
+app.get "/drive/:id", (req, res) ->
+    carId = req.params.id
+    debug.info ".get #{sty.magenta '/drive/'}"+carId
+    switch req.device
+        when "tablet"
+            res.render tablet.jade,
+                carId: carId
+        when "phone"
+            res.render phone.jade,
+                carId: carId
+        else
+            res.render default.jade,
+                carId: carId
+###
 
 app.get "*", (req, res) ->
     debug.info ".get #{sty.magenta '*'} from "+req.user

@@ -3,18 +3,18 @@
   "description": "Drive your RC Car with the power of Web!",
   "version": "0.0.1",
   "private": true,
-  "contributors":[
+  "contributors": [
     {
-      "name":"Michael Poschacher",
-      "email":"michael.poschacher@gmail.com"
+      "name": "Michael Poschacher",
+      "email": "michael.poschacher@gmail.com"
     },
     {
-      "name":"Sebastian Slamanig",
-      "email":"sebastian.slamanig@gmail.com"
+      "name": "Sebastian Slamanig",
+      "email": "sebastian.slamanig@gmail.com"
     },
     {
-      "name":"Lisa Maria Lederer",
-      "email":""
+      "name": "Lisa Maria Lederer",
+      "email": ""
     }
   ],
   "scripts": {
@@ -25,28 +25,29 @@
     "url": "https://github.com/PosMich/WC-Car"
   },
   "dependencies": {
-    "express"           : "3.x",
-    "coffee-script"     : "1.x",
-    "connect-assets"    : "2.x",
-    "jade"              : "0.30.x",
-    "stylus"            : "0.32.x",
-    "ws"                : "0.4.25",
-    "passport"          : "0.1.17",
-    "passport-facebook" : "0.1.5",
-    "passport-local"    : "0.1.6",
-    "connect-flash"     : "0.1.1",
-    "mongodb"           : "1.3.5",
-    "mongoose"          : "3.6.11",
-    "sty"               : "0.6.1",
-    "express-device"    : "0.3.7"
+    "express": "3.x",
+    "coffee-script": "1.x",
+    "connect-assets": "2.x",
+    "jade": "0.30.x",
+    "stylus": "0.32.x",
+    "ws": "0.4.25",
+    "passport": "0.1.17",
+    "passport-facebook": "0.1.5",
+    "passport-local": "0.1.6",
+    "connect-flash": "0.1.1",
+    "mongodb": "1.3.5",
+    "mongoose": "3.6.11",
+    "sty": "0.6.1",
+    "express-device": "0.3.7",
+    "nj-tinyurl": "~0.1.0"
   },
   "engines": {
     "node": ">=0.10"
   },
   "_dependencies": {
     "everyauth": "git://github.com/bnoguchi/everyauth.git#express3",
-    "sqlite3":   "2.1.x",
-    "pwd"               : "git://github.com/visionmedia/node-pwd.git"
+    "sqlite3": "2.1.x",
+    "pwd": "git://github.com/visionmedia/node-pwd.git"
   },
   "_change!": {
     "pwd": "https://github.com/jlubawy/node-pwd/commit/910f8d348f224222822604b6c8d5c41c5bf4b1fa"
