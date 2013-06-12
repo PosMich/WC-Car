@@ -543,6 +543,7 @@ app.post "/kill", authenticatedOrNot, (req, res) ->
         unless car
             res.jsonp null
         else
+            console.log car
             hash req.body.password, car.salt, (err, hash) ->
                 if err
                     debug.error "Kill: error while hashing"
