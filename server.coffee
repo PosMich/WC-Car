@@ -479,14 +479,16 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                 debug.error "error creating hash"
             urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
 
+            debug.info "try to find car"
             Cars.findOne
                 user: req.user._id
-            , (err, user) ->
+            , (err, car) ->
                 if err
                     debug.error "Error occured while searching for Car"
                     res.jsonp null
                 #if no car insert car into db
-                unless user
+                unless car
+                    debug.info "no car found, creating new one"
                     car = new Cars(
                         user: req.user._id
                         salt: salt
@@ -500,7 +502,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                             res.format
                                 "application/json": ->
                                     res.jsonp null
-
+                        debug.info "try to get tinyUrl"
                         tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
                             debug.error err if err
                             debug.info "tinyUrl: "+url
@@ -509,7 +511,9 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                                     debug.info "send jsonp"
                                     res.jsonp { tinyUrl: url }
                     )
-                res.jsonp null
+                else
+                    debug.info "car found "+car
+                    res.jsonp null
 
 ###
 app.get "/drive/:id", (req, res) ->
