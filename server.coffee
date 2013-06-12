@@ -17,6 +17,8 @@ assets    = require "connect-assets"
 flash     = require "connect-flash"
 device    = require "express-device"
 
+tinyUrl   = require "nj-tinyurl"
+
 mongoose = require "mongoose"
 ObjectID = require("mongodb").ObjectID
 
