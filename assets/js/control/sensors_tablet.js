@@ -15,7 +15,7 @@ $(function(){
         var gamma = Math.round(event.gamma);
 
         var alpha = Math.round(event.alpha);
-        $("#info").html("Alpha-Wert: " + alpha);
+        $("#info").html("Using Tablet: " + is_tablet);
         $("#info2").html("Beta-Wert: " + beta);
         $("#info3").html("Gamma-Wert: " + gamma);
 

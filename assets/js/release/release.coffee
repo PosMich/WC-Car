@@ -4,7 +4,7 @@ $(document).ready ->
     localVideo = $("#car")[0]
     peerConnection = null
     socket = null
-    serverUri = "10.0.0.8:8000"
+    serverUri = "10.0.0.10:8000"
     controlChannel = null
     authDone = false
 
