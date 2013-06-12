@@ -16,6 +16,7 @@ html(ng-app="WebCar", lang="de")
         != css("lib/bootswatch.css")
         != css("bootstrap-adaptions.css")
         != css("release.css")
+        != js("lib/jquery-2.0.0.min")
 
         body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
             .navbar.navbar-fixed-top
@@ -69,5 +70,4 @@ html(ng-app="WebCar", lang="de")
 // Include our Scripts. See /assets/js.
 // ============================================================================
 // Load jQuery
-!= js("lib/jquery-2.0.0.min")
 != js("lib/adapter")

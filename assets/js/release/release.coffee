@@ -1,11 +1,11 @@
 $(document).ready ->
 
-    localStream
+    localStream = null
     localVideo = $("#car")[0]
     peerConnection = null
-    socket
+    socket = null
     serverUri = "localhost:8000"
-    controlChannel
+    controlChannel = null
 
     pcConfig = iceServers: [url: "stun:stun.l.google.com:19302"]
     connection = optional: [
@@ -204,7 +204,7 @@ $(document).ready ->
         $("#ready").attr("disabled", false)
         $("#passphrase_error").html("");
 
-    $("a.btn").click (e) ->
+    $("a.btn:not(#control_kill)").click (e) ->
         e.preventDefault()
         if !$(this).attr("id")
             $("html, body").animate
