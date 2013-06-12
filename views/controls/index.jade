@@ -9,13 +9,13 @@ html(ng-app="WebCar", lang="de")
 
         link(type="image/x-icon", rel="icon", href="/favicon.ico")
         link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
-        
+
         //- != css("lib/bootstrap.min.css")
         != css("controls.css")
 
     body
         #password
-            video(id="remote")
+            video(id="remote", autoplay)
             form(class="form-horizontal well")
                 fieldset
                     legend Autorisierung
@@ -40,6 +40,7 @@ html(ng-app="WebCar", lang="de")
 != js("lib/jquery-2.0.0.min")
 != js("lib/keydrown")
 != js("control/control")
+!= js("lib/adapter")
 //- if control == "gyro"
 //- if is_tablet
 //-    != js("control/sensors_tablet.js")

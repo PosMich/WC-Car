@@ -1,6 +1,6 @@
 $(document).ready ->
 
-    localStream = null
+    remoteStream = null
     remoteVideo = document.getElementById "remote"
     controlChannel = null
     peerConnection = null
@@ -46,42 +46,17 @@ $(document).ready ->
         if !$("#connect").attr("disabled")
             socket = new WebSocket("ws://" + serverUri)
             socket.onopen = ->
-                socket.send(JSON.stringify {"type": "login", "user": "driver", "carId": carId, "password": $("#passphrase_input").val()} )
+                socket.send(JSON.stringify {"type": "login", "user": "driver", "carId": carId, "pw": $("#passphrase_input").val()} )
                 console.log "sent data to server"
 
-            socket.onmessage = (data) ->
+            socket.onmessage = (msg) ->
                 console.log "message received."
-                msg  = JSON.parse data
+                msg  = JSON.parse msg.data
 
                 if !signalingDone
                     if msg.type is "success"
                         #start webrtc
-                        ###
-                        STEP 2: create PeerConnection      ***
-                        ###
-                        try
-                          
-                            # Create an RTCPeerConnection via the polyfill (adapter.js).
-                            peerConnection = new RTCPeerConnection(pcConfig, connection)
-                            peerConnection.onicecandidate = onIceCandidate
-                            console.log "Created RTCPeerConnnection with:\n  config: '" + JSON.stringify(pcConfig) + "';\n"
-                        catch e
-                            console.log "Failed to create PeerConnection, exception: " + e.msg
-                            alert "Cannot create RTCPeerConnection object; WebRTC is not supported by this browser."
 
-                        peerConnection.onaddstream = onRemoteStreamAdded
-                        peerConnection.onremovestream = onRemoteStreamRemoved
-                        controlChannel = peerConnection.createDataChannel("control",
-                            reliable: false
-                        )
-                        controlChannel.onopen = ->
-                            console.log "controlChannel opened"
-                            setInterval (->
-                                controlChannel.send "asdfasdf"
-                            ), 500
-
-                        controlChannel.onclose = ->
-                            console.log "controlChannel closed"
 
                         onIceCandidate = (event) ->
                             if event.candidate
@@ -103,7 +78,7 @@ $(document).ready ->
 
                         waitForRemoteVideo = ->
                             console.log "wait for remote video"
-                          
+
                             # Call the getVideoTracks method via adapter.js.
                             videoTracks = remoteStream.getVideoTracks()
                             if videoTracks.length is 0 or remoteVideo.currentTime > 0
@@ -119,13 +94,40 @@ $(document).ready ->
                             peerConnection.createOffer setLocalAndSendMessage, null, offerConstraints
 
                         setLocalAndSendMessage = (sessionDescription) ->
-                          
+
                             # Set Opus as the preferred codec in SDP if Opus is present.
                             # sessionDescription.sdp = preferOpus(sessionDescription.sdp);
                             peerConnection.setLocalDescription sessionDescription
                             sendMessage
                                 type: "offer"
                                 sdp: sessionDescription
+                        ###
+                        STEP 2: create PeerConnection      ***
+                        ###
+                        try
+
+                            # Create an RTCPeerConnection via the polyfill (adapter.js).
+                            peerConnection = new RTCPeerConnection(pcConfig, connection)
+                            peerConnection.onicecandidate = onIceCandidate
+                            console.log "Created RTCPeerConnnection with:\n  config: '" + JSON.stringify(pcConfig) + "';\n"
+                        catch e
+                            console.log "Failed to create PeerConnection, exception: " + e.message
+                            alert "Cannot create RTCPeerConnection object; WebRTC is not supported by this browser."
+
+
+                        peerConnection.onaddstream = onRemoteStreamAdded
+                        peerConnection.onremovestream = onRemoteStreamRemoved
+                        controlChannel = peerConnection.createDataChannel("control",
+                            reliable: false
+                        )
+                        controlChannel.onopen = ->
+                            console.log "controlChannel opened"
+                            setInterval (->
+                                controlChannel.send "asdfasdf"
+                            ), 500
+
+                        controlChannel.onclose = ->
+                            console.log "controlChannel closed"
 
                         signalingDone = true
                         doCall()

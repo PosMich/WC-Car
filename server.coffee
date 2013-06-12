@@ -665,7 +665,8 @@ wss.on "connection", (ws) ->
                                             search all ws.clients for ws.carId == urlHash
                                         ###
                                         for client of wss.clients
-                                            if client.type is car and client.carId is msg.id
+                                            client = wss.clients[client]
+                                            if client.type is "car" and client.carId is msg.carId
                                                 debug.info "found car"
                                                 if client.isDriven
                                                     debug.error "car is occupied"
@@ -684,6 +685,10 @@ wss.on "connection", (ws) ->
                                                     )
                                         if ws.other is undefined
                                             debug.error "something went horribly wrong, car not found in socket clients"
+                                            debug.error "clients:"
+                                            #for client of wss.clients
+                                            #    client = wss.clients[client]
+                                            #    console.log client
                                             ws.send JSON.stringify(
                                                 type: "error"
                                                 msg: "something went horribly wrong, car not found in socket clients"
@@ -697,8 +702,8 @@ wss.on "connection", (ws) ->
                 when "answer"
                     throw "wrong type!!! "+ws.type if ws.type isnt "car"
                     ws.other.send JSON.stringify(msg)
-                when "canditate"
-                    throw "not logged in?"
+                when "candidate"
+                    throw "not logged in?" if ws.type isnt "car" and ws.type isnt "driver"
                     ws.other.send JSON.stringify(msg)
                 when "bye"
                     ws.close()
@@ -710,9 +715,8 @@ wss.on "connection", (ws) ->
 
     ws.on "close", ->
         debug.info "ws connection closed"
-        if ws.type is undefined
-            debug.info "unknown ws closed"
-        else if ws.type is "car"
+        console.log ws.type
+        if ws.type is "car"
             debug.info "trying to find car by id: "+ws.carId
             Cars.findOne
                 urlHash: ws.carId
