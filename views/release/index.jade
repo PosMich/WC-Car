@@ -1,9 +1,9 @@
 extends ./layout
 
 block content
-    header#release
+    header
         .page-header
-            h1 WebCar freigeben
+            h1#release WebCar freigeben
             //- .row
                 .span8
                     h4 Wer darf das WebCar kontrollieren?
@@ -13,77 +13,69 @@ block content
                         //- a(href="#", class="btn btn-fb btn-large") Public
             .row
                 .span4.offset1
-                    h4 Instructions
                     p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
-                .span6
+                .span4.offset1
                     .img_placeholder(id="instructions")
             .row
-                .span4.offset1
-                    a(href="#connector", class="btn btn-large btn-inverse") Plug In!
+                .span8.offset2
+                    center
+                        a(href="#connector", class="btn btn-large btn-inverse") Weiter
 
-    section#connector
-        .page-header
-            h1 Phone Connector
+    section
+        //- .page-header
+        //-     h1 Audio Kabel
         .row
-            .span6.offset1
-                .img_placeholder(id="phone_connector")
-            .span4
-                h4 Plug In!
+            .span4.offset1#connector
+                h4 Audiokabel
                 p.
-                    Das WebCar empfängt die Steuersignale über einen Audio-Eingang. 
-                    Dein Smartphone nimmt Steuersignale steuernden Users entgegen und gibt dementsprechend Töne aus.<br/><br/>
-                    Damit das WebCar nun diese Töne auch empfängt musst du nun bitte sicherstellen, dass der dafür
-                    vorgesehene Phone Connector auch am Smartphone angeschlossen ist.
-        .row
-            .span6.offset1
-            .span4
-                a(href="#volume", class="btn btn-large btn-inverse") Volume!
-                    
-
-    section#volume
-        .page-header
-            h1 Volume
-        .row
+                    Damit das WebCar die Audio-Steuer-Signale empfängt musst du nun bitte sicherstellen, dass das dafür
+                    vorgesehene Audiokabel auch am Smartphone angeschlossen ist.
             .span4.offset1
-                h4 Turn up!
+                .img_placeholder(id="phone_connector")
+            .row
+                .span8.offset2
+                    center
+                        a(href="#volume", class="btn btn-large btn-inverse") Weiter
+                
+    section
+        .row
+            .span4.offset1#volume
+                h4 Lautstärke
                 p.
                     Damit die Töne bei dem WebCar die richtige Wirkung erzeugen muss der Ton des Smartphones ganz aufgedreht sein.
                     Bitte stelle deine Lautstärke auf die höchste Stufe.
-            .span6
+            .span4.offset1
                 .img_placeholder(id="volume_img")
         .row
-            .span4.offset1
-                a(href="#passphrase", class="btn btn-large btn-inverse") Passphrase!
+            .span8.offset2
+                center
+                    a(href="#passphrase", class="btn btn-large btn-inverse") Weiter
 
-    section#passphrase
-        .page-header
-            h1 Passwort
-        .row
-            .span6.offset1
-                form(class="form-horizontal well img_placeholder")
-                    fieldset
-                        legend Für deine Kontrolle
-                        div.control-group
-                            label(class="control-label", for="passphrase") Passwort
-                            div.controls
-                                input(type="password", id="passphrase_input", class="input-small", required, pattern=".{5,}")                                    
-                                span(class="help-inline", id="passphrase_error") Passwort benötigt.
-            .span4
-                h4 Make it save!
-                p.
-                    Du kannst das WebCar der ganzen Welt zur Verfügung stellen. <br/><br/>
-                    Falls du jedoch kontrollieren willst, wer sich ans Steuer deines WebCars setzt, musst du nun eine Passwort eintragen.<br/><br/>
-        .row
-            .span6.offset1
-            .span4
-                a(id="ready", href="#ready", class="btn btn-large btn-inverse", disabled="disabled") Save passphrase and get ready!
-
-    section#ready
-        .page-header
-            h1 Get ready!
+    section
+        .span4.offset1#passphrase
+            h4 Make it save!
+            p.
+                Du kannst das WebCar der ganzen Welt zur Verfügung stellen.
+            p.
+                Falls du jedoch kontrollieren willst, wer sich ans Steuer deines WebCars setzt, musst du nun eine Passwort eintragen.
+        .span4.offset1
+            form(class="form-horizontal well")
+                fieldset
+                    legend Für deine Kontrolle
+                    div.control-group
+                        label(class="control-label", for="passphrase") Passwort
+                        div.controls
+                            input(type="password", id="passphrase_input", class="input-small", required, pattern=".{5,}")                                    
+                            span(class="help-inline", id="passphrase_error") Passwort benötigt.
         .row
             .span8.offset2
-                h4 Last but not least.
+                center
+                    a(id="ready", href="#ready", class="btn btn-large btn-inverse", disabled="disabled") Password speichern und fast fertig
+
+    section#ready
+        .row
+            .span8.offset2
+                h4 Fast fertig!
                 p.
                     Alle notwendigen Schritte sind nun getan. Nun muss das Smartphone noch in die dafür vorgesehene Halterung
                     am WebCar angebracht werden und dann kann es los gehen.<br/><br/>

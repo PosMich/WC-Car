@@ -1,18 +1,18 @@
 .img_placeholder {
-	width: 80%;
-	height: 400px;
+	width: 250px;
+	height: 250px;
 	border: 1px dashed #555;
 	background-repeat: no-repeat;
 	background-position: 50%;
-	background-size: 60%;
+	background-size: 95%;
 }
 
 form.img_placeholder {
-	height: 200px;
+	width: 250px;
 }
 
 #instructions {
-	background-image: url("auto.png");
+	background-image: url("auto_color.png");
 }
 
 #phone_connector {
@@ -21,4 +21,14 @@ form.img_placeholder {
 
 #volume_img {
 	background-image: url("lautstaerke.png");
+}
+
+form.img_placeholder {
+	border: none;
+}
+
+video {
+	width: 0px;
+	height: 0px;
+	display: none;
 }
