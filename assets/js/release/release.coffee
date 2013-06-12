@@ -204,7 +204,7 @@ $(document).ready ->
         $("#ready").attr("disabled", false)
         $("#passphrase_error").html("");
 
-    $("a.btn").click (e) ->
+    $("a.btn:not(#control_kill)").click (e) ->
         e.preventDefault()
         if !$(this).attr("id")
             $("html, body").animate
