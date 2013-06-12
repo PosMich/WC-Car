@@ -438,6 +438,13 @@ app.get "/control/gyro", (req, res) ->
         control: "gyro"
         user: req.user
 
+app.get "/control/joystick", (req, res) ->
+    debug.info ".get #{sty.magenta '/control/joystick'} from "+req.user
+    debug.info "render controls/joystick"
+    res.render "controls/joystick",
+        control: "joystick"
+        user: req.user
+
 app.get "/release", (req, res) ->
     debug.info ".get #{sty.magenta '/release'} from "+req.user
     debug.info "render release/index"
