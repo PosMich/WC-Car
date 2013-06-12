@@ -3,7 +3,7 @@ $('a[rel=tooltip]').tooltip({
 });
 
 
-$('.navbar a, .subnav a').smoothScroll();
+//$('.navbar a, .subnav a').smoothScroll();
 
 
 (function ($) {

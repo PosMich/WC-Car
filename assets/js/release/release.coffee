@@ -23,6 +23,28 @@ $(document).ready ->
         OfferToReceiveAudio: false
         OfferToReceiveVideo: true
 
+
+    control = (event) ->
+        console.log "controlChannel message received: " + event.data
+        msg = event.data
+        console.log msg
+
+    setLocalAndSendMessage = (sessionDescription) ->
+
+        # Set Opus as the preferred codec in SDP if Opus is present.
+        # sessionDescription.sdp = preferOpus(sessionDescription.sdp);
+        peerConnection.setLocalDescription sessionDescription
+        sendMessage
+            type: "answer"
+            sdp: sessionDescription
+
+    doAnswer = ->
+        peerConnection.createAnswer setLocalAndSendMessage, null, sdpConstraints
+    sendMessage = (message) ->
+        msgString = JSON.stringify(message)
+        console.log "C->S: " + msgString
+        socket.send msgString
+
     $("#ready").click (e) ->
 
         if !$(this).attr("disabled")
@@ -36,7 +58,7 @@ $(document).ready ->
             $.post("/registerCar",
                 password: pw
             , (data) ->
-                if data != null
+                if data.tinyUrl != false
                     url = data.tinyUrl
                     carId = data.carId
 
@@ -60,23 +82,14 @@ $(document).ready ->
 
                         console.log "socket connection established"
 
-                    socket.onmessage = (data) ->
-                        console.log "S->C: " + data
-                        msg = JSON.parse(data)
+                    socket.onmessage = (msg) ->
+                        console.log "S->C: "
+                        console.log msg
+                        msg = JSON.parse(msg.data)
 
                         if !authDone
                             if msg.type is "success"
-
-                                ### 
-                                STEP 3: obtaining local media
-                                ###
-                                try
-                                    getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
-                                    console.log "Requested access to local media with mediaConstraints:\n\\" + JSON.stringify(mediaConstraints) + "'"
-                                catch e
-                                    alert "getUserMedia() failed. Is this a WebRTC capable browser?"
-                                    console.log "getUserMedia failed with exception: " + e.message
-
+                                authDone = true;
                                 onIceCandidate = (event) ->
                                     if event.candidate
                                         sendMessage
@@ -89,10 +102,10 @@ $(document).ready ->
 
                                 onUserMediaSuccess = (stream) ->
                                     console.log "User has granted access to local media."
-                                    attachMediaStream(localVideo, stream)
+                                    #attachMediaStream(localVideo, stream)
 
-                                    localVideo.style.display = "none"
-                                    localStream = stream
+                                    #localVideo.style.display = "none"
+                                    #localStream = stream
 
                                     console.log "adding local stream and trying to create PeerConnection."
 
@@ -102,7 +115,7 @@ $(document).ready ->
                                     try
                                         peerConnection = new RTCPeerConnection(pcConfig, connection)
                                         peerConnection.onicecandidate = onIceCandidate
-                                        peerConnection.onclose =
+                                        #peerConnection.onclose =
                                         console.log "Created RTCPeerConnnection with:\n  config: '" + JSON.stringify(pcConfig)
                                     catch e
                                         console.log "Failed to create PeerConnection, exception: " + e.message
@@ -119,47 +132,45 @@ $(document).ready ->
                                         console.log "controlChannel closed"
 
                                     controlChannel.onmessage = control
-                                    peerConnection.addStream localStream
+                                    peerConnection.addStream stream
 
                                 onUserMediaError = (error) ->
                                     console.log "Failed to get access to local media. Error code was " + error.code
                                     alert "Failed to get access to local media. Error code was " + error.code + "."
 
-                                control = (event) ->
-                                    console.log "controlChannel message received: " + event.data
-                                    msg = event.data
-                                    console.log msg
+                                ###
+                                STEP 3: obtaining local media
+                                ###
+                                try
+                                    console.log "Requested access to local media with mediaConstraints:\n"
+                                    console.log mediaConstraints
+                                    getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
 
-                                setLocalAndSendMessage = (sessionDescription) ->
+                                catch e
+                                    alert "getUserMedia() failed. Is this a WebRTC capable browser?"
+                                    console.log "getUserMedia failed with exception: " + e.message
 
-                                    # Set Opus as the preferred codec in SDP if Opus is present.
-                                    # sessionDescription.sdp = preferOpus(sessionDescription.sdp);
-                                    peerConnection.setLocalDescription sessionDescription
-                                    sendMessage
-                                        type: "answer"
-                                        sdp: sessionDescription
-
-                                doAnswer = ->
-                                        pc.createAnswer setLocalAndSendMessage, null, sdpConstraints
+                                return
                             else if msg.type is "error"
                                 console.log "error"
                         else
                             console.log "Processing:"
                             console.log msg
-                            if msg.data.type is "offer"
+                            if msg.type is "offer"
 
                                 # Set Opus in Stereo, if stereo enabled.
                                 # if (stereo)
                                 #  message.sdp = addStereo(message.sdp);
                                 peerConnection.setRemoteDescription new RTCSessionDescription(msg.sdp)
                                 doAnswer()
-                            else if msg.data.type is "candidate"
+                                return
+                            else if msg.type is "candidate"
                                 candidate = new RTCIceCandidate(
                                     sdpMLineIndex: msg.label
                                     candidate: msg.candidate
                                 )
                                 peerConnection.addIceCandidate candidate
-                            else console.log "bye"  if msg.data.type is "bye"
+                            else console.log "bye"  if msg.type is "bye"
 
 
                     socket.onerror = ->
@@ -175,11 +186,6 @@ $(document).ready ->
 
                         console.log "Channel closed."
 
-                    sendMessage = (message) ->
-                        msgString = JSON.stringify(message)
-                        console.log "C->S: " + msgString
-                        socket.send msgString
-
                     # set url/error and scroll to last point
                     console.log "url: "+url
                     $("#webrtcUrl").html url
@@ -192,7 +198,7 @@ $(document).ready ->
                     , 600
 
                 else
-                    console.log "no url received"
+                    console.log "no url/error received"+data.msg
 
             ).fail ->
                 console.log "register failed."

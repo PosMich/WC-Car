@@ -9,7 +9,7 @@ html(ng-app="WebCar", lang="de")
 
         link(type="image/x-icon", rel="icon", href="/favicon.ico")
         link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
-        
+
         != css("lib/bootstrap.min.css")
         != css("lib/bootstrap-responsive.min.css")
         != css("lib/font-awesome-min.css")
@@ -17,6 +17,7 @@ html(ng-app="WebCar", lang="de")
         != css("bootstrap-adaptions.css")
         != css("release.css")
         != js("lib/jquery-2.0.0.min")
+        != js("lib/adapter")
 
         body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
             .navbar.navbar-fixed-top
@@ -27,7 +28,7 @@ html(ng-app="WebCar", lang="de")
                         a.btn.btn-navbar.collapsed(data-target=".nav-collapse", data-toggle="collapse")
                             span.icon-bar
                             span.icon-bar
-                            span.icon-bar 
+                            span.icon-bar
             .container
                 block content
                 section#impressum
@@ -67,7 +68,5 @@ html(ng-app="WebCar", lang="de")
                           | A-5412 Puch/Salzburg
                           br
                           | Österreich
-// Include our Scripts. See /assets/js.
-// ============================================================================
-// Load jQuery
-!= js("lib/adapter")
+        // Include our Scripts. See /assets/js.
+        // ============================================================================
