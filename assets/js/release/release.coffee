@@ -56,22 +56,23 @@ $(document).ready ->
 
                         console.log "socket connection established"
 
-                        ###
-                        STEP 3: obtaining local media
-                        ###
-                        try
-                            getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
-                            console.log "Requested access to local media with mediaConstraints:\n\\" + JSON.stringify(mediaConstraints) + "'"
-                        catch e
-                            alert "getUserMedia() failed. Is this a WebRTC capable browser?"
-                            console.log "getUserMedia failed with exception: " + e.message
-
                     socket.onmessage = (data) ->
                         console.log "S->C: " + data.data
                         msg = JSON.parse(data.data)
 
                         if !authDone
                             if msg.type is "success"
+
+                                ###
+                                STEP 3: obtaining local media
+                                ###
+                                try
+                                    getUserMedia mediaConstraints, onUserMediaSuccess, onUserMediaError
+                                    console.log "Requested access to local media with mediaConstraints:\n\\" + JSON.stringify(mediaConstraints) + "'"
+                                catch e
+                                    alert "getUserMedia() failed. Is this a WebRTC capable browser?"
+                                    console.log "getUserMedia failed with exception: " + e.message
+
                                 onIceCandidate = (event) ->
                                     if event.candidate
                                         sendMessage
