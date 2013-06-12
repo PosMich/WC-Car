@@ -17,8 +17,8 @@
           span(ng-show="login.password.$error.required", class="help-inline") Password is required
           span(ng-show="login.password.$error.minlength", class="help-inline") Password is too short
       .pull-center(ng-controller="DialogCtrl")
-        a(href="#", class="btn btn-inverse btn-large", ng-click="update(user)", ng-disabled="login.$invalid") Login
-        a(href="#", class="btn btn-fb btn-large", ng-click="facebook()") Login via Facebook
-        a(href="#", class="btn btn-success btn-large", ng-click="signup()") Signup now
+        a(href="#", class="btn btn-inverse", ng-click="update(user)", ng-disabled="login.$invalid") Login
+        a(href="#", class="btn btn-fb", ng-click="facebook()") Login via Facebook
+        a(href="#", class="btn btn-success", ng-click="signup()") Signup now
   .pull-center
-    a(href="#", class="btn btn-large", ng-click="close()") Cancel
+    a(href="#", class="btn", ng-click="close()") Cancel
