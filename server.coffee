@@ -490,28 +490,33 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                 #if no car insert car into db
                 unless car
                     debug.info "no car found, creating new one"
-                    car = new Cars(
-                        user: req.user._id
-                        salt: salt
-                        hash: hash
-                        urlHash: urlHash
-                        _id: new ObjectID
-                    ).save( (err, newCar) ->
+
+                    hash req.body.password, (err, salt, hash) ->
                         if err
-                            debug.error "wasn't able to save car!"
-                            debug.error err
-                            res.format
-                                "application/json": ->
-                                    res.jsonp null
-                        debug.info "try to get tinyUrl"
-                        tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
-                            debug.error err if err
-                            debug.info "tinyUrl: "+url
-                            res.format
-                                "application/json": ->
-                                    debug.info "send jsonp"
-                                    res.jsonp { tinyUrl: url }
-                    )
+                            debug.error "problem during hash/salt creation"
+                        else
+                            car = new Cars(
+                                user: req.user._id
+                                salt: salt
+                                hash: hash
+                                urlHash: urlHash
+                                _id: new ObjectID
+                            ).save( (err, newCar) ->
+                                if err
+                                    debug.error "wasn't able to save car!"
+                                    debug.error err
+                                    res.format
+                                        "application/json": ->
+                                            res.jsonp null
+                                debug.info "try to get tinyUrl"
+                                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
+                                    debug.error err if err
+                                    debug.info "tinyUrl: "+url
+                                    res.format
+                                        "application/json": ->
+                                            debug.info "send jsonp"
+                                            res.jsonp { tinyUrl: url }
+                            )
                 else
                     debug.info "car found "+car
                     res.jsonp null
