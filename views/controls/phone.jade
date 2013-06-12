@@ -1,0 +1,56 @@
+!!! 5
+html(ng-app="WebCar", lang="de")
+    head
+        title WebCar
+        meta(http-equiv="Content-Type",content="text/html; charset=UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="description", content="WebCar")
+        meta(name="author", content="Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher")
+
+        link(type="image/x-icon", rel="icon", href="/favicon.ico")
+        link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
+
+        != css("controls.css")
+
+    body
+        #notification
+            #notificationHeader Wrong device orientation
+            #notificationBody Please turn your mobile Device into landscape mode for proper device orientation control.
+        #blackening
+        .main
+            #info
+            #info2
+            #info3
+            #contentWrapper
+                h1.noPadding Values of Gyroscope:
+                #slider-vertical
+                p Orientation:
+                #orient 0
+                p Beta (left/right):
+                #gBeta 0
+                p Gamma (forwards/backwards):
+                #gGamma 0
+            #speedWrapper
+
+                span#forwardLabel forward
+                #forward
+                    #boxForward
+                        #thumbForward
+                        #middleForward
+                span#backLabel back
+
+            #directionWrapper
+                // Display Direction
+                span#leftLabel left
+                span#rightLabel right
+                #direction
+                    #boxDirection
+                    #thumbDirection
+                    #middleDirection
+
+          //#notify
+              #dialog(title='Wrong Orientation')
+                  p
+                      | Wrong Device Orientation!
+                  br
+                      | Please go back to Landscape mode
