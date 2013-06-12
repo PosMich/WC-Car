@@ -95,9 +95,10 @@ FbUsers = mongoose.model "fbauths", FacebookUserSchema
 
 CarSchema = new mongoose.Schema
     user:           String
-    hash:         String
-    salt:         String
+    hash:           String
+    salt:           String
     urlHash:        String
+    isDriven:       Boolean
 
 Cars = mongoose.model "cars", CarSchema
 
@@ -202,7 +203,7 @@ app.configure ->
     app.use express.session(
         secret:config.secret
         cookie:
-            maxAge: 60000
+            maxAge:  new Date(Date.now() + 3600000)
     )
     app.use assets()
     app.use flash()
@@ -341,10 +342,9 @@ app.post "/settings", (req, res) ->
                     user.avatar = req.body.avatar
                     user.salt   = salt
                     user.hash   = hash
-                user.save (err) ->
-                    # Error handling
-                    debug.error "Error during user.save: "+err
-
+                    user.save (err) ->
+                        # Error handling
+                        debug.error "Error during user.save: "+err
             else
                 debug.error "new password too short"
         )
@@ -481,7 +481,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
         , (err, car) ->
             if err
                 debug.error "Error occured while searching for Car"
-                res.jsonp null
+                res.jsonp {tinyUrl: false, msg: "Error occured while searching for Car"}
             #if no car insert car into db
             unless car
                 debug.info "no car found, creating new one"
@@ -497,6 +497,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                             salt: salt
                             hash: hash
                             urlHash: urlHash
+                            isDriven: false
                             _id: new ObjectID
                         ).save( (err, newCar) ->
                             if err
@@ -504,7 +505,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                                 debug.error err
                                 res.format
                                     "application/json": ->
-                                        res.jsonp null
+                                        res.jsonp {tinyUrl: false, "wasn't able to save car"}
                             debug.info "try to get tinyUrl"
                             tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
                                 debug.error err if err
@@ -512,14 +513,14 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                                 res.format
                                     "application/json": ->
                                         debug.info "send jsonp"
-                                        res.jsonp { tinyUrl: url }
+                                        res.jsonp { tinyUrl: url , carId: newCar.urlHash }
                         )
             else
                 debug.info "car found "+car
-                res.jsonp null
+                res.jsonp {tinyUrl: false, msg: "car exists"}
     else
         debug.info "pw too short"
-        res.jsonp null
+        res.jsonp {tinyUrl: false, msg: "pw too short"}
 
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
@@ -581,14 +582,122 @@ server = http.createServer(app).listen app.get("port"), ->
 
 ###
     WebSocket stuff
+
+    type of messages:
+        --> "login": from driver/car to server
+            --> if msg.user is car
+                --> check Cars for id, validate password
+                    --> password correct: add to driver, enable signalling
+            --> if msg.user is driver
+        --> "offer": from driver to car
+            --> if signalling enabled
+                --> sent offer to car
+            --> else
+                --> kill connection
+        --> "answer": from car to driver
+            --> if signalling enabled
+                --> send answer to driver
+            --> else
+                --> kill connection
+        --> "candidate": from car to driver vice versa
+            --> if signalling enabled
+                --> exchange canditates
+            --> else
+                --> kill connection
+        --> "bye": from car to driver vice versa
+            --> don't know
 ###
 
 wss = new WebSocketServer(server: server)
-console.log(wss);
 wss.on "connection", (ws) ->
-    console.log wss.clients
+
     debug.info "new ws connection"
-    ws.on "close", ->
-        debug.info "ws connection closed"
+
     ws.on "message", (msg) ->
         debug.info 'ws received: '+msg
+
+        try
+            msg = JSON.parse msg
+
+            switch msg.type
+                when "login"
+                    throw "msg.user not defined!!!" if msg.user isnt "car" and msg.user isnt "driver"
+                    Cars.findOne
+                        urlHash: msg.id
+                    , (err, car) ->
+                        debug.error "Error occured while searching for car: "+err if err
+                        unless car
+                            debug.error "car not in list!!!"
+                            ws.send JSON.stringify({type: "error", msg: "car is not in the list"})
+                        else
+                            #validate pw
+                            hash msg.pw, car.salt, (err, hash) ->
+                                if err
+                                    throw "error while hashing"
+                                else if hash is car.hash
+                                    debug.info "same password"
+                                    if msg.user is "car"
+                                        debug.info "identified as car"
+                                        ws.type = "car"
+                                        ws.other = ""
+                                        ws.carId = msg.id
+                                        ws.isDriven = false
+                                    else
+                                        debug.info "identified as driver"
+                                        #driver
+                                        ###
+                                            search all ws.clients for ws.carId == urlHash
+                                        ###
+                                        for client of wss.clients
+                                            if client.type is car and client.carId is msg.id
+                                                debug.info "found car"
+                                                if client.isDriven
+                                                    debug.error "car is occupied"
+                                                    ws.send JSON.stringify({type: "error", msg: "car is occupied"})
+                                                else
+                                                    debug.info "add driver to car"
+                                                    client.isDriven = true
+                                                    ws.other = client
+                                                    ws.type = "driver"
+                                                    client.other = ws
+                                                    ws.send JSON.stringify({type: "success"})
+                                        if ws.other is undefined
+                                            debug.error "something went horribly wrong, car not found in socket clients"
+                                            ws.send JSON.stringify({type: "error", msg: "something went horribly wrong, car not found in socket clients"})
+                                else
+                                    ws.send JSON.stringify({type: "error", msg: "wrong password"})
+                when "offer"
+                    throw "wrong type!!! "+ws.type if ws.type isnt "driver"
+                    ws.other.send JSON.stringify(msg)
+                    debug.info "offer sent to car"
+                when "answer"
+                    throw "wrong type!!! "+ws.type if ws.type isnt "car"
+                    ws.other.send JSON.stringify(msg)
+                when "canditate"
+                    throw "not logged in?"
+                    ws.other.send JSON.stringify(msg)
+                when "bye"
+                    ws.close()
+                else
+                    throw "wrong msg type: "+msg.type
+        catch e
+            debug.error e
+            ws.close()
+
+    ws.on "close", ->
+        debug.info "ws connection closed"
+        if ws.type is undefined
+
+        else if ws.type is "car"
+            ws.type = undefined
+            ws.other = undefined
+            ws.carId = undefined
+            ws.isDriven = false
+        else if ws.type is ""
+            ws.type = undefined
+            ws.other = undefined
+
+
+
+
+
