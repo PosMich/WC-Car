@@ -1,0 +1,26 @@
+extends ./layout
+
+block content
+    header
+        .page-header
+            h1 WebCar Kill
+        .row
+            .span4.offset1#passphrase.
+                Falls du jedoch kontrollieren willst, wer sich ans Steuer deines WebCars setzt, musst du nun eine Passwort eintragen.
+                Hier behältst du die Kontrolle über dein WebCar. 
+                Mithilfe des zuvor eingegebenen Passworts kannst du die Verbindung mit einem Klick beenden.
+            .span4.offset1
+                form(class="form-horizontal well")
+                    fieldset
+                        legend Für deine Kontrolle
+                        div.control-group
+                            label(class="control-label", for="passphrase") Passwort
+                            div.controls
+                                input(type="password", id="passphrase_kill", class="input-small", required, pattern=".{5,}")
+                                span(class="help-inline", id="passphrase_error") Passwort benötigt.
+        .row
+            .span8.offset2
+                center
+                    a(id="kill", href="#", class="btn btn-large btn-inverse", disabled="disabled") Kill
+
+    != js("release/kill")

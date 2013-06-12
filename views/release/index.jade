@@ -4,22 +4,22 @@ block content
     header
         .page-header
             h1#release WebCar freigeben
-            //- .row
-                .span8
-                    h4 Wer darf das WebCar kontrollieren?
-                    p Du kannst dich nun entscheiden, wer dein WebCar kontrollieren darf.
-                        a(href="#", class="btn btn-success btn-large") Private
-                        a(href="#", class="btn btn-fb btn-large") Public
-                        //- a(href="#", class="btn btn-fb btn-large") Public
-            .row
-                .span4.offset1
-                    p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
-                .span4.offset1
-                    .img_placeholder(id="instructions")
-            .row
-                .span8.offset2
-                    center
-                        a(href="#connector", class="btn btn-large btn-inverse") Weiter
+        //- .row
+            .span8
+                h4 Wer darf das WebCar kontrollieren?
+                p Du kannst dich nun entscheiden, wer dein WebCar kontrollieren darf.
+                    a(href="#", class="btn btn-success btn-large") Private
+                    a(href="#", class="btn btn-fb btn-large") Public
+                    //- a(href="#", class="btn btn-fb btn-large") Public
+        .row
+            .span4.offset1
+                p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
+            .span4.offset1
+                .img_placeholder(id="instructions")
+        .row
+            .span8.offset2
+                center
+                    a(href="#connector", class="btn btn-large btn-inverse") Weiter
 
     section
         //- .page-header
@@ -53,7 +53,7 @@ block content
 
     section
         .span4.offset1#passphrase
-            h4 Make it save!
+            h4 Behalte die Kontrolle!
             p.
                 Du kannst das WebCar der ganzen Welt zur Verfügung stellen.
             p.
@@ -65,7 +65,7 @@ block content
                     div.control-group
                         label(class="control-label", for="passphrase") Passwort
                         div.controls
-                            input(type="password", id="passphrase_input", class="input-small", required, pattern=".{5,}")                                    
+                            input(type="password", id="passphrase_input", class="input-small", required, pattern=".{5,}")
                             span(class="help-inline", id="passphrase_error") Passwort benötigt.
         .row
             .span8.offset2
@@ -88,4 +88,8 @@ block content
             .span8.offset2
                 video(id="car")
                 center
-                    a(href="#release", class="btn btn-large btn-inverse") Back to top!
+                    a(href="kill", class="btn btn-large btn-fb") Kontrolle
+                center
+                    a(href="#release", class="btn btn-large btn-inverse") Zurück an den Anfang!
+
+    != js("release/release")
