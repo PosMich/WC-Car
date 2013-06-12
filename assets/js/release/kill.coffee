@@ -26,8 +26,9 @@ $(document).ready ->
             $.post("/kill",
                 password:  $("#passphrase_kill").val()
             , (data) ->
+                console.log data
                 if data.success
-                    window.location.href "/choose"
+                    window.location = "/choose"
                 else
                     console.log "wasn't able to kill the connection. user? password?"
             )

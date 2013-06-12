@@ -521,23 +521,11 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
         debug.info "pw too short"
         res.jsonp null
 
-
-
-
-
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
     debug.info ".get #{sty.magenta '/drive/'}"+carId
-    switch req.device
-        when "tablet"
-            res.render "tablet.jade",
-                carId: carId
-        when "phone"
-            res.render "phone.jade",
-                carId: carId
-        else
-            res.render "default.jade",
-                carId: carId
+    res.render "controls/index.jade",
+        carId: carId
 
 app.post "/kill", authenticatedOrNot, (req, res) ->
     debug.info ".post #{sty.magenta '/kill'} pw:"+req.body.password
