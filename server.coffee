@@ -534,7 +534,8 @@ app.get "/drive/:id", (req, res) ->
                 carId: carId
 
 app.post "/kill", authenticatedOrNot, (req, res) ->
-    debug.info ".post #{sty.magenta '/kill'}"
+    debug.info ".post #{sty.magenta '/kill'} pw:"+req.body.password
+    console.log req.body
     Cars.findOne
         user: req.user._id
     , (err, car) ->
