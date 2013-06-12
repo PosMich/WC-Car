@@ -23,10 +23,10 @@ var VirtualJoystick = function(opts) {
     this._stickX    = 0;
     this._stickY    = 0;
 
-    var __bind  = function(fn, me){ 
-        return function() { 
+    var __bind  = function(fn, me){
+        return function() {
             return fn.apply(me, arguments);
-        }; 
+        };
     };
 
     this._$onTouchStart = __bind(this._onTouchStart , this);
@@ -35,7 +35,7 @@ var VirtualJoystick = function(opts) {
     this._container.addEventListener( 'touchstart'  , this._$onTouchStart   , false );
     this._container.addEventListener( 'touchend'    , this._$onTouchEnd , false );
     this._container.addEventListener( 'touchmove'   , this._$onTouchMove    , false );
-    
+
     if( this._mouseSupport ) {
         this._$onMouseDown  = __bind(this._onMouseDown  , this);
         this._$onMouseUp    = __bind(this._onMouseUp    , this);
@@ -53,8 +53,8 @@ VirtualJoystick.prototype.destroy   = function() {
     this._container.removeEventListener( 'touchstart'   , this._$onTouchStart   , false );
     this._container.removeEventListener( 'touchend' , this._$onTouchEnd , false );
     this._container.removeEventListener( 'touchmove'    , this._$onTouchMove    , false );
-    
-    if( this._mouseSupport ){       
+
+    if( this._mouseSupport ){
         this._container.removeEventListener( 'mouseup'  , this._$onMouseUp  , false );
         this._container.removeEventListener( 'mousedown'    , this._$onMouseDown    , false );
         this._container.removeEventListener( 'mousemove'    , this._$onMouseMove    , false );
@@ -104,12 +104,12 @@ VirtualJoystick.touchScreenAvailable    = function() {
 // //
 //////////////////////////////////////////////////////////////////////////////////
 
-VirtualJoystick.prototype.deltaX    = function(){ 
-    return this._stickX - this._baseX;    
+VirtualJoystick.prototype.deltaX    = function(){
+    return this._stickX - this._baseX;
 }
 
-VirtualJoystick.prototype.deltaY    = function(){ 
-    return this._stickY - this._baseY;    
+VirtualJoystick.prototype.deltaY    = function(){
+    return this._stickY - this._baseY;
 }
 
 VirtualJoystick.prototype.up    = function(){
@@ -127,7 +127,7 @@ VirtualJoystick.prototype.down  = function(){
     var deltaY  = this.deltaY();
     if( deltaY <= 0 )   return false;
     if( Math.abs(deltaX) > 2*Math.abs(deltaY) ) return false;
-    return true;    
+    return true;
 }
 
 VirtualJoystick.prototype.right = function(){
@@ -136,7 +136,7 @@ VirtualJoystick.prototype.right = function(){
     var deltaY  = this.deltaY();
     if( deltaX <= 0 )   return false;
     if( Math.abs(deltaY) > 2*Math.abs(deltaX) ) return false;
-    return true;    
+    return true;
 }
 
 VirtualJoystick.prototype.left  = function(){
@@ -145,7 +145,7 @@ VirtualJoystick.prototype.left  = function(){
     var deltaY  = this.deltaY();
     if( deltaX >= 0 )   return false;
     if( Math.abs(deltaY) > 2*Math.abs(deltaX) ) return false;
-    return true;    
+    return true;
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +291,7 @@ VirtualJoystick.prototype._buildJoystickBase    = function() {
     ctx.strokeStyle = this._strokeStyle;
     ctx.lineWidth   = 6;
     ctx.arc( canvas.width/2, canvas.width/2, 40, 0, Math.PI*2, true);
-    ctx.stroke();   
+    ctx.stroke();
 
     ctx.beginPath();
     ctx.strokeStyle = this._strokeStyle;
