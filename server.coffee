@@ -495,6 +495,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                         if err
                             debug.error "problem during hash/salt creation"
                         else
+                            debug.info "tryin to create new car"
                             car = new Cars(
                                 user: req.user._id
                                 salt: salt
