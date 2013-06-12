@@ -471,7 +471,8 @@ app.get "/choose", (req, res) ->
 
 # register Car, create Url ....
 app.post "/registerCar", authenticatedOrNot, (req, res) ->
-    debug.info ".post #{sty.magenta '/registerCar'} from "+req.user    # register Car to availabel Cars
+    debug.info ".post #{sty.magenta '/registerCar'} from "+req.user
+    # register Car to available Cars
     if req.body.password.length > config.mongo.validate.pwlength
         debug.info "password length > "+config.mongo.validate.pwlength
         hash req.body.password, (err, salt, hash) ->
@@ -514,22 +515,53 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                 else
                     debug.info "car found "+car
                     res.jsonp null
-
+    else
+        debug.info "pw too short"
+        res.jsonp null
 
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
     debug.info ".get #{sty.magenta '/drive/'}"+carId
     switch req.device
         when "tablet"
-            res.render tablet.jade,
+            res.render "tablet.jade",
                 carId: carId
         when "phone"
-            res.render phone.jade,
+            res.render "phone.jade",
                 carId: carId
         else
-            res.render default.jade,
+            res.render "default.jade",
                 carId: carId
 
+app.post "/kill", authenticatedOrNot, (req, res) ->
+    Cars.findOne
+        user: req.user._id
+    , (err, car) ->
+        debug.error "Error occured while searching for Car" if err
+        unless car
+            res.jsonp null
+        else
+            hash req.body.password, car.salt, (err, hash) ->
+                if err
+                    debug.error "Kill: error while hashing"
+                    res.jsonp {success: false}
+                else if hash is car.hash
+                    debug.info "Kill: same password"
+                    car.remove()
+                    res.jsonp {success: true}
+                else
+                    debug.infoFail "Kill: incorrect password"
+                    res.jsonp {success: false}
+
+app.get "/kill", authenticatedOrNot, (req, res) ->
+    Cars.findOne
+        user: req.user._id
+    , (err, car) ->
+        debug.error "Error occured while searching for Car" if err
+        unless car
+            res.render "release/index.jade"
+        else
+            res.render "release/kill.jade"
 
 app.get "*", (req, res) ->
     debug.info ".get #{sty.magenta '*'} from "+req.user
@@ -552,6 +584,7 @@ server = http.createServer(app).listen app.get("port"), ->
 ###
 
 wss = new WebSocketServer(server: server)
+console.log(wss);
 wss.on "connection", (ws) ->
     debug.info "new ws connection"
     ws.on "close", ->
