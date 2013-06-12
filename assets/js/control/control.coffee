@@ -21,7 +21,7 @@ $(document).ready ->
         OfferToReceiveVideo: true
 
     socket = null
-    serverUri = "10.0.0.8:8000"
+    serverUri = "webcar.multimediatechnology.at:8000"
 
     $("#passphrase_input").bind "input", ->
         pw = $(this).val()

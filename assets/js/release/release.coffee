@@ -105,7 +105,7 @@ $(document).ready ->
     localVideo = $("#car")[0]
     peerConnection = null
     socket = null
-    serverUri = "10.0.0.8:8000"
+    serverUri = "webcar.multimediatechnology.at:8000"
     controlChannel = null
     authDone = false
     Driver = null
