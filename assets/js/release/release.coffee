@@ -25,7 +25,7 @@ $(document).ready ->
     $("#ready").click (e) ->
 
         if !$(this).attr("disabled")
-            
+
             # trying to register car
             console.log "trying to register car."
             pw = $("#passphrase_input").val();
@@ -36,13 +36,12 @@ $(document).ready ->
                 password: pw
             , (data) ->
                 if data != null
-                    msg = JSON.parse data
-                    url = msg.tinyUrl
+                    url = data.tinyUrl
 
                     # Start WebRTC
                     console.log "trying to start WebRTC."
 
-                    ### 
+                    ###
                     STEP 1: create ws for signaling
                     ###
                     console.log "trying to create WebSocket connection to " + serverUri
@@ -61,7 +60,7 @@ $(document).ready ->
                     onUserMediaSuccess = (stream) ->
                         console.log "User has granted access to local media."
                         attachMediaStream(localVideo, stream)
-                        
+
                         localVideo.style.display = "none"
                         localStream = stream
 
@@ -137,7 +136,7 @@ $(document).ready ->
                         console.log "Processing:"
                         console.log message
                         if message.type is "offer"
-                        
+
                             # Set Opus in Stereo, if stereo enabled.
                             # if (stereo)
                             #  message.sdp = addStereo(message.sdp);
@@ -158,6 +157,17 @@ $(document).ready ->
                         console.log "C->S: " + msgString
                         socket.send msgString
 
+                    # set url/error and scroll to last point
+                    console.log "url: "+url
+                    $("#webrtcUrl").html url
+                    $("#webrtcUrl").animate
+                        opacity: 1
+                    , 750
+
+                    $("html, body").animate
+                        scrollTop: $(@hash).offset().top
+                    , 600
+
                 else
                     console.log "no url received"
 
@@ -165,19 +175,11 @@ $(document).ready ->
                 console.log "register failed."
                 url = "Uops. Da ist wohl was schief gelaufen. Bitte versuche es erneut."
 
-            # set url/error and scroll to last point
-            $("#webrtcUrl").html url
-            $("#webrtcUrl").animate
-                opacity: 1
-            , 750
 
-            $("html, body").animate
-                scrollTop: $(@hash).offset().top
-            , 600
-            
+
 
     $("#passphrase_input").bind "input", ->
-      
+
       pw = $(this).val()
       error = false
       msg = "";

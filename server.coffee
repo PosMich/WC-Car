@@ -17,10 +17,12 @@ assets    = require "connect-assets"
 flash     = require "connect-flash"
 device    = require "express-device"
 
-tinyUrl = require("nj-tinyurl").shorten
+crypto    = require "crypto"
+sha       = crypto.createHash("sha1")
+tinyUrl   = require("nj-tinyurl").shorten
 
-mongoose = require "mongoose"
-ObjectID = require("mongodb").ObjectID
+mongoose  = require "mongoose"
+ObjectID  = require("mongodb").ObjectID
 
 passport         = require "passport"
 FacebookStrategy = require("passport-facebook").Strategy
@@ -92,13 +94,9 @@ FacebookUserSchema = new mongoose.Schema
 FbUsers = mongoose.model "fbauths", FacebookUserSchema
 
 CarSchema = new mongoose.Schema
-    isFbUser:
-        type:       Boolean
-        required:   true
-    fbId:           String
-    name:           String
-    pwHash:         String
-    pwSalt:         String
+    user:           String
+    Hash:         String
+    Salt:         String
     urlHash:        String
 
 Cars = mongoose.model "cars", CarSchema
@@ -459,7 +457,7 @@ app.get "/control/joystick", (req, res) ->
         control: "joystick"
         user: req.user
 
-app.get "/release", (req, res) ->
+app.get "/release", authenticatedOrNot, (req, res) ->
     debug.info ".get #{sty.magenta '/release'} from "+req.user
     debug.info "render release/index"
     res.render "release/index",
@@ -477,23 +475,31 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
     if req.body.password.length > config.mongo.validate.pwlength
         debug.info "password length > "+config.mongo.validate.pwlength
         hash req.body.password, (err, salt, hash) ->
-            throw err  if err
+            if err
+                debug.error "error creating hash"
+            urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
+
             car = new Cars(
                 user: req.user._id
                 salt: salt
                 hash: hash
-                urlHash: crypto.createHash sha1
+                urlHash: urlHash
                 _id: new ObjectID
-            ).save( (err, newUser) ->
+            ).save( (err, newCar) ->
                 if err
                     debug.error "wasn't able to save car!"
+                    debug.error err
                     res.format
                         "application/json": ->
                             res.jsonp null
-                res.format
-                    "application/json": ->
-                        debug.info "send jsonp"
-                        res.jsonp { tinyUrl: tinyUrl(config.siteUrl+":"+config.port+"/drive/"+car.urlHash) }
+
+                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
+                    debug.error err if err
+                    debug.info "tinyUrl: "+url
+                    res.format
+                        "application/json": ->
+                            debug.info "send jsonp"
+                            res.jsonp { tinyUrl: url }
             )
 
 ###
