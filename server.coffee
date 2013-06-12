@@ -95,8 +95,8 @@ FbUsers = mongoose.model "fbauths", FacebookUserSchema
 
 CarSchema = new mongoose.Schema
     user:           String
-    Hash:         String
-    Salt:         String
+    hash:         String
+    salt:         String
     urlHash:        String
 
 Cars = mongoose.model "cars", CarSchema
@@ -475,55 +475,55 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
     # register Car to available Cars
     if req.body.password.length > config.mongo.validate.pwlength
         debug.info "password length > "+config.mongo.validate.pwlength
-        hash req.body.password, (err, salt, hash) ->
+
+        Cars.findOne
+            user: req.user._id
+        , (err, car) ->
             if err
-                debug.error "error creating hash"
-            urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
+                debug.error "Error occured while searching for Car"
+                res.jsonp null
+            #if no car insert car into db
+            unless car
+                debug.info "no car found, creating new one"
 
-            debug.info "try to find car"
-            Cars.findOne
-                user: req.user._id
-            , (err, car) ->
-                if err
-                    debug.error "Error occured while searching for Car"
-                    res.jsonp null
-                #if no car insert car into db
-                unless car
-                    debug.info "no car found, creating new one"
-
-                    hash req.body.password, (err, salt, hash) ->
-                        if err
-                            debug.error "problem during hash/salt creation"
-                        else
-                            debug.info "tryin to create new car"
-                            car = new Cars(
-                                user: req.user._id
-                                salt: salt
-                                hash: hash
-                                urlHash: urlHash
-                                _id: new ObjectID
-                            ).save( (err, newCar) ->
-                                if err
-                                    debug.error "wasn't able to save car!"
-                                    debug.error err
-                                    res.format
-                                        "application/json": ->
-                                            res.jsonp null
-                                debug.info "try to get tinyUrl"
-                                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
-                                    debug.error err if err
-                                    debug.info "tinyUrl: "+url
-                                    res.format
-                                        "application/json": ->
-                                            debug.info "send jsonp"
-                                            res.jsonp { tinyUrl: url }
-                            )
-                else
-                    debug.info "car found "+car
-                    res.jsonp null
+                hash req.body.password, (err, salt, hash) ->
+                    if err
+                        debug.error "problem during hash/salt creation"
+                    else
+                        debug.info "tryin to create new car"
+                        urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
+                        car = new Cars(
+                            user: req.user._id
+                            salt: salt
+                            hash: hash
+                            urlHash: urlHash
+                            _id: new ObjectID
+                        ).save( (err, newCar) ->
+                            if err
+                                debug.error "wasn't able to save car!"
+                                debug.error err
+                                res.format
+                                    "application/json": ->
+                                        res.jsonp null
+                            debug.info "try to get tinyUrl"
+                            tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
+                                debug.error err if err
+                                debug.info "tinyUrl: "+url
+                                res.format
+                                    "application/json": ->
+                                        debug.info "send jsonp"
+                                        res.jsonp { tinyUrl: url }
+                        )
+            else
+                debug.info "car found "+car
+                res.jsonp null
     else
         debug.info "pw too short"
         res.jsonp null
+
+
+
+
 
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
