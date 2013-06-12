@@ -165,7 +165,7 @@ $(document).ready ->
                     , 750
 
                     $("html, body").animate
-                        scrollTop: $(@hash).offset().top
+                        scrollTop: $("#ready").offset().top
                     , 600
 
                 else
