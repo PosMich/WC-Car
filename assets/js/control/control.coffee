@@ -21,7 +21,7 @@ $(document).ready ->
         OfferToReceiveVideo: true
 
     socket = null
-    serverUri = "10.0.0.10:8000"
+    serverUri = "10.0.0.8:8000"
 
     $("#passphrase_input").bind "input", ->
         pw = $(this).val()
@@ -124,10 +124,18 @@ $(document).ready ->
                         controlChannel = peerConnection.createDataChannel("control",
                             reliable: false
                         )
+                        left2right = -1
+                        bwd2fwd = -1
                         controlChannel.onopen = ->
                             console.log "controlChannel opened"
                             setInterval (->
-                                controlChannel.send "asdfasdf"
+                                controlChannel.send JSON.stringify({l2r:left2right,b2f:bwd2fwd})
+                                left2right += 0.1
+                                bwd2fwd += 0.1
+                                if left2right > 1
+                                    left2right = -1
+                                if bwd2fwd > 1
+                                    bwd2fwd = -1
                             ), 500
 
                         controlChannel.onclose = ->
@@ -174,7 +182,7 @@ $(document).ready ->
                     display: "block"
 
             $(window).onresize = (e) ->
-                width = $("#videoContainer").width() 
+                width = $("#videoContainer").width()
                 height = $("#videoContainer").height()
                 $("#remote").css
                     width: width
