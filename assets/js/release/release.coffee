@@ -61,13 +61,13 @@ $(document).ready ->
                         console.log "socket connection established"
 
                     socket.onmessage = (data) ->
-                        console.log "S->C: " + data.data
-                        msg = JSON.parse(data.data)
+                        console.log "S->C: " + data
+                        msg = JSON.parse(data)
 
                         if !authDone
                             if msg.type is "success"
 
-                                ###
+                                ### 
                                 STEP 3: obtaining local media
                                 ###
                                 try
@@ -146,20 +146,20 @@ $(document).ready ->
                         else
                             console.log "Processing:"
                             console.log msg
-                            if msg.type is "offer"
+                            if msg.data.type is "offer"
 
                                 # Set Opus in Stereo, if stereo enabled.
                                 # if (stereo)
                                 #  message.sdp = addStereo(message.sdp);
                                 peerConnection.setRemoteDescription new RTCSessionDescription(msg.sdp)
                                 doAnswer()
-                            else if msg.type is "candidate"
+                            else if msg.data.type is "candidate"
                                 candidate = new RTCIceCandidate(
                                     sdpMLineIndex: msg.label
                                     candidate: msg.candidate
                                 )
                                 peerConnection.addIceCandidate candidate
-                            else console.log "bye"  if msg.type is "bye"
+                            else console.log "bye"  if msg.data.type is "bye"
 
 
                     socket.onerror = ->
