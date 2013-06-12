@@ -30,4 +30,4 @@ $(document).ready ->
                     window.location.href "/choose"
                 else
                     console.log "wasn't able to kill the connection. user? password?"
-        )
+            )
