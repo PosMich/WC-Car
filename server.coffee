@@ -463,7 +463,7 @@ app.get "/release", authenticatedOrNot, (req, res) ->
     res.render "release/index",
         user: req.user
 
-app.get "/choose", (req, res) ->
+app.get "/choose", authenticatedOrNot,(req, res) ->
     debug.info ".get #{sty.magenta '/choose'} from "+req.user
     debug.info "render layout"
     res.render "layout",
@@ -534,6 +534,7 @@ app.get "/drive/:id", (req, res) ->
                 carId: carId
 
 app.post "/kill", authenticatedOrNot, (req, res) ->
+    debug.info ".post #{sty.magenta '/kill'}"
     Cars.findOne
         user: req.user._id
     , (err, car) ->
@@ -554,13 +555,16 @@ app.post "/kill", authenticatedOrNot, (req, res) ->
                     res.jsonp {success: false}
 
 app.get "/kill", authenticatedOrNot, (req, res) ->
+    debug.info ".get #{sty.magenta '/kill'}"
     Cars.findOne
         user: req.user._id
     , (err, car) ->
         debug.error "Error occured while searching for Car" if err
         unless car
-            res.render "release/index.jade"
+            debug.infoFail "no car found"
+            res.redirect "/release"
         else
+            debug.infoSuccess "car found"
             res.render "release/kill.jade"
 
 app.get "*", (req, res) ->
@@ -586,6 +590,7 @@ server = http.createServer(app).listen app.get("port"), ->
 wss = new WebSocketServer(server: server)
 console.log(wss);
 wss.on "connection", (ws) ->
+    console.log wss.clients
     debug.info "new ws connection"
     ws.on "close", ->
         debug.info "ws connection closed"
