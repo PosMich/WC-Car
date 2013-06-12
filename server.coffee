@@ -714,30 +714,27 @@ wss.on "connection", (ws) ->
             ws.close()
 
     ws.on "close", ->
-        debug.info "ws connection closed"
-        console.log ws.type
-        if ws.type is "car"
-            debug.info "trying to find car by id: "+ws.carId
-            Cars.findOne
-                urlHash: ws.carId
-            , (err, car) ->
-                debug.error "Error occured while searching for car: "+err if err
-                unless car
-                    debug.error "car not in list!!!"
-                else
-                    debug.info "car found - removing it"
-                    car.remove()
-                    if ws.other is not "" and ws.other is not undefined
-                        ws.other.close()
-                    ws.type = undefined
-                    ws.other = undefined
-                    ws.carId = undefined
-                    ws.isDriven = false
-        else if ws.type is "driver"
-            ws.type = undefined
-            ws.other = undefined
-
-
-
-
-
+        debug.info "ws connection closed: "+ws.type
+        switch ws.type
+            when "driver"
+                ws.other.isDriven = false
+                ws.other.other = undefined
+                debug.info "removed driver"
+            when "car"
+                debug.info "car remove"
+                Cars.findOne
+                    urlHash: ws.carId
+                , (err, car) ->
+                    debug.error "Error occured while searching for car: "+err if err
+                    unless car
+                        debug.error "car not in list!!!"
+                    else
+                        debug.info "car found - removing it"
+                        car.remove()
+                        console.log "ws.other"
+                        console.log ws.other
+                        if ws.other != "" and ws.other != undefined
+                            ws.other.close()
+                            debug.info "driver closed"
+            else
+                debug.error "unknown ws.type removed"
