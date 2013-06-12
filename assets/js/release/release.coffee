@@ -235,6 +235,7 @@ $(document).ready ->
 
                                     controlChannel.onclose = ->
                                         console.log "controlChannel closed"
+                                        Driver.stop()
 
                                     controlChannel.onmessage = control
                                     peerConnection.addStream stream
