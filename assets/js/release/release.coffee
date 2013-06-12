@@ -72,6 +72,7 @@ $(document).ready ->
                         try
                             peerConnection = new RTCPeerConnection(pcConfig, connection)
                             peerConnection.onicecandidate = onIceCandidate
+                            peerConnection.onclose = 
                             console.log "Created RTCPeerConnnection with:\n  config: '" + JSON.stringify(pcConfig)
                         catch e
                             console.log "Failed to create PeerConnection, exception: " + e.message
@@ -130,6 +131,13 @@ $(document).ready ->
                         console.log "Channel error."
 
                     socket.onclose = ->
+                        $.post("/kill",
+                            password: pw
+                        , (data) ->
+                            if data != null
+                                window.location.href "/kill"
+                        )
+
                         console.log "Channel closed."
 
                     processSignalingMessage = (message) ->
@@ -165,7 +173,7 @@ $(document).ready ->
                     , 750
 
                     $("html, body").animate
-                        scrollTop: $(@hash).offset().top
+                        scrollTop: $("#ready").offset().top
                     , 600
 
                 else
@@ -176,10 +184,7 @@ $(document).ready ->
                 url = "Uops. Da ist wohl was schief gelaufen. Bitte versuche es erneut."
 
 
-
-
     $("#passphrase_input").bind "input", ->
-
       pw = $(this).val()
       error = false
       msg = "";
