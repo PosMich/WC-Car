@@ -33,7 +33,7 @@ class Motion2Sound
         @setFreq 0
         @playSound()
 
-    setFreq: (val) ->  
+    setFreq: (val) ->
         @oscillator.frequency.value = val
 
     stopSound: ->
@@ -49,11 +49,11 @@ class Motion2Sound
 
     drive: (left2right, bwd2fwd) ->
         @debugOut "l2r: "+left2right+" |b2f: "+bwd2fwd
-        
-        b2f = @getFreqbwd2fwd bwd2fwd 
-        l2r = @getFreqlft2rght left2right 
-        
-        @debugOut "bwd2fwd: "+b2f 
+
+        b2f = @getFreqbwd2fwd bwd2fwd
+        l2r = @getFreqlft2rght left2right
+
+        @debugOut "bwd2fwd: "+b2f
         @debugOut "left2right: "+l2r
 
         @setFreq l2r+b2f
@@ -77,7 +77,7 @@ class Motion2Sound
             return @straightFreq;
 
     getFreqbwd2fwd: (b2f) ->
-        if (b2f > 0) 
+        if (b2f > 0)
             # keep in boundaries */
             b2f = 1 if b2f>1
 
