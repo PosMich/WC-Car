@@ -479,28 +479,37 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                 debug.error "error creating hash"
             urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
 
-            car = new Cars(
+            Cars.findOne
                 user: req.user._id
-                salt: salt
-                hash: hash
-                urlHash: urlHash
-                _id: new ObjectID
-            ).save( (err, newCar) ->
+            , (err, user) ->
                 if err
-                    debug.error "wasn't able to save car!"
-                    debug.error err
-                    res.format
-                        "application/json": ->
-                            res.jsonp null
+                    debug.error "Error occured while searching for Car"
+                    res.jsonp null
+                #if no car insert car into db
+                unless user
+                    car = new Cars(
+                        user: req.user._id
+                        salt: salt
+                        hash: hash
+                        urlHash: urlHash
+                        _id: new ObjectID
+                    ).save( (err, newCar) ->
+                        if err
+                            debug.error "wasn't able to save car!"
+                            debug.error err
+                            res.format
+                                "application/json": ->
+                                    res.jsonp null
 
-                tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
-                    debug.error err if err
-                    debug.info "tinyUrl: "+url
-                    res.format
-                        "application/json": ->
-                            debug.info "send jsonp"
-                            res.jsonp { tinyUrl: url }
-            )
+                        tinyUrl config.siteUrl+":"+config.port+"/drive/"+newCar.urlHash, (err, url)->
+                            debug.error err if err
+                            debug.info "tinyUrl: "+url
+                            res.format
+                                "application/json": ->
+                                    debug.info "send jsonp"
+                                    res.jsonp { tinyUrl: url }
+                    )
+                res.jsonp null
 
 ###
 app.get "/drive/:id", (req, res) ->
