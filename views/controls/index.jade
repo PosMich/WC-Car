@@ -31,56 +31,59 @@ html(ng-app="WebCar", lang="de")
         script(type="text/javascript")
             carId = "#{carId}"
 
-        #notification
-            #notificationHeader Wrong device orientation
-            #notificationBody Please turn your mobile Device into landscape mode for proper device orientation control.
-        #blackening
-        .main
-            #info
-            #info2
-            #info3
-            #contentWrapper
-                h1.noPadding Values of Gyroscope:
-                #slider-vertical
-                p Orientation:
-                #orient 0
-                p Beta (left/right):
-                #gBeta 0
-                p Gamma (forwards/backwards):
-                #gGamma 0
-                h3.noPadding Values of Keypress:
-                p Speed:
-                #speedKeypress
-                p Direction:
-                #directionKeypress
-            #forwardButton.buttonsKeypress
-            #leftButton.buttonsKeypress
-            #rightButton.buttonsKeypress
+        #controls
+            #notification
+                #notificationHeader.
+                    Falsche Orientierung
+                #notificationBody
+                    p.
+                        Bitte drehe dein Smartphone/Tablet ins Querformat für das Steuern mit Neigungssensors.
+                    p
+                        .hint
+            #blackening
+            .main
+                //-#contentWrapper
+                    h1.noPadding Values of Gyroscope:
+                    #slider-vertical
+                    p Orientation:
+                    #orient 0
+                    p Beta (left/right):
+                    #gBeta 0
+                    p Gamma (forwards/backwards):
+                    #gGamma 0
+                    h3.noPadding Values of Keypress:
+                    p Speed:
+                    #speedKeypress
+                    p Direction:
+                    #directionKeypress
+                #forwardButton.buttonsKeypress
+                #leftButton.buttonsKeypress
+                #rightButton.buttonsKeypress
 
-            #speedWrapper
-                span#forwardLabel forward
-                #forward
-                    #boxForward
-                        #thumbForward
-                        #middleForward
-                span#backLabel back
+                #speedWrapper
+                    span#forwardLabel forward
+                    #forward
+                        #boxForward
+                            #thumbForward
+                            #middleForward
+                    span#backLabel back
 
-            #directionWrapper
-                // Display Dir012ection
-                span#leftLabel left
-                span#rightLabel right
-                #direction
-                    #boxDirection
-                    #thumbDirection
-                    #middleDirection
-            #backButton.buttonsKeypress
+                #directionWrapper
+                    // Display Dir012ection
+                    span#leftLabel left
+                    span#rightLabel right
+                    #direction
+                        #boxDirection
+                        #thumbDirection
+                        #middleDirection
+                #backButton.buttonsKeypress
 
-          //#notify
-              #dialog(title='Wrong Orientation')
-                  p
-                      | Wrong Device Orientation!
-                  br
-                      | Please go back to Landscape mode
+              //#notify
+                  #dialog(title='Wrong Orientation')
+                      p
+                          | Wrong Device Orientation!
+                      br
+                          | Please go back to Landscape mode
 
 
 
@@ -92,6 +95,10 @@ html(ng-app="WebCar", lang="de")
 != js("lib/jquery-2.0.0.min")
 != js("lib/keydrown")
 != js("control/control")
+if is_tablet
+    != js("control/tablet")
+else
+    != js("control/drive")
 != js("lib/adapter")
 //- if control == "gyro"
 //- if is_tablet

@@ -172,6 +172,7 @@ $(document).ready ->
                     width: width
                     height: height
                     display: "block"
+                $("#controls").css display: "block"
 
             $(window).onresize = (e) ->
                 width = $("#videoContainer").width() 
