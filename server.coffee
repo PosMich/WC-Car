@@ -515,7 +515,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                     debug.info "car found "+car
                     res.jsonp null
 
-###
+
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
     debug.info ".get #{sty.magenta '/drive/'}"+carId
@@ -529,7 +529,7 @@ app.get "/drive/:id", (req, res) ->
         else
             res.render default.jade,
                 carId: carId
-###
+
 
 app.get "*", (req, res) ->
     debug.info ".get #{sty.magenta '*'} from "+req.user
