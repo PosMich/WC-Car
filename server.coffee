@@ -709,8 +709,6 @@ wss.on "connection", (ws) ->
                     throw "not logged in?" if ws.type isnt "car" and ws.type isnt "driver"
                     ws.other.send JSON.stringify(msg)
                 when "bye"
-                    if msg.type is driver
-                        ws.other.send JSON.stringify({type:"bye"})
                     ws.close()
                 else
                     throw "wrong msg type: "+msg.type
@@ -722,6 +720,7 @@ wss.on "connection", (ws) ->
         debug.info "ws connection closed: "+ws.type
         switch ws.type
             when "driver"
+                ws.other.send JSON.stringify({type:"bye"})
                 ws.other.isDriven = false
                 ws.other.other = undefined
                 debug.info "removed driver"
