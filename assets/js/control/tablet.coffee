@@ -21,7 +21,7 @@ $(document).ready ->
     $("#thumbForward").css top: (((Math.round(-speed * 1000) / 1000) + 1) * ($("#forward").height() / 2))
 
   sendMotion = ->
-    if window.controlChannel isnt null
+    if window.controlChannel isnt undefined
       window.controlChannel.send JSON.stringify
         l2r: direction
         b2f: speed
