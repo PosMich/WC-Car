@@ -20,11 +20,13 @@ $(document).ready ->
     $("#thumbForward").css top: (((Math.round(-speed * 1000) / 1000) + 1) * ($("#forward").height() / 2))
 
   sendMotion = ->
-    if controlChannel isnt null
-      controlChannel.send JSON.stringify
+    if window.controlChannel isnt null
+      window.controlChannel.send JSON.stringify
         l2r: direction
         b2f: speed
-  
+    else
+      console.log "controlChannel isn't initialized"
+
   kd.run ->
     kd.tick()
 
@@ -76,9 +78,9 @@ $(document).ready ->
 
 
 
-#Automatically reduces speed 
+#Automatically reduces speed
 #setInterval(function() {
-#                  
+#
 #        if ((Math.round(speed*1000)/1000) >= 0.0125) {
 #            speed -= 0.0125;
 #            updateSpeed(speed);
@@ -86,7 +88,7 @@ $(document).ready ->
 #        else if ((Math.round(speed*1000)/1000) < 0) {
 #            speed += 0.0125;
 #            updateSpeed(speed);
-#        }   
+#        }
 #    }, 150);
 
   #Get Device Orientation values
@@ -122,12 +124,12 @@ $(document).ready ->
 
       updateSpeed speed
       updateDirection direction
-    
+
     #$("#wGamma").html(((Math.round(((1/90)*gamma)*100)/100)*($('#forward').height()/2)));
     else if orientation is 90
       $("#notification").hide()
       $("#blackening").hide()
-      
+
       direction = Math.round(((2 / offset_left) * beta) * 100) / 100
 
       direction = 1 if direction > 1
@@ -140,16 +142,16 @@ $(document).ready ->
       speed = -1 if speed < -1
 
       #Getting values and animating thumb to display speed
-      #Query because of degree behavior at this orientation 
+      #Query because of degree behavior at this orientation
 
       $("#gGamma").html speed
       $("#gBeta").html direction
       $("#orient").html orientation
-      
+
       updateSpeed speed
       updateDirection direction
-    
-    #Portrait Mode 
+
+    #Portrait Mode
     else if orientation is 0 or orientation is 180
       $("#orient").html orientation
       $("#notification").show()
@@ -165,7 +167,7 @@ $(document).ready ->
     if direction > 0
       $("#leftButton").removeClass "buttonsKeypressActive"
       $("#rightButton").addClass "buttonsKeypressActive"
-    else if direction < 0 
+    else if direction < 0
       $("#rightButton").removeClass "buttonsKeypressActive"
       $("#leftButton").addClass "buttonsKeypressActive"
 

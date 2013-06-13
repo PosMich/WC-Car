@@ -1,4 +1,9 @@
 $(document).ready ->
+
+    serverUri = "webcar.multimediatechnology.at:8000"
+
+
+
     class Motion2Sound
         constructor: ->
             @debug = false
@@ -105,7 +110,6 @@ $(document).ready ->
     localVideo = $("#car")[0]
     peerConnection = null
     socket = null
-    serverUri = "webcar.multimediatechnology.at:8000"
     controlChannel = null
     authDone = false
     Driver = null

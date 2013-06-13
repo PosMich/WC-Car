@@ -1,5 +1,8 @@
 $(document).ready ->
 
+    serverUri = "webcar.multimediatechnology.at:8000"
+
+
     remoteStream = null
     remoteVideo = document.getElementById "remote"
     controlChannel = null
@@ -21,7 +24,6 @@ $(document).ready ->
         OfferToReceiveVideo: true
 
     socket = null
-    serverUri = "webcar.multimediatechnology.at:8000"
 
     $("#passphrase_input").bind "input", ->
         pw = $(this).val()
@@ -127,7 +129,9 @@ $(document).ready ->
                         left2right = -1
                         bwd2fwd = -1
                         controlChannel.onopen = ->
+                            window.controlChannel = controlChannel
                             console.log "controlChannel opened"
+                            ###
                             setInterval (->
                                 controlChannel.send JSON.stringify({l2r:left2right,b2f:bwd2fwd})
                                 left2right += 0.1
@@ -137,8 +141,10 @@ $(document).ready ->
                                 if bwd2fwd > 1
                                     bwd2fwd = -1
                             ), 500
+                            ###
 
                         controlChannel.onclose = ->
+                            window.controlChannel = null
                             console.log "controlChannel closed"
 
                         signalingDone = true
