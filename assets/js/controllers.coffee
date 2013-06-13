@@ -1,7 +1,10 @@
 "use strict"
 
 # Controllers
-@AppCtrl = ($scope, $http) ->
+@AppCtrl = ($scope, $http, $window) ->
+
+  $scope.release = ->
+    $window.location.href = "/release"
 
 ###
   console.log($scope)
@@ -14,8 +17,6 @@
   ).error (data, status, headers, config) ->
     $scope.name = "Error!"
 ###
-@ReleaseCtrl = ($scope, $window) ->
-  $window.location.href = "/release"
 
 @AnchorCtrl = ($scope, $window, $location, $anchorScroll) ->
   #console.log $location.url().substring(1)
@@ -83,8 +84,9 @@
         headers:
           "Content-Type": "application/x-www-form-urlencoded"
       ).success (response) ->
+        console.log response
         dialog.close()
-        $window.location.href = "/"
+        $window.location.href = "/login"
 
 
   $scope.close = (user) ->

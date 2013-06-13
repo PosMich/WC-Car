@@ -24,7 +24,6 @@ span {
 }
 
 .mirror {
-    display:block;
     -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
     -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
     -o-transform:matrix(-1, 0, 0, 1, 0, 0);
@@ -682,6 +681,13 @@ video {
   width: 100%;
 }
 
+#login_error {
+  color: #ff0000;
+  display: block;
+  clear: both;
+  padding: 10px;
+}
+
 @media (min-width: 481px) and (max-width: 767px) {
 
     #password {
@@ -716,7 +722,8 @@ video {
     }
 
     video {
-      width: 320px; margin: auto;
-      height: 240px;
+      /*width: 320px; margin: auto;
+      height: 240px;*/
+      margin: auto;
     }
 }

@@ -9,10 +9,6 @@
     templateUrl: "partials/choose"
     controller: AppCtrl
 
-  $routeProvider.when "/release",
-    templateUrl: "partials/index"
-    controller: ReleaseCtrl
-
   $routeProvider.when "control",
     templateUrl: "partials/control"
     controller: ControlCtrl

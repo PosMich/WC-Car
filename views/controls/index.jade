@@ -25,6 +25,8 @@ html(ng-app="WebCar", lang="de")
                         div.controls
                             input(type="password", id="passphrase_input", class="input", required, pattern=".{5,}")
                             span(class="help-inline", id="passphrase_error") Passwort benötigt.
+                        center
+                            span.error(id="login_error")
                 center
                     a(class="btn btn-large btn-fb", id="connect", disabled) Connect
 
