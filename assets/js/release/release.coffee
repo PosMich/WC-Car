@@ -15,12 +15,12 @@ $(document).ready ->
             @maxFreqRight = 20000
 
             # boundaries --> drive backward */
-            @minFreqBwd = 90
+            @minFreqBwd = 100
             @maxFreqBwd = 490
 
             # boundaries --> drive forward */
             @minFreqFwd = 510
-            @maxFreqFwd = 910
+            @maxFreqFwd = 900
 
             # drive straight Frequency */
             @straightFreq = 10000
