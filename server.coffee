@@ -465,8 +465,8 @@ app.get "/release", authenticatedOrNot, (req, res) ->
 
 app.get "/choose", authenticatedOrNot,(req, res) ->
     debug.info ".get #{sty.magenta '/choose'} from "+req.user
-    debug.info "render layout"
-    res.render "layout",
+    debug.info "render release/index"
+    res.render "release/index",
         user: req.user
 
 # register Car, create Url ....
