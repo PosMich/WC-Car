@@ -6,7 +6,7 @@ $(document).ready ->
 
     class Motion2Sound
         constructor: ->
-            @debug = false
+            @debug = true
             @TAG = "Motion2Sound"
 
             # boundaries --> drive left */
@@ -281,7 +281,8 @@ $(document).ready ->
                                     candidate: msg.candidate
                                 )
                                 peerConnection.addIceCandidate candidate
-                            else console.log "bye"  if msg.type is "bye"
+                            else if msg.type is "bye"
+                                Driver.stop()
 
 
                     socket.onerror = ->

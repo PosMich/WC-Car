@@ -21,6 +21,7 @@ $(document).ready ->
 
   sendMotion = ->
     if window.controlChannel isnt null
+      console.log("l2r:"+direction, "b2f:"+speed);
       window.controlChannel.send JSON.stringify
         l2r: direction
         b2f: speed
