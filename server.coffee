@@ -512,7 +512,7 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
                                         debug.error err
                                         res.format
                                             "application/json": ->
-                                                res.jsonp {tinyUrl: false, "wasn't able to save car"}
+                                                res.jsonp {tinyUrl: false, "Konnte Auto nicht in die Datenbank speichern."}
                                     else
                                         res.format
                                             "application/json": ->
@@ -526,10 +526,10 @@ app.post "/registerCar", authenticatedOrNot, (req, res) ->
 
             else
                 debug.info "car found "+car
-                res.jsonp {tinyUrl: false, msg: "car exists"}
+                res.jsonp {tinyUrl: false, msg: "Das Auto wurde bereits ein mal freigegeben!"}
     else
         debug.info "pw too short"
-        res.jsonp {tinyUrl: false, msg: "pw too short"}
+        res.jsonp {tinyUrl: false, msg: "Das Passwort ist zu kurz!"}
 
 app.get "/drive/:id", (req, res) ->
     carId = req.params.id
@@ -545,7 +545,7 @@ app.post "/kill", authenticatedOrNot, (req, res) ->
     , (err, car) ->
         debug.error "Error occured while searching for Car" if err
         unless car
-            res.jsonp null
+            res.jsonp {sucess: false}
         else
             console.log car
             hash req.body.password, car.salt, (err, hash) ->
@@ -640,7 +640,7 @@ wss.on "connection", (ws) ->
                             debug.error "car not in list!!!"
                             ws.send JSON.stringify(
                                 type: "error"
-                                msg: "car is not in the list"
+                                msg: "Das Auto ist nicht freigegeben!"
                             )
                         else
                             #validate pw
@@ -672,7 +672,7 @@ wss.on "connection", (ws) ->
                                                     debug.error "car is occupied"
                                                     ws.send JSON.stringify(
                                                         type: "error"
-                                                        msg: "car is occupied"
+                                                        msg: "Das Auto wird bereits gesteuert!"
                                                     )
                                                 else
                                                     debug.info "add driver to car"
@@ -691,10 +691,10 @@ wss.on "connection", (ws) ->
                                             #    console.log client
                                             ws.send JSON.stringify(
                                                 type: "error"
-                                                msg: "something went horribly wrong, car not found in socket clients"
+                                                msg: "Etwas sehr komisches ist passiert. Das Auto wurde nicht gefunden :("
                                             )
                                 else
-                                    ws.send JSON.stringify({type: "error", msg: "wrong password"})
+                                    ws.send JSON.stringify({type: "error", msg: "Falsches Passwort"})
                 when "offer"
                     throw "wrong type!!! "+ws.type if ws.type isnt "driver"
                     ws.other.send JSON.stringify(msg)
@@ -706,6 +706,8 @@ wss.on "connection", (ws) ->
                     throw "not logged in?" if ws.type isnt "car" and ws.type isnt "driver"
                     ws.other.send JSON.stringify(msg)
                 when "bye"
+                    if msg.type is driver
+                        ws.other.send JSON.stringify({type:"bye"})
                     ws.close()
                 else
                     throw "wrong msg type: "+msg.type
