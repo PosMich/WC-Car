@@ -23,11 +23,18 @@ span {
   font-size: 14px;
 }
 
+.mirror {
+    display:block;
+    -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+    -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+    -o-transform:matrix(-1, 0, 0, 1, 0, 0);
+}
+
 #containerJoystick {
   /*margin: 0px auto;
   top: 5%;
   left: 2.5%;
-  position: absolute;  
+  position: absolute;
   height: 90%;
   width: 95%;
 
@@ -272,7 +279,7 @@ span {
   margin: 0px;
 }
 
-#notify {  
+#notify {
     display:none;
     position:fixed;
     width:100%;
@@ -672,7 +679,7 @@ video {
 }
 
 @media (min-width: 481px) and (max-width: 767px) {
-    
+
     #password {
         width: 80%;
         margin-top:10px;
@@ -696,7 +703,7 @@ video {
 
     input[type="password"] {
         width: 100%;
-     
+
     }
 
     #password {
