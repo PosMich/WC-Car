@@ -1,9 +1,6 @@
 $(document).ready ->
 
     serverUri = "webcar.multimediatechnology.at:8000"
-
-
-
     class Motion2Sound
         constructor: ->
             @debug = true

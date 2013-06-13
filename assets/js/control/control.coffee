@@ -188,11 +188,11 @@ $(document).ready ->
                     display: "block"
                 $("#controls").css display: "block"
 
-            $(window).onresize = (e) ->
-                width = $("#videoContainer").width()
-                height = $("#videoContainer").height()
-                $("#remote").css
-                    width: width
-                    height: height
+            # $(window).onresize = (e) ->
+            #     width = $("#videoContainer").width()
+            #     height = $("#videoContainer").height()
+            #     $("#remote").css
+            #         width: width
+            #         height: height
 
 
