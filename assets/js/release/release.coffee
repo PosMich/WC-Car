@@ -194,6 +194,7 @@ $(document).ready ->
 
                         if !authDone
                             if msg.type is "success"
+                                $("#connection_error").html ""
                                 authDone = true;
                                 onIceCandidate = (event) ->
                                     if event.candidate
@@ -260,7 +261,7 @@ $(document).ready ->
 
                                 return
                             else if msg.type is "error"
-                                console.log "error"
+                                $("#connection_error").html msg.msg
 
                         else
                             console.log "Processing:"
@@ -281,7 +282,7 @@ $(document).ready ->
                                 peerConnection.addIceCandidate candidate
                             else if msg.type is "bye"
                                 Driver.stop()
-                                
+
 
 
                     socket.onerror = ->
@@ -309,7 +310,7 @@ $(document).ready ->
                     , 600
 
                 else
-                    console.log "no url/error received"+data.msg
+                    $("#connection_error").html data.msg
 
             ).fail ->
                 console.log "register failed."

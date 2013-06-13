@@ -32,3 +32,10 @@ video {
     height: 0px;
     display: none;
 }
+
+#connection_error {
+  color: #ff0000;
+  display: block;
+  clear: both;
+  padding: 10px;
+}
