@@ -35,41 +35,41 @@ $(document).ready ->
     if direction >= -1
       direction = 0  if direction > 0
       direction -= 0.0125
-      $("#leftButton").addClass "buttonsKeypressActive"
+      #$("#leftButton").addClass "buttonsKeypressActive"
       updateDirection direction
 
   kd.LEFT.up ->
-    $("#leftButton").removeClass "buttonsKeypressActive"
+    #$("#leftButton").removeClass "buttonsKeypressActive"
 
   kd.RIGHT.down ->
     if direction <= 1
       direction = 0  if direction < 0
       direction += 0.0125
-      $("#rightButton").addClass "buttonsKeypressActive"
+      #$("#rightButton").addClass "buttonsKeypressActive"
       updateDirection direction
 
   kd.RIGHT.up ->
-    $("#rightButton").removeClass "buttonsKeypressActive"
+    #$("#rightButton").removeClass "buttonsKeypressActive"
 
   kd.DOWN.down ->
     if speed >= -1
       speed = 0  if speed > 0
       speed -= 0.0125
-      $("#backButton").addClass "buttonsKeypressActive"
+      #$("#backButton").addClass "buttonsKeypressActive"
       updateSpeed speed
 
   kd.DOWN.up ->
-    $("#backButton").removeClass "buttonsKeypressActive"
+    #$("#backButton").removeClass "buttonsKeypressActive"
 
   kd.UP.down ->
     if speed <= 1
       speed = 0  if speed < 0
       speed += 0.0125
-      $("#forwardButton").addClass "buttonsKeypressActive"
+      #$("#forwardButton").addClass "buttonsKeypressActive"
       updateSpeed speed
 
   kd.UP.up ->
-    $("#forwardButton").removeClass "buttonsKeypressActive"
+    #$("#forwardButton").removeClass "buttonsKeypressActive"
 
   kd.SPACE.press ->
     speed = 0
@@ -157,7 +157,7 @@ $(document).ready ->
       $("#orient").html orientation
       $("#notification").show()
       $("#blackening").show()
-
+    ###
     if speed > 0
       $("#forwardButton").addClass "buttonsKeypressActive"
       $("#backButton").removeClass "buttonsKeypressActive"
@@ -171,7 +171,7 @@ $(document).ready ->
     else if direction < 0
       $("#rightButton").removeClass "buttonsKeypressActive"
       $("#leftButton").addClass "buttonsKeypressActive"
-
+    ###
   alpha = undefined
   beta = undefined
   gamma = undefined

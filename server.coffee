@@ -738,3 +738,4 @@ wss.on "connection", (ws) ->
                             debug.info "driver closed"
             else
                 debug.error "unknown ws.type removed"
+
