@@ -70,14 +70,14 @@ $(document).ready ->
                 l2r = 1 if l2r>1
 
                 # drive right */
-                return (@minFreqRight+l2r*parseInt((@maxFreqRight-@minFreqRight)))/1000*1000;
+                return @minFreqRight + parseInt(l2r * (@maxFreqRight - @minFreqRight) / 1000) * 1000
 
             else if l2r<0
                 # keep in boundaries */
                 l2r = -1 if l2r<-1
 
                 # drive left */
-                return (@maxFreqLeft+l2r*parseInt((@maxFreqLeft-@minFreqLeft)))/1000*1000;
+                return @maxFreqLeft + parseInt(l2r * (@maxFreqLeft - @minFreqLeft) / 1000) * 1000
             else
                 # drive straight */
                 return @straightFreq;
