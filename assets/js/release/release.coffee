@@ -1,9 +1,6 @@
 $(document).ready ->
 
     serverUri = "webcar.multimediatechnology.at:8000"
-
-
-
     class Motion2Sound
         constructor: ->
             @debug = true
@@ -264,6 +261,7 @@ $(document).ready ->
                                 return
                             else if msg.type is "error"
                                 console.log "error"
+
                         else
                             console.log "Processing:"
                             console.log msg
@@ -283,6 +281,7 @@ $(document).ready ->
                                 peerConnection.addIceCandidate candidate
                             else if msg.type is "bye"
                                 Driver.stop()
+                                
 
 
                     socket.onerror = ->

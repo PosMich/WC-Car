@@ -59,7 +59,7 @@ $(document).ready ->
                 if !signalingDone
                     if msg.type is "success"
                         #start webrtc
-
+                        $("login_error").html ""
 
                         onIceCandidate = (event) ->
                             if event.candidate
@@ -151,7 +151,8 @@ $(document).ready ->
                         doCall()
 
                     else if msg.type is "error"
-                        console.log "error " + msg.msg
+                        console.log msg.msg
+                        $("#login_error").html msg.msg
                 else
                     if msg.type is "answer"
                         console.log "setRemoteDescription"
@@ -183,16 +184,14 @@ $(document).ready ->
                 width = $("#videoContainer").width()
                 height = $("#videoContainer").height()
                 $("#remote").css
-                    width: width
-                    height: height
                     display: "block"
                 $("#controls").css display: "block"
 
-            $(window).onresize = (e) ->
-                width = $("#videoContainer").width()
-                height = $("#videoContainer").height()
-                $("#remote").css
-                    width: width
-                    height: height
+            # $(window).onresize = (e) ->
+            #     width = $("#videoContainer").width()
+            #     height = $("#videoContainer").height()
+            #     $("#remote").css
+            #         width: width
+            #         height: height
 
 
