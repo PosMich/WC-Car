@@ -1,6 +1,6 @@
 $(document).ready ->
 
-    serverUri = "webcar.multimediatechnology.at:8000"
+    serverUri = "localhost:8000"
 
 
     remoteStream = null

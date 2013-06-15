@@ -5,12 +5,11 @@
 coffee    = require "coffee-script"
 
 config    = require "./config"
-debug     = require "./debug"
+debug     = require "./modules/debug"
 sty       = require "sty"
 
 path      = require "path"
 http      = require "http"
-WebSocketServer = require("ws").Server
 
 express   = require "express"
 assets    = require "connect-assets"
@@ -21,13 +20,17 @@ crypto    = require "crypto"
 sha       = crypto.createHash("sha1")
 tinyUrl   = require("nj-tinyurl").shorten
 
+MongoStore = require("connect-mongo")(express)
 mongoose  = require "mongoose"
 ObjectID  = require("mongodb").ObjectID
 
 passport         = require "passport"
 FacebookStrategy = require("passport-facebook").Strategy
 LocalStrategy    = require("passport-local").Strategy
-hash             = require("./pass").hash
+hash             = require("./modules/pass").hash
+
+routes    = require "./modules/routes"
+signaler  = require "./modules/signaling"
 
 ###
     DB Stuff
@@ -202,21 +205,36 @@ app.configure ->
     app.use express.cookieParser(config.cookieSecret)
     app.use express.session(
         secret:config.secret
-        cookie:
-            maxAge:  new Date(Date.now() + 3600000)
+        maxAge: new Date(Date.now() + 3600000)
+        originalMaxAge: new Date(Date.now() + 3600000)
+        expires: new Date(Date.now() + 3600000)
+        store: new MongoStore(
+            db: mongoose.connection.db
+        , (err) ->
+            console.log err or "session to mongo connection established"
+        )
     )
     app.use assets()
     app.use flash()
     app.use passport.initialize()
     app.use passport.session()
     app.use express.static(path.join(__dirname, "public"))
-
-
     app.use express.methodOverride()
     app.use device.capture()
     app.enableDeviceHelpers()
     app.use app.router
 
+###
+,
+        store: new MongoStore(
+            {db:mongoose.connection.db}, (err) ->
+                if err
+                    debug.error err
+                else
+                    debug.info 'mongodb session connection ok'
+        )
+
+###
 
 ###
     Error routes
@@ -272,316 +290,51 @@ http://www.jmanzano.es/blog/?p=603
     Routes
 ###
 
-# std path
-app.get "/", (req, res) ->
-    debug.info ".get #{sty.magenta '/'} from "+req.user
-    debug.info " User isauth: "+req.isAuthenticated()
-    if req.isAuthenticated()
-        debug.info "redirect to /choose"
-        res.redirect "/choose"
-    else
-        debug.info "not authenticated, render layout - index"
-        res.render "layout",
-            user: null
+app.get "/", routes.home        # home path
 
-# login -> post, perform authentication
 app.post "/login", passport.authenticate("local",
     successRedirect: "/choose"
     failureRedirect: "/login"
-), (req, res, next) ->
-    debug.info ".post #{sty.magenta '/login'}"
-    next()
+), routes.login
 
+app.post "/signup", userExist, routes.signup
 
-# signup --> post check if user exist
-app.post "/signup", userExist, (req, res, next) ->
-    debug.info ".post #{sty.magenta '/signup'} from "+req.user
-    debug.info "post body: "
-    console.log req.body
-    user = new Users()
-
-    if req.body.password.length > config.mongo.validate.pwlength
-        debug.info "password length > "+config.mongo.validate.pwlength
-        hash req.body.password, (err, salt, hash) ->
-            throw err  if err
-            user = new Users(
-                name: req.body.name
-                email: req.body.email
-                avatar: req.body.avatar
-                salt: salt
-                hash: hash
-                _id: new ObjectID
-            ).save((err, newUser) ->
-                throw err if err
-                req.login newUser, (err) ->
-                    return next(err) if err
-                    debug.info "user created, redirecting to '/'"
-                    res.redirect "/"
-            )
-    else
-        debug.error "password too short"
-        # error handling
-
-# settings -> post update
-app.post "/settings", (req, res) ->
-    debug.info ".post #{sty.magenta '/settings'} from "+req.user
-    debug.info "post body: "
-    console.log req.body
-
-    if req.user.fbId
-        debug.warn "FbUser tried to change settings! He/she is a bad boy/girl: "+req.user
-        return res.redirect "/"
-
-    if req.body.old_password != "" and req.body.password != ""
-        debug.info "passwords are not empty"
-        validatePassword( req.body.name, req.body.old_password, ( err, user ) ->
-            if req.body.password.length > config.mongo.validate.pwlength
-                hash req.body.password, (err, salt, hash) ->
-                    user.name   = req.body.name
-                    user.email  = req.body.email
-                    user.avatar = req.body.avatar
-                    user.salt   = salt
-                    user.hash   = hash
-                    user.save (err) ->
-                        # Error handling
-                        debug.error "Error during user.save: "+err
-            else
-                debug.error "new password too short"
-        )
-    else
-        debug.info "update settings except password"
-        Users.findOne
-            name: req.body.name
-        , (err, user) ->
-            throw err if err
-            user.name = req.body.name
-            user.email = req.body.email
-            user.avatar = req.body.avatar
-            user.save (err) ->
-                debug.error "Error while updating user: "+err
-    debug.info "redirecting to '/'"
-    res.redirect "/"
-
-
-
-# facebook auth paths
+# facebook auth and callback
 app.get "/auth/facebook", passport.authenticate("facebook",
     scope: "email"
-), (req, res) ->
-    debug.info ".get #{sty.magenta '/auth/facebook'} from "+req.user
-    debug.info "render layout"
-    res.render "layout",
-        user: null
-#        message: req.flash("info")
-
-
+), routes.facebook
 app.get "/auth/facebook/callback", passport.authenticate("facebook",
     failureRedirect: "/login"
-), (req, res) ->
-    debug.info ".get #{sty.magenta '/auth/facebook/callback'} from "+req.user
-    debug.info "redirecting to '/'"
-    res.redirect "/"
+), routes.facebookcb
 
-# settings path
-app.get "/settings", authenticatedOrNot, (req, res) ->
-    debug.info ".get #{sty.magenta '/settings'} from "+req.user
-    if req.user.fbId is null or req.user.fbId is undefined
-        res.format
-            "application/json": ->
-                debug.info "send jsonp"
-                res.jsonp req.user
-            "text/html": ->
-                debug.info "render layout"
-                res.render "layout",
-                    user: req.user
-    else
-        res.redirect "/"
+# settings -> post update, -> get /get
+app.post "/settings", authenticatedOrNot, routes.settings.post
+app.get "/settings", authenticatedOrNot, routes.settings.get
 
 # logout
-app.get "/logout", (req, res) ->
-    debug.info ".get #{sty.magenta '/logout'} from "+req.user
-    req.logout()
-    debug.info "logged out, redirect to '/'"
-    res.redirect "/"
-
-app.post "/logout", (req, res) ->
-    debug.info ".post #{sty.magenta '/logout'} from "+req.user
-    req.logout()
-    debug.info "logged out, redirect to '/'"
-    res.redirect "/"
+app.get "/logout", routes.logout.get
+app.post "/logout", routes.logout.post
 
 # All partials. This is used by Angular.
-app.get "/partials/:name", (req, res) ->
-    debug.info ".get #{sty.magenta '/partials/:name'} from "+req.user
-    name = req.params.name
-    debug.info "partial: "+name
-    if name is "choose"
-        if req.isAuthenticated()
-            debug.info "user is logged in, render partial 'choose'"
-            res.render "partials/choose",
-                user: req.user
-        else
-            debug.info "user is not logged in, render partial 'index'"
-            res.render "partials/index",
-    else
-        debug.info "render partial "+name
-        res.render "partials/" + name
-
+app.get "/partials/:name", routes.partials
 
 # controls
-app.get "/control/key", (req, res) ->
-    debug.info ".get #{sty.magenta '/control/key'} from "+req.user
-    debug.info "render controls/key"
-    res.render "controls/key",
-        control: "keyboard"
-        user: req.user
+app.get "/control/key", routes.control.key
+app.get "/control/key2", routes.control.key2
+app.get "/control/gyro", routes.control.gyro
+app.get "/control/joystick", routes.control.joystick
 
-app.get "/control/key2", (req, res) ->
-    debug.info ".get #{sty.magenta '/control/key2'} from "+req.user
-    debug.info "render controls/key2"
-    res.render "controls/key2",
-        control: "keyboard2"
-        user: req.user
-
-app.get "/control/gyro", (req, res) ->
-    debug.info ".get #{sty.magenta '/control/gyro'} from "+req.user
-    debug.info "render controls/gyro"
-    res.render "controls/gyro",
-        control: "gyro"
-        user: req.user
-
-app.get "/control/joystick", (req, res) ->
-    debug.info ".get #{sty.magenta '/control/joystick'} from "+req.user
-    debug.info "render controls/joystick"
-    res.render "controls/joystick",
-        control: "joystick"
-        user: req.user
-
-app.get "/release", authenticatedOrNot, (req, res) ->
-    debug.info ".get #{sty.magenta '/release'} from "+req.user
-    debug.info "render release/index"
-    res.render "release/index",
-        user: req.user
-
-app.get "/choose", authenticatedOrNot,(req, res) ->
-    debug.info ".get #{sty.magenta '/choose'} from "+req.user
-    debug.info "render release/index"
-    res.render "layout",
-        user: req.user
+app.get "/release", authenticatedOrNot, routes.release
+app.get "/choose", authenticatedOrNot, routes.choose
 
 # register Car, create Url ....
-app.post "/registerCar", authenticatedOrNot, (req, res) ->
-    debug.info ".post #{sty.magenta '/registerCar'} from "+req.user
-    # register Car to available Cars
-    if req.body.password.length > config.mongo.validate.pwlength
-        debug.info "password length > "+config.mongo.validate.pwlength
+app.post "/registerCar", authenticatedOrNot, routes.registerCar
+app.get "/drive/:id", routes.drive
 
-        Cars.findOne
-            user: req.user._id
-        , (err, car) ->
-            if err
-                debug.error "Error occured while searching for Car"
-                res.jsonp {tinyUrl: false, msg: "Error occured while searching for Car"}
-            #if no car insert car into db
-            unless car
-                debug.info "no car found, creating new one"
+app.post "/kill", authenticatedOrNot, routes.kill.post
+app.get "/kill", authenticatedOrNot, routes.kill.get
 
-                hash req.body.password, (err, salt, hash) ->
-                    if err
-                        debug.error "problem during hash/salt creation"
-                    else
-                        debug.info "tryin to create new car"
-                        urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
-                        debug.info "try to get tinyUrl"
-                        try
-                            tinyUrl config.siteUrl+":"+config.port+"/drive/"+urlHash, (err, url)->
-                                debug.error err if err
-                                debug.info "tinyUrl: "+url
-
-                                debug.info "tryin to create new car"
-                                car = new Cars(
-                                    user: req.user._id
-                                    salt: salt
-                                    hash: hash
-                                    urlHash: urlHash
-                                    isDriven: false
-                                    _id: new ObjectID
-                                ).save( (err, newCar) ->
-                                    if err
-                                        debug.error "wasn't able to save car!"
-                                        debug.error err
-                                        res.format
-                                            "application/json": ->
-                                                res.jsonp {tinyUrl: false, "Konnte Auto nicht in die Datenbank speichern."}
-                                    else
-                                        res.format
-                                            "application/json": ->
-                                                debug.info "send jsonp"
-                                                res.jsonp { tinyUrl: url , carId: newCar.urlHash }
-                                )
-
-
-                        catch err
-                            debug.error "while getting tinyUrl: "+err
-
-            else
-                debug.info "car found "+car
-                res.jsonp {tinyUrl: false, msg: "Das Auto wurde bereits ein mal freigegeben!"}
-    else
-        debug.info "pw too short"
-        res.jsonp {tinyUrl: false, msg: "Das Passwort ist zu kurz!"}
-
-app.get "/drive/:id", (req, res) ->
-    carId = req.params.id
-    debug.info ".get #{sty.magenta '/drive/'}"+carId
-    res.render "controls/index.jade",
-        carId: carId
-
-app.post "/kill", authenticatedOrNot, (req, res) ->
-    debug.info ".post #{sty.magenta '/kill'} pw:"+req.body.password
-    console.log req.body
-    Cars.findOne
-        user: req.user._id
-    , (err, car) ->
-        debug.error "Error occured while searching for Car" if err
-        unless car
-            res.jsonp {sucess: false}
-        else
-            console.log car
-            hash req.body.password, car.salt, (err, hash) ->
-                if err
-                    debug.error "Kill: error while hashing"
-                    res.jsonp {success: false}
-                else if hash is car.hash
-                    debug.info "Kill: same password"
-                    car.remove()
-                    res.jsonp {success: true}
-                else
-                    debug.infoFail "Kill: incorrect password"
-                    res.jsonp {success: false}
-
-app.get "/kill", authenticatedOrNot, (req, res) ->
-    debug.info ".get #{sty.magenta '/kill'}"
-    Cars.findOne
-        user: req.user._id
-    , (err, car) ->
-        debug.error "Error occured while searching for Car" if err
-        unless car
-            debug.infoFail "no car found"
-            res.redirect "/release"
-        else
-            debug.infoSuccess "car found"
-            res.render "release/kill.jade"
-
-app.get "*", (req, res) ->
-    debug.info ".get #{sty.magenta '*'} from "+req.user
-    if req.isAuthenticated()
-        debug.info "user is logged in, redirect to '/choose'"
-        res.redirect "/choose"
-    else
-        debug.info "user is not logged in, render 'layout'"
-        res.render "layout",
-            user:  res.user
+app.get "*", routes.default
 
 ###
     Startup and log.
@@ -589,157 +342,4 @@ app.get "*", (req, res) ->
 server = http.createServer(app).listen app.get("port"), ->
     debug.info "Express server is listening on port "+app.get("port")
 
-
-
-
-###
-    WebSocket stuff
-
-    type of messages:
-        --> "login": from driver/car to server
-            --> if msg.user is car
-                --> check Cars for id, validate password
-                    --> password correct: add to driver, enable signalling
-            --> if msg.user is driver
-        --> "offer": from driver to car
-            --> if signalling enabled
-                --> sent offer to car
-            --> else
-                --> kill connection
-        --> "answer": from car to driver
-            --> if signalling enabled
-                --> send answer to driver
-            --> else
-                --> kill connection
-        --> "candidate": from car to driver vice versa
-            --> if signalling enabled
-                --> exchange canditates
-            --> else
-                --> kill connection
-        --> "bye": from car to driver vice versa
-            --> don't know
-###
-
-wss = new WebSocketServer(server: server)
-wss.on "connection", (ws) ->
-
-    debug.info "new ws connection"
-
-    ws.on "message", (msg) ->
-        debug.info 'ws received: '
-        console.log msg
-
-        try
-            msg = JSON.parse msg
-
-            switch msg.type
-                when "login"
-                    throw "msg.user not defined!!!" if msg.user isnt "car" and msg.user isnt "driver"
-                    Cars.findOne
-                        urlHash: msg.carId
-                    , (err, car) ->
-                        debug.error "Error occured while searching for car: "+err if err
-                        unless car
-                            debug.error "car not in list!!!"
-                            ws.send JSON.stringify(
-                                type: "error"
-                                msg: "Das Auto ist nicht freigegeben!"
-                            )
-                        else
-                            #validate pw
-                            hash msg.pw, car.salt, (err, hash) ->
-                                if err
-                                    throw "error while hashing"
-                                else if hash is car.hash
-                                    debug.info "same password"
-                                    if msg.user is "car"
-                                        debug.info "identified as car"
-                                        ws.type = "car"
-                                        ws.other = ""
-                                        ws.carId = msg.carId
-                                        ws.isDriven = false
-                                        ws.send JSON.stringify(
-                                            type: "success"
-                                        )
-                                    else
-                                        debug.info "identified as driver"
-                                        #driver
-                                        ###
-                                            search all ws.clients for ws.carId == urlHash
-                                        ###
-                                        for client of wss.clients
-                                            client = wss.clients[client]
-                                            if client.type is "car" and client.carId is msg.carId
-                                                debug.info "found car"
-                                                if client.isDriven
-                                                    debug.error "car is occupied"
-                                                    ws.send JSON.stringify(
-                                                        type: "error"
-                                                        msg: "Das Auto wird bereits gesteuert!"
-                                                    )
-                                                else
-                                                    debug.info "add driver to car"
-                                                    client.isDriven = true
-                                                    ws.other = client
-                                                    ws.type = "driver"
-                                                    client.other = ws
-                                                    ws.send JSON.stringify(
-                                                        type: "success"
-                                                    )
-                                        if ws.other is undefined
-                                            debug.error "something went horribly wrong, car not found in socket clients"
-                                            debug.error "clients:"
-                                            #for client of wss.clients
-                                            #    client = wss.clients[client]
-                                            #    console.log client
-                                            ws.send JSON.stringify(
-                                                type: "error"
-                                                msg: "Etwas sehr komisches ist passiert. Das Auto wurde nicht gefunden :("
-                                            )
-                                else
-                                    ws.send JSON.stringify({type: "error", msg: "Falsches Passwort"})
-                when "offer"
-                    throw "wrong type!!! "+ws.type if ws.type isnt "driver"
-                    ws.other.send JSON.stringify(msg)
-                    debug.info "offer sent to car"
-                when "answer"
-                    throw "wrong type!!! "+ws.type if ws.type isnt "car"
-                    ws.other.send JSON.stringify(msg)
-                when "candidate"
-                    throw "not logged in?" if ws.type isnt "car" and ws.type isnt "driver"
-                    ws.other.send JSON.stringify(msg)
-                when "bye"
-                    ws.close()
-                else
-                    throw "wrong msg type: "+msg.type
-        catch e
-            debug.error e
-            ws.close()
-
-    ws.on "close", ->
-        debug.info "ws connection closed: "+ws.type
-        switch ws.type
-            when "driver"
-                ws.other.send JSON.stringify({type:"bye"})
-                ws.other.isDriven = false
-                ws.other.other = undefined
-                debug.info "removed driver"
-            when "car"
-                debug.info "car remove"
-                Cars.findOne
-                    urlHash: ws.carId
-                , (err, car) ->
-                    debug.error "Error occured while searching for car: "+err if err
-                    unless car
-                        debug.error "car not in list!!!"
-                    else
-                        debug.info "car found - removing it"
-                        car.remove()
-                        console.log "ws.other"
-                        console.log ws.other
-                        if ws.other != "" and ws.other != undefined
-                            ws.other.close()
-                            debug.info "driver closed"
-            else
-                debug.error "unknown ws.type removed"
-
+signaler.signaling server
