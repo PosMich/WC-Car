@@ -1,3 +1,6 @@
+debug   = require "./debug"
+db      = require "./db"
+hash    = require("./pass").hash
 
 WebSocketServer = require("ws").Server
 
@@ -45,7 +48,7 @@ exports.signaling = (server) ->
                 switch msg.type
                     when "login"
                         throw "msg.user not defined!!!" if msg.user isnt "car" and msg.user isnt "driver"
-                        Cars.findOne
+                        db.Cars.findOne
                             urlHash: msg.carId
                         , (err, car) ->
                             debug.error "Error occured while searching for car: "+err if err
@@ -136,7 +139,7 @@ exports.signaling = (server) ->
                     debug.info "removed driver"
                 when "car"
                     debug.info "car remove"
-                    Cars.findOne
+                    db.Cars.findOne
                         urlHash: ws.carId
                     , (err, car) ->
                         debug.error "Error occured while searching for car: "+err if err
@@ -152,4 +155,3 @@ exports.signaling = (server) ->
                                 debug.info "driver closed"
                 else
                     debug.error "unknown ws.type removed"
-

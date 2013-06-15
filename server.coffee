@@ -1,12 +1,7 @@
-###
-    Requires
-###
-
 coffee    = require "coffee-script"
 
 config    = require "./config"
 debug     = require "./modules/debug"
-sty       = require "sty"
 
 path      = require "path"
 http      = require "http"
@@ -16,177 +11,15 @@ assets    = require "connect-assets"
 flash     = require "connect-flash"
 device    = require "express-device"
 
-crypto    = require "crypto"
-sha       = crypto.createHash("sha1")
-tinyUrl   = require("nj-tinyurl").shorten
-
 MongoStore = require("connect-mongo")(express)
-mongoose  = require "mongoose"
-ObjectID  = require("mongodb").ObjectID
-
-passport         = require "passport"
-FacebookStrategy = require("passport-facebook").Strategy
-LocalStrategy    = require("passport-local").Strategy
-hash             = require("./modules/pass").hash
+db        = require "./modules/db"
 
 routes    = require "./modules/routes"
 signaler  = require "./modules/signaling"
 
-###
-    DB Stuff
-###
-debug.info "Connect to: "+config.mongo.url+":"+config.mongo.port+" database: "+config.mongo.database+" user: "+config.mongo.user+" and pw "+config.mongo.pwd
+auth      = require "./modules/auth"
 
-# mongoose.connect "mongodb://"+config.mongo.url+":"+config.mongo.port+"/"+config.mongo.database,
-mongoose.connect config.mongo.url+"/"+config.mongo.database, config.mongo.port, config.mongo.database,
-    user: config.mongo.user
-    pass: config.mongo.pwd
-, (err) ->
-    if err then debug.error err
-    else debug.infoSuccess "Connected to MongoDB"
-
-
-# Validators
-validateLength = ( val ) ->
-    debug.info "validate length"
-    return ( val.length > config.mongo.validate.pwlength )
-
-validateEmail = ( val ) ->
-    debug.info "validate e-mail"
-    return /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test val
-
-validateUrl = ( val ) ->
-    debug.info "validate url"
-    return 1 if val.length is 0
-    return /\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))/i.test val
-
-
-# Local Users Schema
-LocalUserSchema = new mongoose.Schema
-    name:
-        type:       String
-        validate:   [validateLength, 'Username is too short']
-        required:   true
-    email:
-        type:       String
-        lowercase:  true
-        validate:   [validateEmail, "Email is invalid."]
-        required:   true
-    avatar:
-        type:       String
-        validate:   [validateUrl, "Not a valid URL."]
-    salt:           String
-    hash:           String
-
-Users = mongoose.model "userauths", LocalUserSchema
-
-# Facebook Users Schema
-FacebookUserSchema = new mongoose.Schema
-    fbId:           String
-    email:
-        type:       String
-        lowercase:  true
-    name:
-        type:       String
-        required:   true
-        validate:   [validateLength, 'Username is too short']
-    avatar:
-        type:       String
-        validate:   [validateUrl, "Not a valid URL."]
-
-FbUsers = mongoose.model "fbauths", FacebookUserSchema
-
-CarSchema = new mongoose.Schema
-    user:           String
-    hash:           String
-    salt:           String
-    urlHash:        String
-    isDriven:       Boolean
-
-Cars = mongoose.model "cars", CarSchema
-
-
-###
-    passport stuff
-###
-
-validatePassword = (username, password, done) ->
-    Users.findOne
-        name: username
-    , (err, user) ->
-        if err
-            debug.error "Passport: error, was not able to find user "+user
-            return done(err)
-        unless user
-            debug.infoFail "Passport: incorrect username "+username
-            return done(null, false,
-                message: "Incorrect username."
-            )
-        hash password, user.salt, (err, hash) ->
-            if err
-                debug.error "Passport: error while hashing"
-                return done(err)
-            if hash is user.hash
-                debug.info "Passport: same password"
-                return done(null, user)
-            debug.infoFail "Passport: incorrect password"
-            done null, false,
-                message: "Incorrect password."
-
-
-passport.use new LocalStrategy(
-    usernameField: "name"
-    validatePassword
-)
-
-passport.use new FacebookStrategy(
-    clientID:      config.fb.appId
-    clientSecret:  config.fb.appSecret
-    callbackURL:   config.siteUrl+":"+config.port+"/auth/facebook/callback"
-    profileFields: ["id", "displayName", "photos", "emails"]
-, (accessToken, refreshToken, profile, done) ->
-    FbUsers.findOne
-        fbId: profile.id
-    , (err, oldUser) ->
-        if oldUser
-            debug.infoSuccess "Passport: fb user exists, return "+oldUser
-            done null, oldUser
-        else
-            newUser = new FbUsers(
-                fbId: profile.id
-                email: profile.emails[0].value
-                name: profile.displayName
-                avatar: profile.photos[0].value
-            ).save((err, newUser) ->
-                if err
-                    debug.error "Passport: error while save fb user to db"
-                    done err
-                else
-                    debug.infoSuccess "Passport: saved new fb user to db "+newUser
-                    done null, newUser
-            )
-)
-
-passport.serializeUser (user, done) ->
-    debug.info "serialize user"
-    done null, user.id
-
-passport.deserializeUser (id, done) ->
-    debug.info "deserialize user"
-    FbUsers.findById id, (err, user) ->
-        done err if err
-        if user
-            debug.infoSuccess "fbUser found"+user
-            done null, user
-        else
-            Users.findById id, (err, user) ->
-                if err
-                    debug.infoFail "no user found!"
-                    done err
-                debug.infoSuccess "user found"+user
-                done null, user
-
-
+passport   = require "passport"
 ###
     Declare & Configure the Server
 ###
@@ -209,7 +42,7 @@ app.configure ->
         originalMaxAge: new Date(Date.now() + 3600000)
         expires: new Date(Date.now() + 3600000)
         store: new MongoStore(
-            db: mongoose.connection.db
+            db: db.connection
         , (err) ->
             console.log err or "session to mongo connection established"
         )
@@ -224,17 +57,6 @@ app.configure ->
     app.enableDeviceHelpers()
     app.use app.router
 
-###
-,
-        store: new MongoStore(
-            {db:mongoose.connection.db}, (err) ->
-                if err
-                    debug.error err
-                else
-                    debug.info 'mongodb session connection ok'
-        )
-
-###
 
 ###
     Error routes
@@ -282,15 +104,16 @@ userExist = (req, res, next) ->
             res.redirect "/signup"
 
 ###
-http://www.jmanzano.es/blog/?p=603
+there's a particular need for random links in random files, here's our random link
+    http://www.jmanzano.es/blog/?p=603
 ###
 
 
 ###
     Routes
 ###
-
-app.get "/", routes.home        # home path
+# home path
+app.get "/", routes.home
 
 app.post "/login", passport.authenticate("local",
     successRedirect: "/choose"

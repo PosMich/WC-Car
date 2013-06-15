@@ -1,12 +1,18 @@
-
 sty       = require "sty"
 debug     = require "./debug"
+config    = require "../config"
+hash      = require("./pass").hash
 
+tinyUrl   = require("nj-tinyurl").shorten
+db        = require "./db"
+
+crypto    = require "crypto"
+sha       = crypto.createHash("sha1")
 ###
     Routes
 ###
 
-# std path
+# index
 exports.home = (req, res) ->
     debug.info ".get #{sty.magenta '/'} from "+req.user
     debug.info " User isauth: "+req.isAuthenticated()
@@ -34,13 +40,13 @@ exports.signup = (req, res, next) ->
         debug.info "password length > "+config.mongo.validate.pwlength
         hash req.body.password, (err, salt, hash) ->
             throw err  if err
-            user = new Users(
+            user = new db.Users(
                 name: req.body.name
                 email: req.body.email
                 avatar: req.body.avatar
                 salt: salt
                 hash: hash
-                _id: new ObjectID
+                _id: new db.ObjectID
             ).save((err, newUser) ->
                 throw err if err
                 req.login newUser, (err) ->
@@ -95,7 +101,7 @@ exports.settings.post = (req, res) ->
         )
     else
         debug.info "update settings except password"
-        Users.findOne
+        db.Users.findOne
             name: req.body.name
         , (err, user) ->
             throw err if err
@@ -202,58 +208,60 @@ exports.registerCar = (req, res) ->
     # register Car to available Cars
     if req.body.password.length > config.mongo.validate.pwlength
         debug.info "password length > "+config.mongo.validate.pwlength
+        try
+            db.Cars.findOne
+                user: req.user._id
+            , (err, car) ->
+                if err
+                    debug.error "Error occured while searching for Car"
+                    res.jsonp {tinyUrl: false, msg: "Error occured while searching for Car"}
+                #if no car insert car into db
+                unless car
+                    debug.info "no car found, creating new one"
 
-        Cars.findOne
-            user: req.user._id
-        , (err, car) ->
-            if err
-                debug.error "Error occured while searching for Car"
-                res.jsonp {tinyUrl: false, msg: "Error occured while searching for Car"}
-            #if no car insert car into db
-            unless car
-                debug.info "no car found, creating new one"
+                    hash req.body.password, (err, salt, hash) ->
+                        if err
+                            debug.error "problem during hash/salt creation"
+                        else
+                            debug.info "tryin to create new car"
+                            urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
+                            debug.info "try to get tinyUrl"
+                            try
+                                tinyUrl config.siteUrl+":"+config.port+"/drive/"+urlHash, (err, url)->
+                                    debug.error err if err
+                                    debug.info "tinyUrl: "+url
 
-                hash req.body.password, (err, salt, hash) ->
-                    if err
-                        debug.error "problem during hash/salt creation"
-                    else
-                        debug.info "tryin to create new car"
-                        urlHash = crypto.createHmac("sha1", req.user._id.toString("base64")).update(config.secret).digest("hex")
-                        debug.info "try to get tinyUrl"
-                        try
-                            tinyUrl config.siteUrl+":"+config.port+"/drive/"+urlHash, (err, url)->
-                                debug.error err if err
-                                debug.info "tinyUrl: "+url
-
-                                debug.info "tryin to create new car"
-                                car = new Cars(
-                                    user: req.user._id
-                                    salt: salt
-                                    hash: hash
-                                    urlHash: urlHash
-                                    isDriven: false
-                                    _id: new ObjectID
-                                ).save( (err, newCar) ->
-                                    if err
-                                        debug.error "wasn't able to save car!"
-                                        debug.error err
-                                        res.format
-                                            "application/json": ->
-                                                res.jsonp {tinyUrl: false, "Konnte Auto nicht in die Datenbank speichern."}
-                                    else
-                                        res.format
-                                            "application/json": ->
-                                                debug.info "send jsonp"
-                                                res.jsonp { tinyUrl: url , carId: newCar.urlHash }
-                                )
+                                    debug.info "tryin to create new car"
+                                    car = new db.Cars(
+                                        user: req.user._id
+                                        salt: salt
+                                        hash: hash
+                                        urlHash: urlHash
+                                        isDriven: false
+                                        _id: new db.ObjectID
+                                    ).save( (err, newCar) ->
+                                        if err
+                                            debug.error "wasn't able to save car!"
+                                            debug.error err
+                                            res.format
+                                                "application/json": ->
+                                                    res.jsonp {tinyUrl: false, "Konnte Auto nicht in die Datenbank speichern."}
+                                        else
+                                            res.format
+                                                "application/json": ->
+                                                    debug.info "send jsonp"
+                                                    res.jsonp { tinyUrl: url , carId: newCar.urlHash }
+                                    )
 
 
-                        catch err
-                            debug.error "while getting tinyUrl: "+err
+                            catch err
+                                debug.error "while getting tinyUrl: "+err
 
-            else
-                debug.info "car found "+car
-                res.jsonp {tinyUrl: false, msg: "Das Auto wurde bereits ein mal freigegeben!"}
+                else
+                    debug.info "car found "+car
+                    res.jsonp {tinyUrl: false, msg: "Das Auto wurde bereits ein mal freigegeben!"}
+        catch e
+            console.log e
     else
         debug.info "pw too short"
         res.jsonp {tinyUrl: false, msg: "Das Passwort ist zu kurz!"}
@@ -268,7 +276,7 @@ exports.kill = {}
 exports.kill.post = (req, res) ->
     debug.info ".post #{sty.magenta '/kill'} pw:"+req.body.password
     console.log req.body
-    Cars.findOne
+    db.Cars.findOne
         user: req.user._id
     , (err, car) ->
         debug.error "Error occured while searching for Car" if err
@@ -290,7 +298,7 @@ exports.kill.post = (req, res) ->
 
 exports.kill.get = (req, res) ->
     debug.info ".get #{sty.magenta '/kill'}"
-    Cars.findOne
+    db.Cars.findOne
         user: req.user._id
     , (err, car) ->
         debug.error "Error occured while searching for Car" if err
