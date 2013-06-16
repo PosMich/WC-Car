@@ -1,13 +1,71 @@
 {
-	"app": {
-		"header": "Beispiel Applikation"
-	},
-	"navigation": {
-		"view1": "Hier View1",
-		"view2": "Hier View2"
-	},
-	"route": {
-		"view1": "Ansicht1",
-		"view2": "Ansicht2"
-	}
+    "nav": {
+        "project": "Das Projekt",
+        "team": "Das Team",
+        "imprint": "Impressum",
+        "login": "Login/Anmelden",
+        "logout": "Abmelden",
+        "settings": "Einstellungen",
+        "drive": "Fahren/Freigeben"
+    },
+    "main": {
+        "project": {
+            "idea": {
+                "header": "Die Idee",
+                "content": "<p>Die Idee war es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den Browser steuern zu können.</p><p>In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden.</p><p>Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt diese dann in Steuersignale für das ferngesteuerte Auto um.</p><p>Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen dem Arduino-Board) umgesetzt.</p>"
+            },
+            "tech": {
+                "header": "Die Technik",
+                "content": "<b>WebCar</b><p>Carrera-RC Jeep Wrangler Rubicon<br>Arduino Pro Mini</p><b>WebApp</b><p>node.js (express)<br>angular.js</p>"
+            }
+        },
+        "attention": {
+            "header": "ACHTUNG!",
+            "content": "<p>Da diese Projekt APIs verwendet, welche sich noch in Entwicklung befinden, sollte als Browser der aktuellste <b>Chrome Beta</b> verwendet werden.</p><p>Folgende flags sind zu aktivieren (erreichbar unter <i>chrome://flags/</i>)</p><ul><li>Enable WebRTC</li><li>Enable experimental WebSocket implementation</li></ul><p>Für nähere Details, siehe <a href='https://github.com/PosMich/WC-Car'>GitHub</a></p>"
+        },
+        "team": {
+            "lisa": {
+                "name": "Lisa-Maria Lederer",
+                "role": "Programmierung"
+            },
+            "laura": {
+                "name": "Laura Gst&ouml;ttenmayr",
+                "role": "Design - Instruktionen"
+            },
+            "sebastian": {
+                "name": "Sebastian Slamanig",
+                "role": "Programmierung"
+            },
+            "michael": {
+                "name": "Michael Poschacher",
+                "role": "Programmierung"
+            }
+        },
+        "imprint": {
+            "header": "Impressum",
+            "webcar": {
+                "header": "WebCar",
+                "content": "WebCar wurde im Rahmen eines Basisqualifikationsprojekts für das Sommersemester 2013 (4. Semester) von Studenten der Fachochschule Salzburg aus den Studiengängen MultiMediaTechnology & MultiMediaArt erstellt."
+            },
+            "team": {
+                "header": "Autorinnen / Autoren",
+                "concept" : {
+                    "header": "Konzept",
+                    "content": "Lisa-Maria Lederer, Sebastian Slamanig, Michael Poschacher"
+                },
+                "realisation": {
+                    "header": "Umsetzung",
+                    "content": "Lisa-Maria Lederer, Sebastian Slamanig, Michael Poschacher"
+                },
+                "design": {
+                    "header": "Design - Instruktionen",
+                    "content": "Laura Gst&ouml;ttenmayr"
+                }
+            },
+            "contact": {
+                "header": "Kontakt",
+                "content": "<h4>Kontakt</h4><b>Lisa Maria Lederer</b><br><a href='mailto:llederer.mmt-b2011@fh-salzburg.ac.at'>llederer.mmt-b2011@fh-salzburg.ac.at</a><br><b>Sebastian Slamanig</b><br><a href='mailto:sebastian.slamanig@gmail.com'>sebastian.slamanig@gmail.com</a><br><b>Michael Poschacher</b><br><a href='mailto:michael.poschacher@gmail.com'>michael.poschacher@gmail.com</a><h4>Copyright</h4><adress><strong>Fachhochschule Salzburg GmbH</strong><br>Urstein Süd 1<br>A-5412 Puch/Salzburg<br>Österreich</adress>"
+            }
+        }
+    }
 }

@@ -1,13 +1,101 @@
 {
-    "app": {
-        "header": "Sample Application"
+    "nav": {
+        "project": "The Project",
+        "team": "The Team",
+        "imprint": "Imprint",
+        "login": "Login/Signup",
+        "logout": "Logout",
+        "settings": "Settings",
+        "drive": "Drive/Release"
     },
-    "navigation": {
-        "view1": "Here View1",
-        "view2": "Here View2"
+    "main": {
+        "project": {
+            "idea": {
+                "header": "The Idea",
+                "content": "<p>The general Idea was to create a platform through which you could control a rc-car over your browser.</p><p>You plug your Smartphone into the rc-car and connect it with the Audio plug.</p><p>A Arduino-Board serves as the Interface between the Smartphone and the car. The Smartphone submits controller signals over the Audio Interface to the Arduino-Board. The Arduino Board converts these signals and transmits them to the rc-car's electronic circuit.</p><p>No native application is necessary, thanks to WebRTC the application is implemented as a pure Web App (exluding the Arduino-Board).</p>"
+            },
+            "tech": {
+                "header": "Technology used",
+                "content": "<b>WebCar</b><p>Carrera-RC Jeep Wrangler Rubicon<br>Arduino Pro Mini</p><b>WebApp</b><p>node.js (express)<br>angular.js</p>"
+            }
+        },
+        "attention": {
+            "header": "ATTENTION!",
+            "content": "<p>As this project uses API's which are under heavy development at the moment, you should use the newest version of Chrome Beta.</p><p>Activate following flags (<i>chrome://flags</i>):</p><ul><li>Enable WebRTC</li><li>Enable experimental WebSocket implementation</li></ul><p>For further details: <a href='https://github.com/PosMich/WC-Car'>GitHub</a></p>"
+        },
+        "team": {
+            "lisa": {
+                "name": "Lisa-Maria Lederer",
+                "role": "coding - frontend"
+            },
+            "laura": {
+                "name": "Laura Gst&ouml;ttenmayr",
+                "role": "design - instructions"
+            },
+            "sebastian": {
+                "name": "Sebastian Slamanig",
+                "role": "coding - frontend/server communication"
+            },
+            "michael": {
+                "name": "Michael Poschacher",
+                "role": "coding - frontend/backend/hardware"
+            }
+        },
+        "imprint": {
+            "webcar": {
+                "header": "WebCar",
+                "content": "WebCar was developed as part of our bachelor degree program in the summer semester of 2013 (4th semester) by students of the courses MultiMediaTechnology and MultiMediaArt from the University of Applied Science Salzburg."
+            },
+            "team": {
+                "header": "Creators",
+                "concept" : {
+                    "header": "Idea",
+                    "content": "Lisa-Maria Lederer, Sebastian Slamanig, Michael Poschacher"
+                },
+                "realisation": {
+                    "header": "Realisation",
+                    "content": "Lisa-Maria Lederer, Sebastian Slamanig, Michael Poschacher"
+                },
+                "design": {
+                    "header": "Design - Instructions",
+                    "content": "Laura Gst&ouml;ttenmayr"
+                }
+            },
+            "contact": "<h4>Contact</h4><b>Lisa Maria Lederer</b><br><a href='mailto:llederer.mmt-b2011@fh-salzburg.ac.at'>llederer.mmt-b2011@fh-salzburg.ac.at</a><br><b>Sebastian Slamanig</b><br><a href='mailto:sebastian.slamanig@gmail.com'>sebastian.slamanig@gmail.com</a><br><b>Michael Poschacher</b><br><a href='mailto:michael.poschacher@gmail.com'>michael.poschacher@gmail.com</a><h4>Copyright</h4><adress><strong>Fachhochschule Salzburg GmbH</strong><br>Urstein S&uuml;d 1<br>A-5412 Puch/Salzburg<br>Austria</adress>"
+        }
     },
-	"route": {
-		"view1": "View1",
-		"view2": "View2"
-	}
+    "signup": {
+        "header": "Signup",
+        "legend": "WebCar Data",
+        "email": {
+            "text": "E-Mail:",
+            "required":"Email is required.",
+            "invalid":"Email is invalid."
+        },
+        "user": {
+            "text": "Username:",
+            "required": "Username is required.",
+            "invalid": "Username is invalid"
+        },
+        "password": {
+            "text": "Password:",
+            "required": "Password is required.",
+            "short": "Password is too short."
+        },
+        "repeat": {
+            "text": "Repeat password:",
+            "required":"Password confirmation is required.",
+            "short":"Password confirmation is too short.",
+            "incorrect":"Password confirmation is incorrect."
+        },
+        "avatar": {
+            "text": "Avatar URL (optional)",
+            "incorrect": "Not a valid URL."
+        },
+        "buttons": {
+            "signup": "Sign Up",
+            "cancel": "Cancel"
+        }
+
+    }
 }

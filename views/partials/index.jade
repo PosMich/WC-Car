@@ -1,112 +1,64 @@
 header#about
   .page-header
-    h1 Das Projekt
+    h1= t("nav.project")
   .row
     .span8
-      h4 Die Idee
-      p.
-          Die Idee ist es, eine Plattform zu schaffen, um ein umgebautes ferngesteuertes Auto über den
-          Browser steuern zu können.
-      p.
-          In dieses Auto wird ein Smartphone gesteckt und über den Audiostecker verbunden.
-          Ein Arduino-Board dient als Schnittstelle zwischen Smartphone und Auto. Die Steuersignale werden in
-          Form eines Audiosignales vom Smartphone ausgegeben, das Arduino-Board wandelt dies dann in Steuersignale
-          für das ferngesteuerte Auto um.
-      p.
-          Es ist keine native Applikation erforderlich, dank WebRTC ist die Applikation als reine WebApp (ausgenommen
-          dem Arduino-Board) umgesetzt.
+      h4= t("main.project.idea.header")
+      != t("main.project.idea.content")
     .span4
-      h4 Die Technik
-      b WebCar
-      p.
-          Carrera-RC Jeep Wrangler Rubicon<br>
-          Arduino Pro Mini<br>
-      b WebApp
-      p.
-          node.js (express.js)<br>
-          angular.js
+      h4= t("main.project.tech.header")
+      != t("main.project.tech.content")
 
 #container_attention
   section#attention
     .page-header
-      h1 ACHTUNG
+      h1= t("main.attention.header")
     .row
       .span12
-        p.
-            Da diese Projekt APIs verwendet, welche sich noch in Entwicklung befinden, sollte als Browser der aktuellste <b>Chrome Beta</b> verwendet werden.
-        p.
-            Folgende flags sind zu aktivieren (erreichbar unter <i>chrome://flags/</i>)
-            <ul><li>Enable WebRTC</li><li>Enable Media Source API on video elements</li><li>Enable experimental WebSocket implementation</li></ul>
-        p.
-            Für nähere Details, siehe <a href="https://github.com/PosMich/WC-Car">GitHub</a>
+        != t("main.attention.content")
 
 #container_member
   section#member
     .page-header
-      h1 Das Team
+      h1= t("nav.team")
     .row
       .span3
         center
-          h4 Lisa Maria Lederer
+          h4= t("main.team.lisa.name")
           img(src="https://secure.gravatar.com/avatar/e789a2561890fea7e0e505a2bfa1fa76")
-          p
-            | Programmierung
+          p= t("main.team.lisa.role")
       .span3
         center
-          h4 Laura Gstöttenmayr
+          h4!= t("main.team.laura.name")
           img(src="http://portfolio2.s3.amazonaws.com/system/users/954/avatar/avatar.jpg", width="80", height="80")
-          p
-            | Design - Instruktionen
+          p= t("main.team.laura.role")
       .span3
         center
-          h4 Sebastian Slamanig
+          h4= t("main.team.sebastian.name")
           img(src="https://secure.gravatar.com/avatar/b28edaf0acc7933ab2af0496bb0137af")
-          p
-            | Programmierung
+          p= t("main.team.sebastian.role")
       .span3
         center
-          h4 Michael Poschacher
+          h4= t("main.team.michael.name")
           img(src="https://secure.gravatar.com/avatar/73737c93a992456c14e4785f46019af5")
-          p
-            | Programmierung
+          p= t("main.team.michael.role")
 
 #container_impressum
   section#impressum
     .page-header
-        h1 Impressum
+        h1= t("nav.imprint")
     .row
       .span8
-        h4 WebCar
-        p.
-            WebCar wurde im Rahmen eines Basisqualifikationsprojekts für das Sommersemester 2013 von Studenten
-            der Fachochschule Salzburg aus den Studiengängen MultiMediaTechnology & MultiMediaTechnology erstellt.
-        h4 Autorinnen & Autoren
-        b Konzept
-        p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
-        b Umsetzung
-        p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
-        b Design - Instruktionen
-        p Laura Gstöttenmayr
+        h4= t("main.imprint.webcar.header")
+        p= t("main.imprint.webcar.content")
+        h4= t("main.imprint.team.header")
+        b= t("main.imprint.team.concept.header")
+        p= t("main.imprint.team.concept.content")
+        b= t("main.imprint.team.realisation.header")
+        p= t("main.imprint.team.realisation.content")
+        b= t("main.imprint.team.design.header")
+        p= t("main.imprint.team.design.content")
 
       .span4
-        h4 Kontakt
-        b Lisa Maria Lederer
-        br
-        a(href="mailto:llederer.mmt-b2011@fh-salzburg.ac.at") llederer.mmt-b2011@fh-salzburg.ac.at
-        br
-        b Sebastian Slamanig
-        br
-        a(href="mailto:sebastian.slamanig@gmail.com") sebastian.slamanig@gmail.com
-        br
-        b Michael Poschacher
-        br
-        a(href="mailto:michael.poschacher@gmail.com") michael.poschacher@gmail.com
-        h4 Copyright
-        adress
-          strong Fachhochschule Salzburg GmbH
-          br
-          | Urstein Süd 1
-          br
-          | A-5412 Puch/Salzburg
-          br
-          | Österreich
+        h4= t("nav.imprint")
+        != t("main.imprint.contact")

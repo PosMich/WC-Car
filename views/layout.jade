@@ -31,22 +31,22 @@ html(ng-app="WebCar", lang="de")
                 ul#main-menu-left.nav(ng-controller="AnchorCtrl")
                   if user !== null && user !== undefined
                     li
-                      a(href="choose") Drive/Release
+                      a(href="choose")= t("nav.drive")
                   li
-                    a(href='/#about') Das Projekt
+                    a(href='/#about')= t("nav.project")
                   li
-                    a(href='/#member') Das Team
+                    a(href='/#member')= t("nav.team")
                   li
-                    a(href='/#impressum') Impressum
+                    a(href='/#impressum')= t("nav.imprint")
                   if user !== null && user !== undefined
                     if user.fbId === null || user.fbId === undefined
                       li
-                        a(href="settings") Einstellungen
+                        a(href="settings")= t("nav.settings")
                   li
                     if user === null || user === undefined
-                      a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl") Login or Signup
+                      a(href='#', ng-click="openDialog('login', 'LogInCtrl')", ng-controller="DialogCtrl")= t("nav.login")
                     else
-                      a(href="#", ng-click="logout()", ng-controller="LogoutCtrl") Logout
+                      a(href="#", ng-click="logout()", ng-controller="LogoutCtrl")= t("nav.logout")
       //-.asdf
         h1 layout
           if is_desktop

@@ -39,7 +39,9 @@
     "mongoose": "3.6.11",
     "sty": "0.6.1",
     "express-device": "0.3.7",
-    "nj-tinyurl": "~0.1.0"
+    "nj-tinyurl": "~0.1.0",
+    "connect-mongo": "~0.3.2",
+    "i18next": "~1.6.8"
   },
   "engines": {
     "node": ">=0.10"

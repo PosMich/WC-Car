@@ -12,14 +12,22 @@ flash     = require "connect-flash"
 device    = require "express-device"
 
 MongoStore = require("connect-mongo")(express)
-db        = require "./modules/db"
+db         = require "./modules/db"
 
-routes    = require "./modules/routes"
-signaler  = require "./modules/signaling"
+routes     = require "./modules/routes"
+signaler   = require "./modules/signaling"
 
-auth      = require "./modules/auth"
+auth       = require "./modules/auth"
 
 passport   = require "passport"
+
+i18n       = require "i18next"
+
+i18n.init
+    saveMissing: true
+    debug: true
+    lng: "de"
+
 ###
     Declare & Configure the Server
 ###
@@ -34,6 +42,7 @@ app.configure ->
     app.use express.favicon('public/images/favicon.ico')
     app.use express.logger("dev")
     app.use express.bodyParser()
+    app.use i18n.handle
     app.use express.methodOverride()
     app.use express.cookieParser(config.cookieSecret)
     app.use express.session(
@@ -57,6 +66,11 @@ app.configure ->
     app.enableDeviceHelpers()
     app.use app.router
 
+    app.use express.errorHandler
+        dumpExceptions: true
+        showStack: true
+
+i18n.registerAppHelper app
 
 ###
     Error routes
