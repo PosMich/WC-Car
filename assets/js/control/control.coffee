@@ -131,6 +131,10 @@ $(document).ready ->
                         controlChannel.onopen = ->
                             window.controlChannel = controlChannel
                             console.log "controlChannel opened"
+                            if !displayStream
+                                display()
+                                displayStream = true
+                        
                             ###
                             setInterval (->
                                 controlChannel.send JSON.stringify({l2r:left2right,b2f:bwd2fwd})
