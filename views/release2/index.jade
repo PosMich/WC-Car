@@ -1,0 +1,96 @@
+extends ./layout
+
+block content
+    header
+        .page-header
+            h1#release WebCar freigeben
+        //- .row
+            .span8
+                h4 Wer darf das WebCar kontrollieren?
+                p Du kannst dich nun entscheiden, wer dein WebCar kontrollieren darf.
+                    a(href="#", class="btn btn-success btn-large") Private
+                    a(href="#", class="btn btn-fb btn-large") Public
+                    //- a(href="#", class="btn btn-fb btn-large") Public
+        .row
+            .span4.offset1
+                p In wenigen Schritten wird dein WebCar freigegeben sein. Du musst nun nur noch wenige aber wichtige Hinweise befolgen.
+            .span4.offset1
+                .img_placeholder(id="instructions")
+        .row
+            .span8.offset2
+                center
+                    a(href="#connector", class="btn btn-large btn-inverse") Weiter
+
+    section
+        //- .page-header
+        //-     h1 Audio Kabel
+        .row
+            .span4.offset1#connector
+                h4 Audiokabel
+                p.
+                    Damit das WebCar die Audio-Steuer-Signale empfängt musst du nun bitte sicherstellen, dass das dafür
+                    vorgesehene Audiokabel auch am Smartphone angeschlossen ist.
+            .span4.offset1
+                .img_placeholder(id="phone_connector")
+            .row
+                .span8.offset2
+                    center
+                        a(href="#volume", class="btn btn-large btn-inverse") Weiter
+
+    section
+        .row
+            .span4.offset1#volume
+                h4 Lautstärke
+                p.
+                    Damit die Töne bei dem WebCar die richtige Wirkung erzeugen muss der Ton des Smartphones ganz aufgedreht sein.
+                    Bitte stelle deine Lautstärke auf die höchste Stufe.
+            .span4.offset1
+                .img_placeholder(id="volume_img")
+        .row
+            .span8.offset2
+                center
+                    a(href="#passphrase", class="btn btn-large btn-inverse") Weiter
+
+    section
+        .span4.offset1#passphrase
+            h4 Behalte die Kontrolle!
+            p.
+                Du kannst das WebCar der ganzen Welt zur Verfügung stellen.
+            p.
+                Falls du jedoch kontrollieren willst, wer sich ans Steuer deines WebCars setzt, musst du nun eine Passwort eintragen.
+        .span4.offset1
+            form(class="form-horizontal well")
+                fieldset
+                    legend Für deine Kontrolle
+                    div.control-group
+                        label(class="control-label", for="passphrase") Passwort
+                        div.controls
+                            input(type="password", id="passphrase_input", class="input-small", required, pattern=".{5,}")
+                            span(class="help-inline", id="passphrase_error") Passwort benötigt.
+                        span.error(id="connection_error")
+        .row
+            .span8.offset2
+                center
+                    a(id="ready", href="#ready", class="btn btn-large btn-inverse", disabled="disabled") Password speichern und fast fertig
+
+    section#ready
+        .row
+            .span8.offset2
+                h4 Fast fertig!
+                p.
+                    Alle notwendigen Schritte sind nun getan. Nun muss das Smartphone noch in die dafür vorgesehene Halterung
+                    am WebCar angebracht werden und dann kann es los gehen.<br/><br/>
+                    Unter folgendem Link ist das WebCar zu erreichen:
+                p.
+                    Mit diesem Link und der von dir gewählten Passphrase kann nun das WebCar gesteuert werden.
+                center
+                    span(class="label label-info label-big label-hidden", id="webrtcUrl")
+        .row
+            .span8.offset2
+                video(id="car")
+                center
+                    a(href="kill", class="btn btn-large btn-fb", id="control_kill") Kontrolle
+                center
+                    a(href="#release", class="btn btn-large btn-inverse") Zurück an den Anfang!
+
+    != js("release2/release")

@@ -196,6 +196,12 @@ exports.release = (req, res) ->
     res.render "release/index",
         user: req.user
 
+exports.release2 = (req, res) ->
+    debug.info ".get #{sty.magenta '/release2'} from "+req.user
+    debug.info "render release2/index"
+    res.render "release2/index",
+        user: req.user
+
 exports.choose = (req, res) ->
     debug.info ".get #{sty.magenta '/choose'} from "+req.user
     debug.info "render release/index"

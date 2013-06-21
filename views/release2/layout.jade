@@ -1,0 +1,72 @@
+!!! 5
+html(ng-app="WebCar", lang="de")
+    head
+        title WebCar
+        meta(http-equiv="Content-Type",content="text/html; charset=UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(name="description", content="WebCar")
+        meta(name="author", content="Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher")
+
+        link(type="image/x-icon", rel="icon", href="/favicon.ico")
+        link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
+
+        != css("lib/bootstrap.min.css")
+        != css("lib/bootstrap-responsive.min.css")
+        != css("lib/font-awesome-min.css")
+        != css("lib/bootswatch.css")
+        != css("bootstrap-adaptions.css")
+        != css("release.css")
+        != js("lib/jquery-2.0.0.min")
+        != js("lib/adapter")
+
+        body#top.preview(data-offset='80', data-target='.subnav', data-spy='scroll', style='margin-top: 0px;')
+            .navbar.navbar-fixed-top
+                .navbar-inner
+                    .container
+                        a.brand(href='../') Web Car
+                        a.menuIcon(href='../')
+                        a.btn.btn-navbar.collapsed(data-target=".nav-collapse", data-toggle="collapse")
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+            .container
+                block content
+                section#impressum
+                    .row
+                      .span8
+                        h4 WebCar
+                        p.
+                            WebCar wurde im Rahmen eines Basisqualifikationsprojekts für das Sommersemester 2013 von Studenten
+                            der Fachochschule Salzburg aus den Studiengängen MultiMediaTechnology & MultiMediaTechnology erstellt.
+                        h4 Autorinnen & Autoren
+                        b Konzept
+                        p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
+                        b Umsetzung
+                        p Lisa Maria Lederer, Sebastian Slamanig, Michael Poschacher
+                        b Design - Instruktionen
+                        p Laura Gstöttenmayr
+
+                      .span4
+                        h4 Kontakt
+                        b Lisa Maria Lederer
+                        br
+                        a(href="mailto:llederer.mmt-b2011@fh-salzburg.ac.at") llederer.mmt-b2011@fh-salzburg.ac.at
+                        br
+                        b Sebastian Slamanig
+                        br
+                        a(href="mailto:sebastian.slamanig@gmail.com") sebastian.slamanig@gmail.com
+                        br
+                        b Michael Poschacher
+                        br
+                        a(href="mailto:michael.poschacher@gmail.com") michael.poschacher@gmail.com
+                        h4 Copyright
+                        adress
+                          strong Fachhochschule Salzburg GmbH
+                          br
+                          | Urstein Süd 1
+                          br
+                          | A-5412 Puch/Salzburg
+                          br
+                          | Österreich
+        // Include our Scripts. See /assets/js.
+        // ============================================================================
