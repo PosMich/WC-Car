@@ -240,7 +240,7 @@ $(document).ready ->
                                     Driver.stop()
 
                                 controlChannel.onmessage = control
-                                peerConnection.addStream stream
+                                #peerConnection.addStream stream
 
 
                                 onUserMediaError = (error) ->
