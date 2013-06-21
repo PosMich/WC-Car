@@ -162,6 +162,7 @@ app.get "/control/gyro", routes.control.gyro
 app.get "/control/joystick", routes.control.joystick
 
 app.get "/release", authenticatedOrNot, routes.release
+app.get "/release2", authenticatedOrNot, routes.release2
 app.get "/choose", authenticatedOrNot, routes.choose
 
 # register Car, create Url ....
